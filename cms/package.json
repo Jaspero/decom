@@ -1,0 +1,51 @@
+{
+  "name": "frontend-template",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "copy:dev": "node run.cjs dev",
+    "copy:prod": "node run.cjs prod",
+    "start:dev": "npm run copy:dev && vite dev",
+    "start:prod": "npm run copy:prod && vite dev",
+    "build:dev": "npm run copy:dev && vite build",
+    "build:prod": "npm run copy:prod && vite build",
+    "preview": "vite preview",
+    "test": "npm run test:integration && npm run test:unit",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --plugin-search-dir . --check . && eslint .",
+    "format": "prettier --plugin-search-dir . --write .",
+    "test:integration": "playwright test",
+    "test:unit": "vitest"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.37.0",
+    "@sveltejs/adapter-static": "2.0.3",
+    "@sveltejs/kit": "1.22.5",
+    "@typescript-eslint/eslint-plugin": "6.3.0",
+    "@typescript-eslint/parser": "6.3.0",
+    "autoprefixer": "10.4.14",
+    "eslint": "8.47.0",
+    "eslint-plugin-svelte": "2.32.4",
+    "eslint-config-prettier": "8.5.0",
+    "postcss": "8.4.27",
+    "prettier": "2.8.0",
+    "prettier-plugin-svelte": "2.10.1",
+    "svelte": "4.2.0",
+    "svelte-check": "3.5.0",
+    "tailwindcss": "3.3.3",
+    "tslib": "2.6.1",
+    "typescript": "5.1.6",
+    "vite": "4.4.9",
+    "vitest": "0.34.1"
+  },
+  "type": "module",
+  "dependencies": {
+    "@jaspero/modular": "1.16.1",
+    "@jaspero/utils": "1.12.0",
+    "@jaspero/web-components": "1.47.1",
+    "deepcopy": "2.1.0",
+    "firebase": "10.3.1",
+    "svelte-material-icons": "3.0.5"
+  }
+}

@@ -1,0 +1,7 @@
+node_modules
+.svelte-kit
+prod.json
+dev.json
+key.json
+src/lib/utils/env-config.ts
+public
