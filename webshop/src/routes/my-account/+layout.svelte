@@ -1,5 +1,13 @@
 <script lang="ts">
+	import {signOut} from "firebase/auth";
+  import {goto} from "$app/navigation";
+  import {auth} from '$lib/utils/firebase';
 
+	async function logOut() {
+		await signOut(auth);
+
+		goto('/');
+	}
 </script>
 
 <aside>
@@ -18,6 +26,8 @@
 		</div>
 	</nav>
 </aside>
+
+<button on:click={logOut}>Sign Out</button>
 
 <svelte:head>
   <meta name="robots" content="noindex, nofollow" />
