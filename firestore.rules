@@ -1,7 +1,24 @@
 rules_version = '2';
 
 service cloud.firestore {
+
+  function authenticated() {
+    return request.auth.token != null;
+  }
+
+  function admin() {
+    return authenticated() && request.auth.token.role == 'admin';
+  }
+
   match /databases/{database}/documents {
+
+    match /users/{userId} {
+      allow get: if userId == request.auth.uid || admin();
+      allow list: if admin();
+      allow update: if admin();
+      allow delete: if userId == request.auth.uid || admin();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
