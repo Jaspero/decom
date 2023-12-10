@@ -7,8 +7,9 @@ on:
     paths:
       - 'cms/**/*'     
 env:
-  PROJECT: wonkawave    
-  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}       
+  PROJECT: wonkawave 
+  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}   
+  TARGET: wonkawave-cms
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -16,7 +17,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
       - name: Build
-        run: npm ci --prefix cms --legacy-peer-deps && npm run build:dev --prefix cms
+        run: npm ci --prefix cms --legacy-peer-deps && npm run build:prod --prefix cms
       - name: Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -24,3 +25,4 @@ jobs:
           firebaseServiceAccount: ${{ env.SERVICE_ACCOUNT }}
           channelId: live
           projectId: ${{ env.PROJECT }}
+          target: ${{ env.TARGET }}
