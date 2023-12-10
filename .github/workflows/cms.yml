@@ -9,7 +9,7 @@ on:
 env:
   PROJECT: wonkawave 
   SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}   
-  TARGET: wonkawave-cms
+  TARGET: cms
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
