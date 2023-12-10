@@ -1,0 +1,26 @@
+name: Prod | Deploy Rules
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'firestore.rules'
+      - '.github/workflows/rules.yml'
+env:
+  PROJECT: wonkawave
+  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}      
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only firestore:rules
+        env:
+          GCP_SA_KEY: ${{ env.SERVICE_ACCOUNT }}
+          PROJECT_ID: ${{ env.PROJECT }}

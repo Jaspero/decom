@@ -1,0 +1,26 @@
+name: Prod | Deploy Webshop
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'webshop/**/*' 
+env:
+  PROJECT: wonkawave
+  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}      
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Build
+        run: npm ci --prefix webshop && npm run build --prefix webshop
+      - name: Deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: ${{ env.SERVICE_ACCOUNT }}
+          channelId: live
+          projectId: ${{ env.PROJECT }}

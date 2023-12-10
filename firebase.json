@@ -3,7 +3,11 @@
     {
       "target": "cms",
       "public": "public/cms",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
       "cleanUrls": true,
       "trailingSlash": false,
       "redirects": [],
@@ -67,7 +71,11 @@
     {
       "target": "webshop",
       "public": "public/webshop",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
       "cleanUrls": true,
       "trailingSlash": false,
       "redirects": [],
