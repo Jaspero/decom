@@ -14,3 +14,14 @@
 
 - [Webshop](https://wonkawave.web.app/)
 - [CMS](https://wonkawave-cms.web.app/)
+
+## Getting Started
+
+- Enable Blaze plan on firebase
+- Enable Firestore, Storage, Authentication (including google authentication).
+- Enable the identity platform
+- Enable Multi Factor Authentication
+- Set up an additional hosting site [project]-cms
+- On the authorized domains page add the added site as well as the main domain website if there is one
+- Change the configuration in all of the workflows
+- Change the env-config files throughout the project

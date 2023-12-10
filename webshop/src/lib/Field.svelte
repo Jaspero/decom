@@ -28,6 +28,7 @@
     | 'image'
     | 'hidden'
     | 'search' = 'text';
+  export let minlength: null | number = null;
 </script>
 
 <label class:has-hint={$$slots.hint}>
@@ -36,17 +37,17 @@
   {/if}
 
   {#if type === 'text'}
-    <input type="text" {required} {placeholder} {disabled} bind:value />
+    <input type="text" {required} {placeholder} {minlength} {disabled} bind:value />
   {:else if type === 'password'}
-    <input type="password" {required} {placeholder} {disabled} bind:value />
+    <input type="password" {required} {placeholder} {minlength} {disabled} bind:value />
   {:else if type === 'email'}
-    <input type="email" {required} {placeholder} {disabled} bind:value />
+    <input type="email" {required} {placeholder} {minlength} {disabled} bind:value />
   {:else if type === 'number'}
     <input type="number" {required} {placeholder} {disabled} bind:value />
   {:else if type === 'tel'}
-    <input type="tel" {required} {placeholder} {disabled} bind:value />
+    <input type="tel" {required} {placeholder} {minlength} {disabled} bind:value />
   {:else if type === 'url'}
-    <input type="url" {required} {placeholder} {disabled} bind:value />
+    <input type="url" {required} {placeholder} {minlength} {disabled} bind:value />
   {:else if type === 'date'}
     <input type="date" {required} {placeholder} {disabled} bind:value />
   {:else if type === 'time'}
@@ -86,17 +87,3 @@
     </div>
   {/if}
 </label>
-
-<style lang="postcss">
-  label {
-    @apply flex flex-col gap-1 font-bold;
-  }
-
-  .has-hint {
-    @apply relative;
-  }
-
-  input {
-    @apply border rounded px-4 py-3 font-normal hover:border-black/50 focus:border-secondary focus:outline-2 focus:outline-secondary focus:outline-offset-4 focus:outline-dashed;
-  }
-</style>
