@@ -4,7 +4,7 @@
 
   export let open: boolean;
   export let removePadding = false;
-  export let fixed;
+  export let fixed = false;
 
   function closeOnEscape(event: KeyboardEvent) {
     if (event.key === 'Escape') {

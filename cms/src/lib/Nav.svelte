@@ -52,7 +52,7 @@
           <Button
             on:click={() => {
               auth.signOut();
-              goto('/login');
+              goto('/');
             }}
           >
             Sign out

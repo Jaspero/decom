@@ -9,3 +9,6 @@
 [![Prod | Deploy Rules](https://github.com/Jaspero/webshop-template/actions/workflows/rules.yml/badge.svg)](https://github.com/Jaspero/webshop-template/actions/workflows/rules.yml)
 
 [![Prod | Deploy Storage Rules](https://github.com/Jaspero/webshop-template/actions/workflows/storage.yml/badge.svg)](https://github.com/Jaspero/webshop-template/actions/workflows/storage.yml)
+
+- [Webshop](https://wonkawave.web.app/)
+- [CMS](https://wonkawave-cms.web.app/)
