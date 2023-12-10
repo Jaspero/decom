@@ -52,8 +52,6 @@
     <div class="dialog-content" class:contentfull>
       <slot />
     </div>
-    <button type="button" class="dialog-close" on:click={close}>
-      Close
-    </button>
+    <button type="button" class="dialog-close" on:click={close}> Close </button>
   </div>
 {/if}

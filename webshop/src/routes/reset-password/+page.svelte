@@ -64,31 +64,31 @@
 </script>
 
 <form on:submit|preventDefault={() => submit()}>
-	<Field
-		type="password"
-		placeholder="Password"
-		label="Password"
-		bind:value={form.password}
-		required
-	/>
-	<Field
-		label="Repeat Password"
-		type="password"
-		placeholder="Repeat Password"
-		bind:value={form.repeatPassword}
-		required
-	/>
+  <Field
+    type="password"
+    placeholder="Password"
+    label="Password"
+    bind:value={form.password}
+    required
+  />
+  <Field
+    label="Repeat Password"
+    type="password"
+    placeholder="Repeat Password"
+    bind:value={form.repeatPassword}
+    required
+  />
 
-	<div class="ta-center">
-		{#if loading}
-			Loading
-		{:else}
-			<Button type="submit">Reset</Button>
-		{/if}
-	</div>
+  <div class="ta-center">
+    {#if loading}
+      Loading
+    {:else}
+      <Button type="submit">Reset</Button>
+    {/if}
+  </div>
 </form>
 
 <svelte:head>
   <title>Reset Password - Jaspero</title>
-	<meta name="robots" content="noindex, nofollow" />
+  <meta name="robots" content="noindex, nofollow" />
 </svelte:head>

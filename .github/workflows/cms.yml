@@ -5,10 +5,10 @@ on:
     branches:
       - main
     paths:
-      - 'cms/**/*'     
+      - 'cms/**/*'
 env:
-  PROJECT: wonkawave 
-  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}   
+  PROJECT: wonkawave
+  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}
   TARGET: cms
 jobs:
   build_and_deploy:

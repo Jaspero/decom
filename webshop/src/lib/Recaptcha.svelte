@@ -1,7 +1,7 @@
 <script lang="ts">
   import { RecaptchaVerifier } from 'firebase/auth';
   import { onMount, onDestroy } from 'svelte';
-  import {auth} from './utils/firebase';
+  import { auth } from './utils/firebase';
 
   export let verify: (() => Promise<string>) | null = null;
 

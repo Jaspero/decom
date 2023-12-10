@@ -9,7 +9,7 @@ on:
       - '.github/workflows/storage.yml'
 env:
   PROJECT: wonkawave
-  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}      
+  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}
 jobs:
   deploy:
     name: Deploy

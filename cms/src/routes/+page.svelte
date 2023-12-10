@@ -105,10 +105,9 @@
       'Login successful',
       (e: any) => {
         if (e.code == 'auth/multi-factor-auth-required') {
-          
-					resolver = getMultiFactorResolver(auth, e);
-          
-					if (resolver.hints) {
+          resolver = getMultiFactorResolver(auth, e);
+
+          if (resolver.hints) {
             const phoneInfoOptions = {
               multiFactorHint: resolver.hints[0],
               session: resolver.session
@@ -267,13 +266,7 @@
 
 <Dialog bind:open={resetPasswordDialog}>
   <slot slot="title">Forgotten your password?</slot>
-  <Field
-    label="Email"
-    type="email"
-    placeholder="your@email.com"
-    required
-    bind:value={rEmail}
-  />
+  <Field label="Email" type="email" placeholder="your@email.com" required bind:value={rEmail} />
 
   <slot slot="actions">
     <Button
