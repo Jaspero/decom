@@ -1,0 +1,32 @@
+name: Prod | Deploy Functions
+on:
+  workflow_dispatch:
+env:
+  PROJECT: wonkawave
+  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}     		
+jobs:
+  build_and_deploy:
+    name: Build And Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js 18.12.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.12.1
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: |
+          npm i -g firebase-tools@12.4.8
+          npm --prefix functions ci --legacy-peer-deps
+      - name: Build
+        run: |
+          npm --prefix functions run build
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions
+        env:
+          GCP_SA_KEY: ${{ env.SERVICE_ACCOUNT }}
+          PROJECT_ID: ${{ env.PROJECT }}
+	

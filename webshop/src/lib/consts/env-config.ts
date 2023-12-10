@@ -1,10 +1,11 @@
 export const ENV_CONFIG = {
   firebase: {
-    apiKey: 'AIzaSyBFefsy419aE_g5ML4elddyzcGURQRl8Nc',
-    authDomain: 'webshop-te.firebaseapp.com',
-    projectId: 'webshop-te',
-    storageBucket: 'webshop-te.appspot.com',
-    messagingSenderId: '425447584398',
-    appId: '1:425447584398:web:468bb8cc94f2f228018fdf'
+    apiKey: 'AIzaSyCv9dQEwPOLoV_Cdn8NKLhNqA9bYb9Umew',
+    authDomain: 'wonkawave.firebaseapp.com',
+    projectId: 'wonkawave',
+    storageBucket: 'wonkawave.appspot.com',
+    messagingSenderId: '100370175739',
+    appId: '1:100370175739:web:9fac4ef481495e6f5b425e',
+    measurementId: 'G-JLW8F5W78G'
   }
 };
