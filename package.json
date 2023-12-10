@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write .",
+    "format": "prettier --plugin-search-dir . --write . && npm run lint:fix --prefix functions",
     "write:indexes": "firebase firestore:indexes > firestore.indexes.json"
   },
   "devDependencies": {
