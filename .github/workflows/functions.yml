@@ -29,4 +29,3 @@ jobs:
         env:
           GCP_SA_KEY: ${{ env.SERVICE_ACCOUNT }}
           PROJECT_ID: ${{ env.PROJECT }}
-	
