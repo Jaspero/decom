@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Install Node Dependencies",
+      "detail": "Install all dependencies in all of the folders throughout the repo.",
+      "type": "shell",
+      "command": "./install.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Webshop",
+      "detail": "Run the Webshop application.",
+      "type": "shell",
+      "command": "npm run start:dev --prefix webshop",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run CMS",
+      "detail": "Run the CMS application.",
+      "type": "shell",
+      "command": "npm run start:dev --prefix cms",
+      "problemMatcher": []
+    },
+    {
+      "label": "Format",
+      "detail": "Runs prettier for the client application.",
+      "type": "shell",
+      "command": "npm run format",
+      "problemMatcher": []
+    }
+  ]
+}

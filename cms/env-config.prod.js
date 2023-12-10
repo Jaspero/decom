@@ -1,9 +1,9 @@
 export const ENV_CONFIG = {
-  apiKey: 'AIzaSyAtPKrUJ7hEy7G9E1Ju_FplScVrFSkXf2Q',
-  authDomain: 'glycan-age.firebaseapp.com',
-  databaseURL: 'https://glycan-age.firebaseio.com',
-  projectId: 'glycan-age',
-  storageBucket: 'glycan-age.appspot.com',
-  messagingSenderId: '332450201707',
-  appId: '1:332450201707:web:7476d52868eb3ce1ebb12e'
+  apiKey: 'AIzaSyCv9dQEwPOLoV_Cdn8NKLhNqA9bYb9Umew',
+  authDomain: 'wonkawave.firebaseapp.com',
+  projectId: 'wonkawave',
+  storageBucket: 'wonkawave.appspot.com',
+  messagingSenderId: '100370175739',
+  appId: '1:100370175739:web:9fac4ef481495e6f5b425e',
+  measurementId: 'G-JLW8F5W78G'
 };

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import {alertWrapper} from '$lib/utils/alert-wrapper';
-  import {goto} from '$app/navigation';
-  import {page} from '$app/stores';
-  import {auth} from '$lib/utils/firebase';
-  import {applyActionCode, checkActionCode} from 'firebase/auth';
-  import {onMount} from 'svelte';
+  import { alertWrapper } from '$lib/utils/alert-wrapper';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
+  import { auth } from '$lib/utils/firebase';
+  import { applyActionCode, checkActionCode } from 'firebase/auth';
+  import { onMount } from 'svelte';
 
   onMount(async () => {
     let oobCode: string;
@@ -32,7 +32,7 @@
       }
     );
 
-		goto('/dashboard');
+    goto('/dashboard');
   });
 </script>
 
