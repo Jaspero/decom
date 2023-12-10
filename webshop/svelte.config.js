@@ -5,7 +5,7 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 const config = {
   kit: {
     adapter: adapter({
-      pages: './public/webshop',
+      pages: '../public/webshop',
       fallback: 'index.html'
     })
   },

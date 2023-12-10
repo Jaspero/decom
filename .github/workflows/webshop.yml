@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
       - name: Build
-        run: npm ci --prefix webshop && npm run build --prefix webshop
+        run: npm ci --prefix webshop --legacy-peer-deps && npm run build --prefix webshop
       - name: Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
