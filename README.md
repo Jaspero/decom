@@ -26,3 +26,4 @@
 - Change the configuration in all of the workflows
 - Change the env-config files throughout the project
 - Change the action URL in authenticaiton templates to `https://europe-west1-[project].cloudfunctions.net/actioncontroller`
+- Download a service account and store it in `webshop/key.json`

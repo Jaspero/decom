@@ -33,6 +33,7 @@
   },
   "type": "module",
   "dependencies": {
-    "firebase": "10.7.1"
+    "firebase": "10.7.1",
+    "firebase-admin": "12.0.0"
   }
 }

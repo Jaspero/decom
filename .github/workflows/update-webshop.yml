@@ -1,0 +1,38 @@
+name: Update Web
+on:
+  workflow_dispatch:
+    inputs:
+      description:
+        description: 'Release description'
+env:
+  PROJECT: wonkawave
+  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}
+  TARGET: webshop        
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Build
+        if: contains(github.ref, 'build')
+        run: |
+          echo $SV > webshop/key.json
+          npm run build --prefix webshop
+        env:
+          SV: ${{ env.SERVICE_ACCOUNT }}
+      - name: Deploy
+        if: contains(github.ref, 'build')
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: ${{ env.SERVICE_ACCOUNT }}
+          channelId: live
+          projectId: ${{ env.PROJECT }}
+          target: ${{ env.TARGET }}
+      - name: Update Firestore
+        if: contains(github.ref, 'build')
+        run: |
+          cd webshop
+          node update-release.cjs

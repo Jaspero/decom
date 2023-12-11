@@ -19,6 +19,10 @@ service cloud.firestore {
       allow delete: if userId == request.auth.uid || admin();
     }
 
+    match /settings/status {
+      allow write, read: if admin();
+    }    
+
     match /{document=**} {
       allow read, write: if false;
     }

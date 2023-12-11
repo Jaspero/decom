@@ -16,6 +16,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
       - name: Build
         run: npm ci --prefix webshop --legacy-peer-deps && npm run build --prefix webshop
       - name: Deploy
@@ -26,3 +29,23 @@ jobs:
           channelId: live
           projectId: ${{ env.PROJECT }}
           target: ${{ env.TARGET }}
+      - name: Commit
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -f --all webshop/.svelte-kit
+          git add -f --all webshop/node_modules
+          git commit -m "BOT - Connected build branch"          
+      # Remove the build branch in case it already exists
+      # this ensures clean code
+      - name: Delete build branch
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ github.token }}
+          branches: build
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: 'build'
+          force: true
