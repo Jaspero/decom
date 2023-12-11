@@ -6,7 +6,11 @@
   import { clickOutside } from './utils/clickOutside';
   import { fly } from 'svelte/transition';
   import { goto } from '$app/navigation';
-  import { auth } from '$lib/utils/firebase';
+  import { auth, db } from '$lib/utils/firebase';
+  import { alertWrapper } from './utils/alert-wrapper';
+  import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+  import { onMount } from 'svelte';
+  import { lastPublishedOn } from './stores/last-published-on.store';
 
   export let label: string;
   export let links: Array<{
@@ -16,6 +20,30 @@
 
   let dropdown = false;
   let menu = false;
+
+  let publishLoading = false;
+  let publishStart: number;
+  let publishDisabled: boolean;
+
+  $: publishDisabled = !!(publishStart && (!$lastPublishedOn || $lastPublishedOn < publishStart));
+
+  async function publish() {
+    publishLoading = true;
+    publishStart = Date.now();
+
+    await alertWrapper(
+      setDoc(doc(db, 'settings', 'status'), { publishStart }, { merge: true }),
+      'Deployment Started!'
+    );
+
+    publishLoading = false;
+  }
+
+  onMount(() => {
+    onSnapshot(doc(db, 'settings', 'status'), (doc) => {
+      lastPublishedOn.set(doc.data()!.lastPublished);
+    });
+  });
 </script>
 
 <nav>
@@ -30,6 +58,8 @@
   <div class="flex-1" />
 
   <div class="hidden sm:flex">
+    <Button loading={publishLoading} disabled={publishDisabled} on:click={publish}>Publish</Button>
+
     {#if links}
       {#each links as link}
         <Button href={link.href}>

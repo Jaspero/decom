@@ -23,7 +23,7 @@ const firebaseErrors: { [key: string]: string } = {
 export async function alertWrapper(
   request: Promise<any>,
   successMessage = '',
-  errorMessage: any,
+  errorMessage?: any,
   onError?: (error?: any) => any | Promise<any>
 ) {
   let resp;
