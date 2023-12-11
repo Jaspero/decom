@@ -203,76 +203,48 @@
   });
 </script>
 
-<div id="recaptcha-container-id" />
-<div class="flex ai-center">
-  <div class="grid p-y-xl">
-    {#if showCodeInput}
-      <GridCol>
-        <Button color="error" href="/login" on:click={back}>Back to login</Button>
-        <p>
-          We have sent you a 6-digit verification code to: <b>{resolver.hints[0].phoneNumber}</b>
-        </p>
+<div class="max-w-7xl mx-auto p-12">
+  <div id="recaptcha-container-id"></div>
 
-        <Field required label="MFA Verification Code:" type="text" bind:value={codeInput} />
-        <Button color="primary" on:click={confirm}>
-          {#if confirmLoader}
-            <Loader />
-          {:else}
-            Confirm and sign in
-          {/if}
-        </Button>
-        <div style="margin-bottom: 340px;" />
-      </GridCol>
-    {:else}
-      <div class="col-6 col-m-8 col-s-6 col-xs-12">
-        <p>Login</p>
+  {#if showCodeInput}
+    <Button color="error" href="/login" on:click={back}>Back to login</Button>
+    <p>
+      We have sent you a 6-digit verification code to: <b>{resolver.hints[0].phoneNumber}</b>
+    </p>
 
-        <form class="grid nogutter" on:submit|preventDefault={submit}>
-          <div class="col-12">
-            <div style="max-width: 400px;">
-              <Field label="Email" type="email" bind:value={email} required />
-            </div>
-          </div>
+    <Field required label="MFA Verification Code:" type="text" bind:value={codeInput} />
 
-          <div class="col-12">
-            <div style="max-width: 400px;">
-              <Field label="Password" {type} bind:value={password} minlength={6} required />
-            </div>
-          </div>
-
-          <div class="col-7 col-xs-5" />
-
-          <div class="col-12">
-            <button class="button-reset" type="button" on:click={toggleVisible}>
-              {#if type === 'password'}
-                Show password
-              {:else}
-                Hide password
-              {/if}
-            </button>
-          </div>
-
-          <div class="col-12">
-            <Button id="login-password" type="submit" {loading}>Sign In</Button>
-            <button type="button" on:click={loginGoogle} class="googleButton" />
-          </div>
-
-          <div class="flex fw-wrap w-full">
-            <div class="flex" style="gap: .25rem;">
-              <p>Forgot your password?</p>
-              <button class="button-reset" type="button" on:click={() => (rDialog = true)}>
-                Reset password
-              </button>
-            </div>
-          </div>
-        </form>
+    <Button color="primary" on:click={confirm}>
+      {#if confirmLoader}
+        <Loader />
+      {:else}
+        Confirm and sign in
+      {/if}
+    </Button>
+  {:else}
+    <form on:submit|preventDefault={submit}>
+      <div class="flex flex-col gap-4">
+        <Field label="Email" type="email" bind:value={email} autocomplete="email" required />
+        <Field label="Password" {type} bind:value={password} autocomplete="current-password" required />
+        <div>
+          <Button type="button" on:click={toggleVisible} label={type === 'password' ? 'Show password' : 'Hide password'} />
+        </div>
       </div>
-    {/if}
-  </div>
+
+      <Button id="login-password" type="submit" {loading} label="Sign in" />
+      <button type="button" on:click={loginGoogle} class="googleButton" name="Sign in with Google">Sign in with google</button>
+
+      <p>Forgot your password?</p>
+      <Button type="button" on:click={() => (rDialog = true)}>
+        Reset password
+      </Button>
+    </form>
+  {/if}
 </div>
 
 <Dialog bind:showing={rDialog}>
   <p>Forgotten your password?</p>
+
   <form on:submit|preventDefault={resetPassword}>
     <Field label="Email" type="email" placeholder="your@email.com" bind:value={rEmail} required />
     <Button type="submit" loading={rLoading}>Reset password</Button>
@@ -287,8 +259,8 @@
 </svelte:head>
 
 <style>
+
   .googleButton {
-    background-image: url('/images/google.png');
     width: 382px;
     height: 92px;
     transform: scale(0.46);

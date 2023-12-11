@@ -8,7 +8,9 @@
 
 <Header />
 
-<slot />
+<main class="pt-20">
+    <slot />
+</main>
 
 <CartSidebar />
 <Notification />
