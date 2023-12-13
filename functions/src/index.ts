@@ -1,7 +1,19 @@
-import {initializeApp} from "firebase-admin/app";
+import {initializeApp} from 'firebase-admin/app';
 
 initializeApp();
 
-export {actioncontroller} from "./rest/action-controller";
+/**
+ * Rest
+ */
+export {actioncontroller} from './rest/action-controller';
 
-export {usercreated} from "./triggers/user-created";
+/**
+ * Triggers
+ */
+export {usercreated} from './triggers/user-created';
+export {adminupdated} from './triggers/admin-updated';
+
+/**
+ * Callable
+ */
+export {createadmin} from './callable/create-admin';
