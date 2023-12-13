@@ -1,11 +1,24 @@
-<script>
+<script lang="ts">
   import '../../app.postcss';
   import Nav from '$lib/Nav.svelte';
   import Footer from '$lib/Footer.svelte';
 
   let links = [
     { label: 'Home', href: '/dashboard' },
-    { label: 'Orders', href: '/dashboard/orders' }
+    {
+      label: 'Shop',
+      links: [
+        { label: 'Products', href: '/dashboard/products' },
+        { label: 'Categories', href: '/dashboard/categories' },
+      ]
+    },
+    { label: 'Orders', href: '/dashboard/orders' },
+    {
+      label: 'Management',
+      links: [
+        { label: 'Admins', href: '/dashboard/admins' }
+      ]
+    }
   ];
 </script>
 

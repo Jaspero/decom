@@ -14,8 +14,12 @@
 
   export let label: string;
   export let links: Array<{
-    href: string;
     label: string;
+    href?: string;
+    links?: Array<{
+      label: string;
+      href: string;
+    }>;
   }>;
 
   let dropdown = false;
@@ -41,7 +45,11 @@
 
   onMount(() => {
     onSnapshot(doc(db, 'settings', 'status'), (doc) => {
-      lastPublishedOn.set(doc.data()!.lastPublished);
+      const {lastPublished} = doc.data() || {};
+      
+      if (lastPublished) {
+        lastPublishedOn.set(lastPublished);
+      }
     });
   });
 </script>
@@ -62,9 +70,20 @@
 
     {#if links}
       {#each links as link}
-        <Button href={link.href}>
-          {link.label}
-        </Button>
+
+        {#if link.href}
+          <Button href={link.href}>
+            {link.label}
+          </Button>
+        {:else if link.links}
+          <!-- TODO: Connect DropDown -->
+          <span>{link.label}</span>
+          {#each link.links as inner}
+            <Button href={inner.href}>
+              {inner.label}
+            </Button>
+          {/each}
+        {/if}
       {/each}
     {/if}
 

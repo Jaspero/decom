@@ -250,11 +250,6 @@
               >Reset password
             </Button>
           </div>
-
-          <div>
-            <p class="mb-2">Don't have an account?</p>
-            <Button color="secondary" href="/signup">Sign up</Button>
-          </div>
         </GridCol>
       {/if}
       <GridCol span="2" />
