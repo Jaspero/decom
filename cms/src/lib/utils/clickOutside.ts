@@ -16,11 +16,11 @@ export function clickOutside(node: any): any {
   }
 
   window.addEventListener('keydown', handleEscape, true);
-  document.addEventListener('click', handleClick, true);
+  document.addEventListener('mousedown', handleClick, true);
 
   return {
     destroy() {
-      document.removeEventListener('click', handleClick, true);
+      document.removeEventListener('mousedown', handleClick, true);
       window.removeEventListener('keydown', handleEscape, true);
     }
   };
