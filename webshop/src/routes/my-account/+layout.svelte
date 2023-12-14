@@ -29,6 +29,8 @@
 
 <button on:click={logOut}>Sign Out</button>
 
+<slot />
+
 <svelte:head>
   <meta name="robots" content="noindex, nofollow" />
 </svelte:head>
