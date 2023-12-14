@@ -11,6 +11,7 @@
   import { doc, onSnapshot, setDoc } from 'firebase/firestore';
   import { onMount } from 'svelte';
   import { lastPublishedOn } from './stores/last-published-on.store';
+  import {page} from "$app/stores";
 
   export let label: string;
   export let links: Array<{
@@ -29,6 +30,7 @@
   let publishStart: number;
   let publishDisabled: boolean;
 
+  $: pathname = $page.url.pathname;
   $: publishDisabled = !!(publishStart && (!$lastPublishedOn || $lastPublishedOn < publishStart));
 
   async function publish() {
@@ -82,12 +84,14 @@
       {#each links as link}
         {#if link.href}
           <Button href={link.href}>
-            {link.label}
+            <span class="link-label" class:active={pathname === link.href}>
+              {link.label}
+            </span>
           </Button>
         {:else if link.links}
           <div class="relative">
             <Button on:click={() => {link.checked = !link.checked}}>
-                {link.label}
+              {link.label}
                 <img class="ml-2"
                      src={link.checked ? '/images/expand_less.svg' : '/images/expand_more.svg'}
                      alt={link.checked ? 'Expand less' : 'Expand more'}>
@@ -97,11 +101,13 @@
               <div class="dropdown"
                    use:clickOutside
                    on:click_outside={() => {link.checked = false}}
-                   transition:fly={{ duration: 300, y: -20 }}
+                   transition:fly={{ duration: 300, y: 20 }}
               >
                 {#each link.links as inner}
                   <Button href={inner.href} on:click={() => {link.checked = false}}>
-                    {inner.label}
+                    <span class="link-label" class:active={pathname === inner.href}>
+                      {inner.label}
+                    </span>
                   </Button>
                 {/each}
               </div>
@@ -173,5 +179,13 @@
 
   img {
     @apply h-6;
+  }
+
+  .link-label {
+    @apply opacity-90;
+  }
+
+  .link-label.active {
+    @apply underline underline-offset-4 opacity-100;
   }
 </style>
