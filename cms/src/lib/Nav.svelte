@@ -51,6 +51,16 @@
         lastPublishedOn.set(lastPublished);
       }
     });
+
+    links = links.map(link => {
+      if (link.links) {
+        return {
+          ...link,
+          checked: false
+        };
+      }
+      return link;
+    });
   });
 </script>
 
@@ -70,19 +80,33 @@
 
     {#if links}
       {#each links as link}
-
         {#if link.href}
           <Button href={link.href}>
             {link.label}
           </Button>
         {:else if link.links}
-          <!-- TODO: Connect DropDown -->
-          <span>{link.label}</span>
-          {#each link.links as inner}
-            <Button href={inner.href}>
-              {inner.label}
+          <div class="relative">
+            <Button on:click={() => {link.checked = !link.checked}}>
+                {link.label}
+                <img class="ml-2"
+                     src={link.checked ? '/images/expand_less.svg' : '/images/expand_more.svg'}
+                     alt={link.checked ? 'Expand less' : 'Expand more'}>
             </Button>
-          {/each}
+
+            {#if link.checked}
+              <div class="dropdown"
+                   use:clickOutside
+                   on:click_outside={() => {link.checked = false}}
+                   transition:fly={{ duration: 300, y: -20 }}
+              >
+                {#each link.links as inner}
+                  <Button href={inner.href} on:click={() => {link.checked = false}}>
+                    {inner.label}
+                  </Button>
+                {/each}
+              </div>
+            {/if}
+          </div>
         {/if}
       {/each}
     {/if}
@@ -141,6 +165,10 @@
 
   .menu {
     @apply z-10 absolute top-16 w-full h-[calc(100vh-4rem)] bg-white flex flex-col;
+  }
+
+  .dropdown {
+    @apply absolute flex flex-col bg-white rounded overflow-hidden shadow-2xl;
   }
 
   img {
