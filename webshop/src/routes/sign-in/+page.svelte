@@ -209,18 +209,12 @@
   {#if showCodeInput}
     <Button color="error" href="/login" on:click={back}>Back to login</Button>
     <p>
-      We have sent you a 6-digit verification code to: <b>{resolver.hints[0].phoneNumber}</b>
+      We have sent you a 6-digit verification code to: <!--<b>{resolver.hints[0].phoneNumber}</b>-->
     </p>
 
     <Field required label="MFA Verification Code:" type="text" bind:value={codeInput} />
 
-    <Button color="primary" on:click={confirm}>
-      {#if confirmLoader}
-        <Loader />
-      {:else}
-        Confirm and sign in
-      {/if}
-    </Button>
+    <Button color="primary" loading={confirmLoader} on:click={confirm} label="Confirm and sign in" />
   {:else}
     <form on:submit|preventDefault={submit}>
       <div class="flex flex-col gap-4">
@@ -235,9 +229,7 @@
       <button type="button" on:click={loginGoogle} class="googleButton" name="Sign in with Google">Sign in with google</button>
 
       <p>Forgot your password?</p>
-      <Button type="button" on:click={() => (rDialog = true)}>
-        Reset password
-      </Button>
+      <Button type="button" on:click={() => (rDialog = true)} label="Reset password" />
     </form>
   {/if}
 </div>
@@ -257,12 +249,3 @@
   <title>Sign In - Jaspero</title>
   <meta name="description" content="Enter your credentials to sign in." />
 </svelte:head>
-
-<style>
-
-  .googleButton {
-    width: 382px;
-    height: 92px;
-    transform: scale(0.46);
-  }
-</style>

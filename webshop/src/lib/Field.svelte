@@ -62,12 +62,8 @@
     <input type="month" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'week'}
     <input type="week" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
-  {:else if type === 'range'}
-    <input type="range" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'color'}
     <input type="color" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
-  {:else if type === 'radio'}
-    <input type="radio" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'file'}
     <input type="file" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'submit'}
@@ -101,7 +97,7 @@
   }
 
   .label {
-    @apply absolute top-4 left-0 transition-all duration-300 select-none;
+    @apply absolute top-4 left-0 transition-all duration-300 select-none cursor-pointer;
   }
 
   .label.move {

@@ -24,16 +24,10 @@
 
   /* Button-specific */
   export let type: 'button' | 'submit' | 'reset' = 'button';
-  export let name: string | null = null;
   export let form: string | null = null;
   export let disabled: boolean | null = null;
   export let loading: boolean | null = null;
-  export let label = 'Add label attribute';
-
-  /* General */
-  export let variant: 'outlined' | 'filled' | 'icon' | 'default' = 'default';
-  export let color: 'primary' | 'secondary' | 'success' | 'warning' | 'error' = 'primary';
-  export let size: 'small' | 'regular' | 'large' = 'regular';
+  export let label = 'Add label attribute to this button';
 </script>
 
 {#if href}
@@ -45,22 +39,13 @@
     {download}
     {hreflang}
     {id}
+    aria-label={label}
     on:click
   >
     {#if loading}
       <Loader />
     {:else}
-      {#if $$slots.prefix && variant !== 'icon'}
-        <span class="prefix">
-          <slot name="prefix" />
-        </span>
-      {/if}
       {@html label}
-      {#if $$slots.suffix && variant !== 'icon'}
-        <span class="suffix">
-          <slot name="suffix" />
-        </span>
-      {/if}
     {/if}
   </a>
 {:else}
@@ -69,25 +54,15 @@
           class:loading
           class:disabled
           {type}
-          name={label}
           {form}
           {disabled}
+          name={label}
           on:click
   >
     {#if loading}
       <Loader />
     {:else}
-      {#if $$slots.prefix && variant !== 'icon'}
-        <span class="prefix">
-          <slot name="prefix" />
-        </span>
-      {/if}
       {@html label}
-      {#if $$slots.suffix && variant !== 'icon'}
-        <span class="suffix">
-          <slot name="suffix" />
-        </span>
-      {/if}
     {/if}
   </button>
 {/if}
