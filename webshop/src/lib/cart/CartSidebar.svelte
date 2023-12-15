@@ -6,7 +6,7 @@
 </script>
 
 {#if show}
-    <nav transition:fly={{x: 250, opacity: 1}} use:clickOutside
+    <nav transition:fly={{x: 450, opacity: 1}} use:clickOutside
          on:click_outside={() => show = false}>
         SOME CART ITEMS
     </nav>
@@ -23,6 +23,6 @@
         border-left: 1px solid #aaa;
         background: #fff;
         overflow-y: auto;
-        width: 10rem;
+        width: 25rem;
     }
 </style>
