@@ -86,5 +86,5 @@
 </section>
 
 <svelte:head>
-  <title>Dashboard - GlycanAge</title>
+  <title>Dashboard - Jaspero</title>
 </svelte:head>
