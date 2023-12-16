@@ -16,6 +16,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@jaspero/utils": "1.13.0",
     "firebase-admin": "11.9.0",
     "firebase-functions": "4.5.0"
   },

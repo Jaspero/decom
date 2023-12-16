@@ -35,9 +35,9 @@
 
   nav {
     @apply max-w-7xl mx-auto flex items-center gap-4 h-full;
-  }
 
-  a {
+  }
+  :is(a):not(:has(img)) {
     @apply opacity-60 hover:opacity-100 transition-all;
   }
 

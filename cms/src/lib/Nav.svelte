@@ -11,11 +11,16 @@
   import { doc, onSnapshot, setDoc } from 'firebase/firestore';
   import { onMount } from 'svelte';
   import { lastPublishedOn } from './stores/last-published-on.store';
+  import {page} from "$app/stores";
 
   export let label: string;
   export let links: Array<{
-    href: string;
     label: string;
+    href?: string;
+    links?: Array<{
+      label: string;
+      href: string;
+    }>;
   }>;
 
   let dropdown = false;
@@ -25,6 +30,7 @@
   let publishStart: number;
   let publishDisabled: boolean;
 
+  $: pathname = $page.url.pathname;
   $: publishDisabled = !!(publishStart && (!$lastPublishedOn || $lastPublishedOn < publishStart));
 
   async function publish() {
@@ -41,7 +47,21 @@
 
   onMount(() => {
     onSnapshot(doc(db, 'settings', 'status'), (doc) => {
-      lastPublishedOn.set(doc.data()!.lastPublished);
+      const {lastPublished} = doc.data() || {};
+      
+      if (lastPublished) {
+        lastPublishedOn.set(lastPublished);
+      }
+    });
+
+    links = links.map(link => {
+      if (link.links) {
+        return {
+          ...link,
+          checked: false
+        };
+      }
+      return link;
     });
   });
 </script>
@@ -62,9 +82,38 @@
 
     {#if links}
       {#each links as link}
-        <Button href={link.href}>
-          {link.label}
-        </Button>
+        {#if link.href}
+          <Button href={link.href}>
+            <span class="link-label" class:active={pathname === link.href}>
+              {link.label}
+            </span>
+          </Button>
+        {:else if link.links}
+          <div class="relative">
+            <Button on:click={() => {link.checked = !link.checked}}>
+              {link.label}
+                <img class="ml-2"
+                     src={link.checked ? '/images/expand_less.svg' : '/images/expand_more.svg'}
+                     alt={link.checked ? 'Expand less' : 'Expand more'}>
+            </Button>
+
+            {#if link.checked}
+              <div class="dropdown"
+                   use:clickOutside
+                   on:click_outside={() => {link.checked = false}}
+                   transition:fly={{ duration: 300, y: 20 }}
+              >
+                {#each link.links as inner}
+                  <Button href={inner.href} on:click={() => {link.checked = false}}>
+                    <span class="link-label" class:active={pathname === inner.href}>
+                      {inner.label}
+                    </span>
+                  </Button>
+                {/each}
+              </div>
+            {/if}
+          </div>
+        {/if}
       {/each}
     {/if}
 
@@ -124,7 +173,19 @@
     @apply z-10 absolute top-16 w-full h-[calc(100vh-4rem)] bg-white flex flex-col;
   }
 
+  .dropdown {
+    @apply absolute flex flex-col bg-white rounded overflow-hidden shadow-2xl;
+  }
+
   img {
     @apply h-6;
+  }
+
+  .link-label {
+    @apply opacity-90;
+  }
+
+  .link-label.active {
+    @apply underline underline-offset-4 opacity-100;
   }
 </style>

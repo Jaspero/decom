@@ -58,7 +58,7 @@
     {download}
     {hreflang}
     class="variant-{variant} color-{color} size-{size}"
-    on:click
+    on:click|stopPropagation
   >
     {#if loading}
       <Loader />
@@ -149,7 +149,7 @@
 <style lang="postcss">
   button,
   a {
-    @apply relative inline-block rounded cursor-pointer no-underline select-none font-bold overflow-hidden;
+    @apply relative inline-flex justify-center items-center rounded cursor-pointer no-underline select-none font-bold overflow-hidden;
   }
 
   button:not(.variant-icon),
