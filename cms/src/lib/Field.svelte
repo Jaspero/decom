@@ -6,6 +6,8 @@
   export let disabled = false;
   export let required = false;
 
+  export let name = 'false';
+
   export let type:
     | 'text'
     | 'password'
@@ -36,48 +38,50 @@
   {/if}
 
   {#if type === 'text'}
-    <input type="text" {required} {placeholder} {disabled} bind:value />
+    <input type="text" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'password'}
-    <input type="password" {required} {placeholder} {disabled} bind:value />
+    <input type="password" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'email'}
-    <input type="email" {required} {placeholder} {disabled} bind:value />
+    <input type="email" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'number'}
-    <input type="number" {required} {placeholder} {disabled} bind:value />
+    <input type="number" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'tel'}
-    <input type="tel" {required} {placeholder} {disabled} bind:value />
+    <input type="tel" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'url'}
-    <input type="url" {required} {placeholder} {disabled} bind:value />
+    <input type="url" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'date'}
-    <input type="date" {required} {placeholder} {disabled} bind:value />
+    <input type="date" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'time'}
-    <input type="time" {required} {placeholder} {disabled} bind:value />
+    <input type="time" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'datetime-local'}
-    <input type="datetime-local" {required} {placeholder} {disabled} bind:value />
+    <input type="datetime-local" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'month'}
-    <input type="month" {required} {placeholder} {disabled} bind:value />
+    <input type="month" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'week'}
-    <input type="week" {required} {placeholder} {disabled} bind:value />
+    <input type="week" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'range'}
-    <input type="range" {required} {placeholder} {disabled} bind:value />
+    <input type="range" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'color'}
-    <input type="color" {required} {placeholder} {disabled} bind:value />
+    <input type="color" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'radio'}
-    <input type="radio" {required} {placeholder} {disabled} bind:value />
+    <input type="radio" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'file'}
-    <input type="file" {required} {placeholder} {disabled} bind:value />
+    <input type="file" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'submit'}
-    <input type="submit" {required} {placeholder} {disabled} bind:value />
+    <input type="submit" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'reset'}
-    <input type="reset" {required} {placeholder} {disabled} bind:value />
+    <input type="reset" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'button'}
-    <input type="button" {required} {placeholder} {disabled} bind:value />
+    <input type="button" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'image'}
     <!-- svelte-ignore a11y-missing-attribute -->
-    <input type="image" {required} {placeholder} {disabled} bind:value />
+    <input type="image" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'hidden'}
-    <input type="hidden" {required} {placeholder} {disabled} bind:value />
+    <input type="hidden" {required} {placeholder} {disabled} {name} bind:value />
+  {:else if type === 'chip'}
+    <jp-chips label="" {name}></jp-chips>
   {:else if type === 'search'}
-    <input type="search" {required} {placeholder} {disabled} bind:value />
+    <input type="search" {required} {placeholder} {disabled} {name} bind:value />
   {/if}
 
   {#if $$slots.hint}
