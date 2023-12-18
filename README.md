@@ -14,6 +14,7 @@
 
 - [Webshop](https://wonkawave.web.app/)
 - [CMS](https://wonkawave-cms.web.app/)
+- figma wireframe (https://www.figma.com/file/Pb7saI2I3K9cUzVTPDdwkK/shopify-wireframe?type=design&node-id=0-1&mode=design&t=zCZIj2pcwiuDl1BE-0)
 
 ## Getting Started
 
