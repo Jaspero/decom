@@ -38,6 +38,18 @@ service cloud.firestore {
       allow write: if admin();
     }
 
+    match /blog-articles/{document} {
+      allow read, write: if admin();
+    }
+
+    match /blog-categories/{document} {
+      allow read, write: if admin();
+    }
+
+    match /blog-authors/{document} {
+      allow read, write: if admin();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

@@ -49,6 +49,9 @@
     await formModule.render.save(id);
 
     if (data.snap) {
+      
+      delete data.value.id;
+
       await alertWrapper(
         updateDoc(data.snap.ref, data.value),
         'Document updated successfully',

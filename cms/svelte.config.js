@@ -12,6 +12,9 @@ const config = {
   preprocess: vitePreprocess(),
   vitePlugin: {
     inspector: true
+  },
+  compilerOptions: {
+    customElement: true
   }
 };
 export default config;

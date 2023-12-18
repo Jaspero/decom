@@ -49,6 +49,9 @@
     await formModule.render.save(id);
 
     if (data.snap) {
+      
+      delete data.value.id;
+
       await alertWrapper(
         updateDoc(data.snap.ref, data.value),
         'Document updated successfully',
@@ -89,7 +92,7 @@
     <GridCol span="12">
       <Card>
         <slot slot="title"
-          >{data.snap ? `Editing ${data.value.name}` : `New Science Magazine Category`}</slot
+          >{data.snap ? `Editing ${data.value.name}` : `New Blog`}</slot
         >
 
         <slot slot="subtitle">
