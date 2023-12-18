@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';
 import { getFirestore, getDoc, doc } from 'firebase/firestore';
+import { getFunctions } from 'firebase/functions';
 import { writable } from 'svelte/store';
 import { getStorage } from 'firebase/storage';
 import { ENV_CONFIG } from './env-config';
@@ -11,6 +12,7 @@ export const firebaseApp = initializeApp(ENV_CONFIG);
 export const auth = getAuth(firebaseApp);
 export const storage = getStorage(firebaseApp);
 export const db = getFirestore(firebaseApp);
+export const functions = getFunctions(firebaseApp);
 
 export const authenticated = writable<null | false | User>(null);
 export const user = writable<null | FirestoreUser>(null);

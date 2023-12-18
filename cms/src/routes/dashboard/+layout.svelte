@@ -1,11 +1,40 @@
-<script>
+<script lang="ts">
   import '../../app.postcss';
   import Nav from '$lib/Nav.svelte';
   import Footer from '$lib/Footer.svelte';
 
-  let links = [
+  const links = [
     { label: 'Home', href: '/dashboard' },
-    { label: 'Orders', href: '/dashboard/orders' }
+    {
+      label: 'Shop',
+      links: [
+        { label: 'Products', href: '/dashboard/shop/products' },
+        { label: 'Categories', href: '/dashboard/shop/categories' },
+        { label: 'Tags', href: '/dashboard/shop/tags' },
+        { label: 'Discounts', href: '/dashboard/shop/discounts' },
+        { label: 'Coupons', href: '/dashboard/shop/coupons' }
+      ]
+    },
+    {
+      label: 'Sales',
+      links: [
+        { label: 'Orders', href: '/dashboard/sales/orders' },
+        { label: 'Customers', href: '/dashboard/sales/customers' },
+      ]
+    },
+    {
+      label: 'Blog',
+      links: [
+        { label: 'Articles', href: '/dashboard/blog/articles' },
+        { label: 'Categories', href: '/dashboard/blog/categories' },
+      ]
+    },
+    {
+      label: 'Management',
+      links: [
+        { label: 'Admins', href: '/dashboard/admins' }
+      ]
+    }
   ];
 </script>
 

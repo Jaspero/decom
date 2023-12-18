@@ -6,7 +6,6 @@
 </script>
 
 <button on:click={() => {
-  console.log('sidebar_show', sidebar_show);
   sidebar_show = !sidebar_show
 }}>Cart</button>
 
