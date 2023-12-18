@@ -3,7 +3,7 @@
   import Header from '$lib/Header.svelte';
   import Meta from '$lib/meta/Meta.svelte';
   import Notification from '$lib/notification/Notification.svelte';
-  import '../app.css';
+  import '../app.pcss';
 </script>
 
 <Header />

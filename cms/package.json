@@ -24,8 +24,8 @@
     "@typescript-eslint/parser": "6.14.0",
     "autoprefixer": "10.4.16",
     "eslint": "8.55.0",
-    "eslint-plugin-svelte": "2.35.1",
     "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-svelte": "2.35.1",
     "postcss": "8.4.32",
     "svelte": "4.2.8",
     "svelte-check": "3.6.2",
@@ -39,7 +39,7 @@
   "dependencies": {
     "@jaspero/modular": "1.17.0",
     "@jaspero/utils": "1.12.0",
-    "@jaspero/web-components": "1.71.0",
+    "@jaspero/web-components": "1.71.2",
     "deepcopy": "2.1.0",
     "firebase": "10.7.1",
     "svelte-material-icons": "3.0.5"

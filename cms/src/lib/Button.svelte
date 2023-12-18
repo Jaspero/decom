@@ -78,7 +78,7 @@
   </a>
 {:else if $$slots.dropdown}
   <button
-    class="variant-{variant} color-{color} size-{size} dropdown-button"
+    class="variant-{variant} color-{color} size-{size} dropdown-buttonw"
     class:loading
     class:disabled
     {type}

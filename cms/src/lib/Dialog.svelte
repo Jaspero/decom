@@ -67,7 +67,7 @@
   }
 
   .dialog {
-    min-width: 340px;
+    min-width: 540px;
     @apply bg-white border rounded-xl overflow-hidden divide-y shadow-2xl;
   }
 

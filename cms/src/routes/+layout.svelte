@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '../app.postcss';
+  import '../app.pcss';
   import { afterNavigate, beforeNavigate } from '$app/navigation';
   import '$lib/utils/firebase';
   import '@jaspero/web-components/dist/alert.wc';
