@@ -5,10 +5,10 @@
     import {page} from '$app/stores';
     import {notification, notificationWrapper} from '$lib/notification/notification';
     import Button from '$lib/Button.svelte';
+    import { formatEmail } from '$lib/utils/format-emails'
 
-    let show = false;
     let email = ''
-    let error = ''
+
     let password = ''
     let passwordConfirm = ''
     let loading = false;
@@ -19,11 +19,15 @@
 
 
     async function signUp ()  {
-
-        email = email.toLowerCase().trim();
-        error = 'passwords do no match'
+        email = formatEmail(email);
         if (password !== passwordConfirm) {
-            notification.set({content: error, type: 'error'});
+            notification.set({content: 'passwords do no match', type: 'error'});
+            password = '';
+            passwordConfirm = '';
+            return;
+        }
+        if (password.length < 6) {
+            notification.set({ content: 'Password must be at least 6 characters long.', type: 'error' });
             password = '';
             passwordConfirm = '';
             return;

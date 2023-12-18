@@ -1,13 +1,13 @@
 import { FirebaseError } from 'firebase/app';
 import { writable } from 'svelte/store';
 
-const firebaseErrors: { [key: string]: string } = {
+export const firebaseErrors: { [key: string]: string } = {
   'auth/wrong-password':
     'The email and password you entered did not match our records. Please double-check and try again.',
   'auth/too-many-requests':
     'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.',
   'auth/user-not-found': 'There is no user record corresponding to this identifier.',
-  'auth/weak-password': 'Please provide a stronger password.',
+  'auth/weak-password': 'Password must be at least 6 characters long',
   'auth/missing-email': 'The provided email address is not valid.',
   'auth/user-token-expired': `This is a sensitive action. Please login again to perform it.`,
   'auth/invalid-login-credentials':
@@ -17,7 +17,8 @@ const firebaseErrors: { [key: string]: string } = {
   'auth/missing-code': 'Please enter the code you received via SMS.',
   'auth/invalid-phone-number': 'Please enter a valid phone number.',
   'auth/unverified-email': 'Please verify your email first.',
-  'auth/requires-recent-login': 'This action requires you to login again.'
+  'auth/requires-recent-login': 'This action requires you to login again.',
+  'auth/email-already-in-use': 'The email address is already in use',
 };
 
 export interface Notification {

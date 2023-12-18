@@ -17,7 +17,8 @@ const firebaseErrors: { [key: string]: string } = {
   'auth/missing-code': 'Please enter the code you received via SMS.',
   'auth/invalid-phone-number': 'Please enter a valid phone number.',
   'auth/unverified-email': 'Please verify your email first.',
-  'auth/requires-recent-login': 'This action requires you to login again.'
+  'auth/requires-recent-login': 'This action requires you to login again.',
+  'auth/email-already-in-use': 'Email is already in use. Please use a different email.'
 };
 
 export async function alertWrapper(
