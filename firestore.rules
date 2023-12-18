@@ -31,7 +31,12 @@ service cloud.firestore {
 
     match /settings/status {
       allow write, read: if admin();
-    }    
+    }
+
+    match /products/{document=**} {
+      allow read;
+      allow write: if admin();
+    }
 
     match /{document=**} {
       allow read, write: if false;
