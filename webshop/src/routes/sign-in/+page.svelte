@@ -39,7 +39,7 @@
   let verId: string;
 
   $: if ($authenticated) {
-    goto('/dashboard');
+    goto('/');
   }
 
   async function submit() {

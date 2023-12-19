@@ -1,5 +1,9 @@
 <script lang="ts">
-    import {createUserWithEmailAndPassword} from 'firebase/auth';
+    import {
+        createUserWithEmailAndPassword, getAuth, getMultiFactorResolver,
+        GoogleAuthProvider, PhoneAuthProvider,
+        signInWithPopup
+    } from 'firebase/auth';
     import { auth } from '$lib/utils/firebase';
     import { goto } from '$app/navigation';
     import {page} from '$app/stores';
@@ -7,12 +11,12 @@
     import Button from '$lib/Button.svelte';
     import { formatEmail } from '$lib/utils/format-emails'
 
-    let email = ''
 
+    let email = ''
     let password = ''
     let passwordConfirm = ''
     let loading = false;
-    let wfull = true;
+    let resolver: any;
 
     let passwordEl: HTMLInputElement;
     let confirmEl: HTMLInputElement;
@@ -41,9 +45,28 @@
         } catch {
             password = '';
         }
+
         loading = false;
         passwordConfirm = ''
     }
+
+    async function signupGoogle() {
+        const { searchParams } = $page.url;
+        email = formatEmail(email);
+        loading = true;
+
+        await notificationWrapper(
+            signInWithPopup(auth, new GoogleAuthProvider()),
+            'Login successful',
+            () => (loading = false),
+        );
+        goto(
+            searchParams.has('forward')
+                ? decodeURIComponent(searchParams.get('forward') as string)
+                : '/shop'
+        );
+    }
+
 
     function navigate() {
         const {searchParams} = $page.url;
@@ -81,8 +104,12 @@
                 <input type="checkbox" class="checkbox" on:change|preventDefault={togglePasswordType}>
                 <p>Show/hide password</p>
             </div>
-            <Button type="submit" {wfull} {loading}>Submit</Button>
+            <Button type="submit"  {loading} label="Submit"></Button>
+            <button type="button" on:click={signupGoogle} class="px-4 py-2 border mt-[10px] flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150" name="Sign up with Google">
+                <img class="w-6 h-6" src="/images/google-icon.svg" loading="lazy" alt="google logo">
+                Sign up with Google</button>
         </form>
+
     </div>
 </section>
 
