@@ -11,9 +11,16 @@ import { CURRENCIES } from '$lib/consts/currencies.const';
 let productDialog = false;
 let trackQuantity = false;
 let currencies = CURRENCIES;
+let multipleAttributes = [];
+
+function addRow() {
+    multipleAttributes = [...multipleAttributes, multipleAttributes.length + 1]
+    console.log('multipleAttributes', multipleAttributes);
+}
 
 function handleSubmit(e) {
-  const formData = new FormData(e.target);
+    console.log(11);
+    const formData = new FormData(e.target);
 
   const data = {};
   for (let field of formData) {
@@ -69,10 +76,10 @@ function handleSubmit(e) {
                 <Select
                         label="Currency"
                         name="currency"
-                        value={''}
+                        value={'EUR'}
                 >
                     {#each currencies as currency}
-                        <option value={'EUR'}>{currency}</option>
+                        <option value={currency}>{currency}</option>
                     {/each}
 
                 </Select>
@@ -85,28 +92,40 @@ function handleSubmit(e) {
                         value={''}
                 />
             </GridCol>
+
             <label>
-                <input type="checkbox" bind:checked={trackQuantity}/>
+                <input type="checkbox" name="trackQuantity" bind:checked={trackQuantity}/>
                 Track Quantity
             </label>
+            {#if trackQuantity}
+                <GridCol span="12">
+                    <Field
+                            label="Quantity"
+                            name="quantity"
+                            value={''}
+                    />
+                </GridCol>
+            {/if}
 
             <GridCol span="12">
-                Attributes
-                <Field
-                        label="Key"
-                        name="key"
-                        value={''}
-                />
-                <Field
-                        label="Type"
-                        name="type"
-                        value={''}
-                />
-                <Field
-                        label="Values"
-                        name="values"
-                        value={''}
-                />
+
+                {#each multipleAttributes as attribute}
+                    <Field
+                            label="Key"
+                            name="key"
+                            value={''}
+                    />
+                    <Field
+                            label="Values"
+                            type="chip"
+                            name="values"
+                            value={''}
+                    />
+                    <br><br>
+                {/each}
+                <Button variant="outlined" color="secondary" on:click={addRow}
+                >Add Row
+                </Button>
             </GridCol>
 
         </Grid>
