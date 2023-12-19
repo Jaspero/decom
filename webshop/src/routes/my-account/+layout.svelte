@@ -16,7 +16,7 @@
   <div class="w-full text-center">
     <h1 class="text-[40px]">Account</h1>
   </div>
-  <div class="flex justify-start">
+  <div class="flex justify-start w-full">
     <aside class="w-[400px] text-center shadow-lg p-[20px] mr-[20px] rounded-[16px]">
       <nav class="flex flex-col text-[20px]">
         <div class="border-b-[1px] border-t-[1px] py-[10px] border-black border-solid" class:active={pathname === '/my-account/orders'}>

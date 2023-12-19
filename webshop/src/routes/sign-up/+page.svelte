@@ -1,7 +1,7 @@
 <script lang="ts">
     import {
-        createUserWithEmailAndPassword, getAuth, getMultiFactorResolver,
-        GoogleAuthProvider, PhoneAuthProvider,
+        createUserWithEmailAndPassword,
+        GoogleAuthProvider,
         signInWithPopup
     } from 'firebase/auth';
     import { auth } from '$lib/utils/firebase';
@@ -194,7 +194,6 @@
         font-weight: 600;
         margin-top: 20px;
     }
-
 </style>
 
 
