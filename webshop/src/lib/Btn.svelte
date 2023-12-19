@@ -23,7 +23,7 @@
     ];
 
     const rippleTiming = {
-        duration: 600,
+        duration: 350,
         iterations: 1
     };
 
@@ -39,6 +39,8 @@
         ripple.style.left = `${x}px`;
         ripple.style.width = `${width}px`;
         ripple.style.height = `${width}px`;
+        ripple.style.transform = `translate(-50%, -50%) scale(0)`;
+        ripple.style.opacity = `1`;
         ripple.style.background = 'var(--ripple-color)';
         ripple.style.borderRadius = '50%';
 
@@ -47,7 +49,7 @@
 
         setTimeout(() => {
             ripple.remove();
-        }, 600);
+        }, 350);
     }
 
     $: properties = {
