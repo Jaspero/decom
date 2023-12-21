@@ -31,7 +31,7 @@
     {
       key: '/author',
       label: 'Author',
-      pipes: [populatePipe('blog-authors', 'fullName')]
+      pipes: [populatePipe('blog-authors', 'name')]
     },
     {
       key: '/id',

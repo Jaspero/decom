@@ -1,5 +1,6 @@
 <script lang="ts">
   export let segments: Array<{ label: string; value: string }> = [];
+  export let suffix = '';
   export let title = '';
 </script>
 
@@ -11,7 +12,7 @@
         href="/{segments
           .slice(0, index + 1)
           .map((it) => it.value)
-          .join('/')}">{segment.label}</a
+          .join('/') + suffix}">{segment.label}</a
       > /
     {:else}
       <span class="font-bold truncate">{title || segment.label}</span>

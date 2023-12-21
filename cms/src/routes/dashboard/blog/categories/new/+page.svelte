@@ -3,7 +3,7 @@
   import { page } from '$app/stores';
   import FormModule from '$lib/FormModule.svelte';
   import { db } from '$lib/utils/firebase';
-  import { DocumentSnapshot, doc, setDoc } from 'firebase/firestore';
+  import { doc, setDoc } from 'firebase/firestore';
 
   import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import Button from '$lib/Button.svelte';
@@ -19,14 +19,13 @@
     col: string;
     items: any[];
     value: any;
-    snap?: DocumentSnapshot;
   };
 
   $: segments = urlSegments($page.url.pathname);
   $: back =
     '/' +
     segments
-      .slice(0, segments.length - 1)
+      .slice(0, segments.length - 2)
       .map((it) => it.value)
       .join('/');
 
@@ -40,11 +39,9 @@
     data.value.lastUpdatedOn = Date.now();
     data.value.id = generateSlug(data.value.name);
 
-    const id = data.value.id;
+    const { id, ...dt } = data.value;
 
     await formModule.render.save(id);
-
-    const { id: dId, ...dt } = data.value;
 
     await alertWrapper(
       setDoc(doc(db, data.col, id), dt),
@@ -75,7 +72,6 @@
 
         <slot slot="footerAction">
           <div class="flex-1" />
-
           <Button href={back} variant="outlined" color="secondary">Cancel</Button>
           <Button type="submit" variant="filled" color="secondary" loading={saveLoading}
             >Save</Button

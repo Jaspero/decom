@@ -163,6 +163,12 @@
 
 <div id="recaptcha-container-id" />
 <div class="flex items-center">
+  <img
+    src="/images/patternmidtext.svg"
+    alt=""
+    class="hidden lg:block h-screen max-w-md object-cover"
+  />
+
   <div class="flex flex-1">
     <Grid>
       <GridCol span="2" />
@@ -255,8 +261,6 @@
       <GridCol span="2" />
     </Grid>
   </div>
-
-  <img src="/images/patternmidtext.svg" alt="" class="hidden lg:block h-screen max-w-md object-cover" />
 </div>
 
 <Dialog bind:open={resetPasswordDialog}>

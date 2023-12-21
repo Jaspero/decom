@@ -30,10 +30,8 @@
     @apply text-sm px-4 font-bold;
   }
 
-  a.active, a:hover {
+  a.active,
+  a:hover {
     @apply font-bold hover:underline;
   }
-
-
-
 </style>

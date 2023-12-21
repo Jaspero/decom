@@ -15,19 +15,19 @@
       <slot slot="title">{data.value.name}</slot>
     </Card>
   </GridCol>
-    <div class="counter">
-    <span class="counter-number">
-      72
-    </span>
+  <div class="counter">
+    <span class="counter-number"> 72 </span>
     <span class="counter-text">All articles</span>
   </div>
   <div class="counter">
-    <span class="counter-number">
-      24
-    </span>
+    <span class="counter-number"> 24 </span>
     <span class="counter-text">Recent</span>
-  </div>  
+  </div>
 </Grid>
+
+<svelte:head>
+  <title>Category Information - Blog - Jaspero</title>
+</svelte:head>
 
 <style lang="postcss">
   .counter {

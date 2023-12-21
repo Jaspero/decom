@@ -1,19 +1,18 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import FormModule from '$lib/FormModule.svelte';
-  import { db } from '$lib/utils/firebase';
-  import { DocumentSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
-
   import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import Button from '$lib/Button.svelte';
   import Card from '$lib/Card.svelte';
+  import FormModule from '$lib/FormModule.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
   import { alertWrapper } from '$lib/utils/alert-wrapper';
   import { confirmation } from '$lib/utils/confirmation';
+  import { db } from '$lib/utils/firebase';
   import { unflatten } from '$lib/utils/unflatten';
   import { urlSegments } from '$lib/utils/url-segments';
+  import { DocumentSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
   export let data: {
     col: string;
@@ -21,6 +20,9 @@
     value: any;
     snap: DocumentSnapshot;
   };
+
+  let saveLoading = false;
+  let formModule: FormModule;
 
   $: segments = urlSegments($page.url.pathname);
   $: back =
@@ -30,20 +32,15 @@
       .map((it) => it.value)
       .join('/');
 
-  let saveLoading = false;
-  let formModule: FormModule;
-
   async function submit() {
     saveLoading = true;
 
     data.value = unflatten(data.value);
     data.value.lastUpdatedOn = Date.now();
 
-    const id = data.snap.id;
+    const { id } = data.snap;
 
     await formModule.render.save(id);
-
-    delete data.value.id;
 
     await alertWrapper(
       updateDoc(data.snap.ref, data.value),
@@ -57,7 +54,7 @@
     goto(back);
   }
 
-  async function deleteItem() {
+  function deleteItem() {
     confirmation(async ({ confirmed }) => {
       if (!confirmed) {
         return;
@@ -74,7 +71,9 @@
   <Grid>
     <GridCol span="12">
       <Card>
-        <slot slot="title">Editing {data.value.name}</slot>
+        <slot slot="title">
+          Editing {data.value.title}
+        </slot>
 
         <slot slot="subtitle">
           <Breadcrumbs suffix="/info" title="Edit" {segments} />
@@ -100,5 +99,5 @@
 </form>
 
 <svelte:head>
-  <title>Edit Category - Blog - Jaspero</title>
+  <title>Edit Article - Blog - Jaspero</title>
 </svelte:head>

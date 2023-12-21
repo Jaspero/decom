@@ -44,13 +44,13 @@
     <div class="blurred-bg" transition:fade={{ duration: 200 }} />
   {/if}
   <div
-          class="dialog"
-          class:fullscreen={fullScreen}
-          class:min-w-0={removeMinW}
-          class:button-outside={buttonOutside}
-          transition:fade={{ duration: 200 }}
-          use:clickOutside
-          on:click_outside={close}
+    class="dialog"
+    class:fullscreen={fullScreen}
+    class:min-w-0={removeMinW}
+    class:button-outside={buttonOutside}
+    transition:fade={{ duration: 200 }}
+    use:clickOutside
+    on:click_outside={close}
   >
     {#if src}
       <img {src} {alt} />
@@ -102,43 +102,42 @@
     border: 1px solid red;
   }
 
+  .fullscreen {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    transform: translate(0);
+  }
 
-    .fullscreen {
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 0;
-      transform: translate(0);
-    }
+  .fullscreen.dialog-content {
+    margin: 0 auto;
+  }
 
-    .fullscreen.dialog-content {
-      margin: 0 auto;
-    }
+  .dialog-content {
+    width: 100%;
+    padding: 3rem;
+    overflow-y: auto;
+  }
 
-    .dialog-content {
-      width: 100%;
-      padding: 3rem;
-      overflow-y: auto;
-    }
-
-    .dialog-close {
-      position: absolute;
-      top: .5rem;
-      right: .5rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: none;
-      background-color: transparent;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-    .dialog-close:hover {
-      background-color: red;
-    }
+  .dialog-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .dialog-close:hover {
+    background-color: red;
+  }
 
   .contentfull {
     width: 100%;
@@ -162,5 +161,4 @@
       display: none;
     }
   }
-
 </style>

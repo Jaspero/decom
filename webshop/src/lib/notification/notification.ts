@@ -23,7 +23,7 @@ export const firebaseErrors: { [key: string]: string } = {
   'auth/email-already-in-use': 'The email address is already in use',
   'uth/operation-not-allowed': 'Please verify the new email before changing email',
   'auth/unauthorized-domain':
-  'This app is not authorized to authenticate with the provided domain. Please contact support for assistance.',
+    'This app is not authorized to authenticate with the provided domain. Please contact support for assistance.'
 };
 
 export interface Notification {

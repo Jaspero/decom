@@ -1,38 +1,36 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import FormModule from '$lib/FormModule.svelte';
-  import { DocumentSnapshot, deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
-  import { db } from '$lib/utils/firebase';
   import { goto } from '$app/navigation';
-
+  import { page } from '$app/stores';
+  import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import Button from '$lib/Button.svelte';
+  import Card from '$lib/Card.svelte';
+  import FormModule from '$lib/FormModule.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
-  import Card from '$lib/Card.svelte';
-  import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import { alertWrapper } from '$lib/utils/alert-wrapper';
-  import { urlSegments } from '$lib/utils/url-segments';
-  import { unflatten } from '$lib/utils/unflatten';
   import { confirmation } from '$lib/utils/confirmation';
-  import { generateSlug } from '$lib/utils/generate-slug';
+  import { db } from '$lib/utils/firebase';
+  import { unflatten } from '$lib/utils/unflatten';
+  import { urlSegments } from '$lib/utils/url-segments';
+  import { DocumentSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
   export let data: {
     col: string;
     items: any[];
     value: any;
-    snap?: DocumentSnapshot;
+    snap: DocumentSnapshot;
   };
-
-  let saveLoading = false;
-  let formModule: FormModule;
 
   $: segments = urlSegments($page.url.pathname);
   $: back =
     '/' +
     segments
-      .slice(0, segments.length - 1)
+      .slice(0, segments.length - 2)
       .map((it) => it.value)
       .join('/');
+
+  let saveLoading = false;
+  let formModule: FormModule;
 
   async function submit() {
     saveLoading = true;
@@ -40,39 +38,25 @@
     data.value = unflatten(data.value);
     data.value.lastUpdatedOn = Date.now();
 
-    if (!data.value.id) {
-      data.value.id = generateSlug(data.value.title);
-      data.value.publicationDate = data.value.publicationDate || Date.now();
-    }
-
-    const id = data.snap?.id || data.value.id;
+    const { id } = data.snap;
 
     await formModule.render.save(id);
 
-    if (data.snap) {
-      await alertWrapper(
-        updateDoc(data.snap.ref, data.value),
-        'Document updated successfully',
-        undefined,
-        () => (saveLoading = false)
-      );
-    } else {
-      const { id: dId, ...dt } = data.value;
+    delete data.value.id;
 
-      await alertWrapper(
-        setDoc(doc(db, data.col, id), dt),
-        'Document created successfully',
-        undefined,
-        () => (saveLoading = false)
-      );
-    }
+    await alertWrapper(
+      updateDoc(data.snap.ref, data.value),
+      'Document updated successfully',
+      undefined,
+      () => (saveLoading = false)
+    );
 
     saveLoading = false;
 
     goto(back);
   }
 
-  function deleteItem() {
+  async function deleteItem() {
     confirmation(async ({ confirmed }) => {
       if (!confirmed) {
         return;
@@ -90,11 +74,11 @@
     <GridCol span="12">
       <Card>
         <slot slot="title">
-          {data.snap ? `Editing ${data.value.title}` : `New Science Magazine Article`}
+          Editing {data.value.name}
         </slot>
 
         <slot slot="subtitle">
-          <Breadcrumbs {segments} title={data.value.title} />
+          <Breadcrumbs suffix="/info" title="Edit" {segments} />
         </slot>
 
         <div class="flex flex-col gap-6">
@@ -102,9 +86,7 @@
         </div>
 
         <slot slot="footerAction">
-          {#if data.snap}
-            <Button type="button" color="warning" on:click={deleteItem}>Delete</Button>
-          {/if}
+          <Button type="button" color="warning" on:click={deleteItem}>Delete</Button>
 
           <div class="flex-1" />
 
@@ -119,5 +101,5 @@
 </form>
 
 <svelte:head>
-  <title>Article - Blog - Jaspero</title>
+  <title>Edit Author - Blog - Jaspero</title>
 </svelte:head>

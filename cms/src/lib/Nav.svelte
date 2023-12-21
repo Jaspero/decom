@@ -68,7 +68,7 @@
 
 <nav>
   <a href="/dashboard" class="flex items-center gap-2">
-    <img src="/brand/logo.svg" alt="GlycanAge Logo" class="logo-img"/>
+    <img src="/brand/logo.svg" alt="GlycanAge Logo" class="logo-img" />
 
     {#if label}
       <p>{label}</p>
