@@ -1,39 +1,12 @@
 
 <script lang="ts">
-    import {
-        getAuth,
-        updatePassword,
-        reauthenticateWithCredential,
-        EmailAuthProvider,
-        onAuthStateChanged, sendPasswordResetEmail
-    } from 'firebase/auth';
-    import {onMount} from 'svelte';
-    import {authenticated, user} from "$lib/utils/firebase.ts";
-    import {firebaseErrors, notification, notificationWrapper} from "$lib/notification/notification.ts";
-
-    // let currentPassword = '';
-    // let newPassword = '';
-    // let confirmPassword = '';
-    //
-    // const auth = getAuth();
-    //
-    // const user = auth.currentUser;
-    //
-    //
-    // updatePassword(user, newPassword).then(() => {
-    //     // Update successful.
-    //     console.log('your new password is:', newPassword)
-    // }).catch((error) => {
-    //     // An error ocurred
-    //     // ...
-    // });
+    import {updatePassword,} from 'firebase/auth';
+    import {notificationWrapper} from "$lib/notification/notification.ts";
+    import {auth} from "$lib/utils/firebase";
 
 
-    let auth = getAuth();
 
     let newPassword = '';
-    let successMessage = '';
-    let errorMessage = '';
 
 
     const handleUpdatePassword = async () => {
