@@ -2,8 +2,8 @@
   export let table = false;
 </script>
 
-<div class="bg-white border rounded-xl overflow-hidden">
-  <div class="flex flex-col gap-4 p-6 bg-fg border-b">
+<div class="bg-white overflow-hidden">
+  <div class="flex flex-col gap-4 p-6">
     {#if $$slots.title}
       <div class="flex items-center gap-4">
         {#if $$slots.emoji}

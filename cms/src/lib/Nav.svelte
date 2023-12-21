@@ -68,7 +68,7 @@
 
 <nav>
   <a href="/dashboard" class="flex items-center gap-2">
-    <img src="/brand/logo.svg" alt="GlycanAge Logo" />
+    <img src="/brand/logo.svg" alt="GlycanAge Logo" class="logo-img"/>
 
     {#if label}
       <p>{label}</p>
@@ -180,7 +180,7 @@
 
 <style lang="postcss">
   nav {
-    @apply z-20 relative flex items-center px-6 min-h-[4rem] h-16 border-b bg-white;
+    @apply z-20 relative flex items-center px-6 2xl:px-20  min-h-[5rem] h-16 bg-white;
   }
 
   .menu {
@@ -193,6 +193,10 @@
 
   img {
     @apply h-6;
+  }
+
+  .logo-img {
+    @apply h-10;
   }
 
   .link-label {

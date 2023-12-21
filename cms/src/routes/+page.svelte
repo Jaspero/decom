@@ -256,7 +256,7 @@
     </Grid>
   </div>
 
-  <img src="/images/success-bg.svg" alt="" class="hidden lg:block h-screen max-w-md object-cover" />
+  <img src="/images/patternmidtext.svg" alt="" class="hidden lg:block h-screen max-w-md object-cover" />
 </div>
 
 <Dialog bind:open={resetPasswordDialog}>

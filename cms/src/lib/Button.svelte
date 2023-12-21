@@ -176,7 +176,7 @@
     @apply bg-transparent border-2 border-transparent;
   }
   .variant-default.color-primary {
-    @apply hover:bg-primary/[8%] text-primary duration-200;
+    @apply hover:text-secondary text-primary duration-200;
   }
   .variant-default.color-secondary {
     @apply hover:bg-secondary/[8%] text-secondary duration-200;
@@ -230,10 +230,10 @@
   }
 
   .size-regular {
-    @apply text-sm;
+    @apply text-base;
   }
 
   .size-large {
-    @apply text-base;
+    @apply text-lg;
   }
 </style>
