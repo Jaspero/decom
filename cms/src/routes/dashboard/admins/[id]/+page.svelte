@@ -1,20 +1,20 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import FormModule from '$lib/FormModule.svelte';
-  import { DocumentSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
   import { db, functions } from '$lib/utils/firebase';
-  import { goto } from '$app/navigation';
+  import { DocumentSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
+  import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import Button from '$lib/Button.svelte';
+  import Card from '$lib/Card.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
-  import Card from '$lib/Card.svelte';
-  import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import { alertWrapper } from '$lib/utils/alert-wrapper';
-  import { urlSegments } from '$lib/utils/url-segments';
-  import { unflatten } from '$lib/utils/unflatten';
   import { confirmation } from '$lib/utils/confirmation';
-  import {httpsCallable} from 'firebase/functions';
+  import { unflatten } from '$lib/utils/unflatten';
+  import { urlSegments } from '$lib/utils/url-segments';
+  import { httpsCallable } from 'firebase/functions';
 
   export let data: {
     col: string;
@@ -51,8 +51,6 @@
         () => (saveLoading = false)
       );
     } else {
-      const { id: dId, ...dt } = data.value;
-
       await alertWrapper(
         httpsCallable(functions, 'createadmin')(data.value),
         'Document created successfully',
@@ -83,8 +81,7 @@
   <Grid>
     <GridCol span="12">
       <Card>
-        <slot slot="title">{data.snap ? `Editing ${data.value.name}` : `New Admin`}</slot
-        >
+        <slot slot="title">{data.snap ? `Editing ${data.value.name}` : `New Admin`}</slot>
 
         <slot slot="subtitle">
           <Breadcrumbs {segments} title={data.value.name} />
@@ -100,11 +97,7 @@
           {/if}
           <div class="flex-1" />
 
-          <Button
-            href={back}
-            variant="outlined"
-            color="secondary">Cancel</Button
-          >
+          <Button href={back} variant="outlined" color="secondary">Cancel</Button>
           <Button type="submit" variant="filled" color="secondary" loading={saveLoading}
             >Save</Button
           >

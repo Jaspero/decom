@@ -1,4 +1,4 @@
-import {ENV_CONFIG} from '../consts/env-config';
+import { ENV_CONFIG } from '../consts/env-config';
 
 export function getThumb(url: string, thumb: string) {
   const temp = url.split('%2F');

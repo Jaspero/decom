@@ -9,7 +9,8 @@
 <header>
   <nav>
     <a href="/" class="mr-8">
-      <img src="/brand/logo.svg" alt="logo" class="h-8"> <!--TODO(branding & accessibility): add logo & change alt-->
+      <img src="/brand/logo.svg" alt="logo" class="h-8" />
+      <!--TODO(branding & accessibility): add logo & change alt-->
     </a>
 
     <a href="/" class:active={pathname === '/'}>Home</a>
@@ -35,7 +36,6 @@
 
   nav {
     @apply max-w-7xl mx-auto flex items-center gap-4 h-full;
-
   }
   :is(a):not(:has(img)) {
     @apply opacity-60 hover:opacity-100 transition-all;

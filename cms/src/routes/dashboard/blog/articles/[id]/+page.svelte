@@ -1,13 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import FormModule from '$lib/FormModule.svelte';
-  import {
-    DocumentSnapshot,
-    deleteDoc,
-    doc,
-    setDoc,
-    updateDoc,
-  } from 'firebase/firestore';
+  import { DocumentSnapshot, deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
   import { db } from '$lib/utils/firebase';
   import { goto } from '$app/navigation';
 
@@ -127,4 +121,3 @@
 <svelte:head>
   <title>Article - Blog - Jaspero</title>
 </svelte:head>
-

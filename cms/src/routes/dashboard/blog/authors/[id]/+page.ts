@@ -11,16 +11,16 @@ export async function load({ params, parent }) {
   const col = 'blog-authors';
 
   const imageService = new BucketImageService();
-  imageService.prefix = col + '/',
-  imageService.metadata = [
-    {
-      filePrefix: 'thumb_',
-      height: 100,
-      webpVersion: true,
-      width: 100,
-      folder: '../../generated'
-    }
-  ];
+  (imageService.prefix = col + '/'),
+    (imageService.metadata = [
+      {
+        filePrefix: 'thumb_',
+        height: 100,
+        webpVersion: true,
+        width: 100,
+        folder: '../../generated'
+      }
+    ]);
 
   const items = [
     {
@@ -53,7 +53,7 @@ export async function load({ params, parent }) {
     throw redirect(303, '/404');
   }
 
-  const value = {id: snap.id, ...snap.data() as any};
+  const value = { id: snap.id, ...(snap.data() as any) };
 
   return { snap, col, items, value };
 }

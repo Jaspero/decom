@@ -6,6 +6,9 @@ export const adminupdated = onDocumentUpdated("admins/{adminId}", async (event) 
   const oldValue = event.data!.before.data();
 
   if (newValue.role !== oldValue.role) {
-    await getAuth().setCustomUserClaims(event.data!.after.id, {role: newValue.role});
+    await getAuth().setCustomUserClaims(
+      event.data!.after.id,
+      {role: newValue.role}
+    );
   }
 });

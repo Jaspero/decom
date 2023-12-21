@@ -53,12 +53,7 @@
   >
 </div>
 
-<DataTable
-  col="blog-articles"
-  {headers}
-  {initialSort}
-  baseLink="/dashboard/blog/articles/"
-/>
+<DataTable col="blog-articles" {headers} {initialSort} baseLink="/dashboard/blog/articles/" />
 
 <svelte:head>
   <title>Articles - Blog - Jaspero</title>

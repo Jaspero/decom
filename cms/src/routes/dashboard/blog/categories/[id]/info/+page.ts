@@ -8,13 +8,13 @@ export async function load({ params, parent }) {
   const { id } = params;
   const col = 'blog-categories';
 
-	const snap = await getDoc(doc(db, col, id));
+  const snap = await getDoc(doc(db, col, id));
 
   if (!snap.exists) {
     throw redirect(303, '/404');
   }
 
-	const value = {id: snap.id, ...snap.data() as any};
+  const value = { id: snap.id, ...(snap.data() as any) };
 
-	return {value};
+  return { value };
 }

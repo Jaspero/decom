@@ -1,5 +1,5 @@
-import {firestore} from '../utils/firebase-admin';
-import {getThumb} from '../utils/get-thumb';
+import { firestore } from '../utils/firebase-admin';
+import { getThumb } from '../utils/get-thumb';
 
 let _data: any;
 
@@ -9,18 +9,14 @@ let _data: any;
 async function blog() {
   const fs = firestore;
 
-  let [
-    categories,
-    authors,
-    articles
-  ] = (await Promise.all([
+  let [categories, authors, articles] = (await Promise.all([
     fs.collection('blog-categories').orderBy('name', 'asc').get(),
     fs.collection('blog-authors').orderBy('name', 'asc').get(),
     fs.collection('blog-articles').orderBy('publicationDate', 'desc').get()
   ])) as any;
 
   articles = articles.docs
-    .map((doc: any) => ({id: doc.id.trim(), ...doc.data()}))
+    .map((doc: any) => ({ id: doc.id.trim(), ...doc.data() }))
     .filter((doc: any) => doc.active || !doc.hasOwnProperty('active'));
 
   authors = authors.docs.map((it: any) => {
@@ -37,10 +33,10 @@ async function blog() {
   categories = categories.docs.map((it: any) => {
     const data = it.data();
     const name = data.name;
-    return {id: it.id.trim(), name};
+    return { id: it.id.trim(), name };
   });
   articles = articles.map((it: any) => {
-    const {id, ...data} = it;
+    const { id, ...data } = it;
 
     let category;
     let author;
@@ -76,7 +72,7 @@ async function blog() {
     featured: articles[0],
     articles,
     categories,
-    authors,
+    authors
   };
 }
 

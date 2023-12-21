@@ -1,14 +1,7 @@
 export function formatEmail(email: string) {
-    const formated = email
-        .toLowerCase()
-        .trim();
+  const formated = email.toLowerCase().trim();
 
-    const [em, domain] = formated.split('@');
+  const [em, domain] = formated.split('@');
 
-    return [
-        em
-            .replace(/\./g, ''),
-        domain
-    ]
-        .join('@');
+  return [em.replace(/\./g, ''), domain].join('@');
 }

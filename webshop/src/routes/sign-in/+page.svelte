@@ -204,7 +204,7 @@
 </script>
 
 <div class="max-w-7xl mx-auto p-12">
-  <div id="recaptcha-container-id"></div>
+  <div id="recaptcha-container-id" />
 
   {#if showCodeInput}
     <Button color="error" href="/login" on:click={back}>Back to login</Button>
@@ -214,19 +214,36 @@
 
     <Field required label="MFA Verification Code:" type="text" bind:value={codeInput} />
 
-    <Button color="primary" loading={confirmLoader} on:click={confirm} label="Confirm and sign in" />
+    <Button
+      color="primary"
+      loading={confirmLoader}
+      on:click={confirm}
+      label="Confirm and sign in"
+    />
   {:else}
     <form on:submit|preventDefault={submit}>
       <div class="flex flex-col gap-4">
         <Field label="Email" type="email" bind:value={email} autocomplete="email" required />
-        <Field label="Password" {type} bind:value={password} autocomplete="current-password" required />
+        <Field
+          label="Password"
+          {type}
+          bind:value={password}
+          autocomplete="current-password"
+          required
+        />
         <div>
-          <Button type="button" on:click={toggleVisible} label={type === 'password' ? 'Show password' : 'Hide password'} />
+          <Button
+            type="button"
+            on:click={toggleVisible}
+            label={type === 'password' ? 'Show password' : 'Hide password'}
+          />
         </div>
       </div>
 
       <Button id="login-password" type="submit" {loading} label="Sign in" />
-      <button type="button" on:click={loginGoogle} class="googleButton" name="Sign in with Google">Sign in with google</button>
+      <button type="button" on:click={loginGoogle} class="googleButton" name="Sign in with Google"
+        >Sign in with google</button
+      >
 
       <p>Forgot your password?</p>
       <Button type="button" on:click={() => (rDialog = true)} label="Reset password" />

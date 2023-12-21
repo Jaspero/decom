@@ -206,7 +206,7 @@
               </div>
               <div class="flex items-center gap-4">
                 <Button variant="filled" color="secondary" type="submit" {loading}>Log in</Button>
-                <button class="gsi-material-button" on:click={loginGoogle}>
+                <button class="gsi-material-button" type="button" on:click={loginGoogle}>
                   <div class="gsi-material-button-state" />
                   <div class="gsi-material-button-content-wrapper">
                     <div class="gsi-material-button-icon">

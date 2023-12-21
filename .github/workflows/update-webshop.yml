@@ -7,7 +7,7 @@ on:
 env:
   PROJECT: wonkawave
   SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}
-  TARGET: webshop        
+  TARGET: webshop
 jobs:
   deploy:
     name: Deploy

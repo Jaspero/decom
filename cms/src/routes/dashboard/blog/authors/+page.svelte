@@ -34,11 +34,7 @@
   >
 </div>
 
-<DataTable
-  col="blog-authors"
-  {headers}
-  baseLink="/dashboard/blog/authors/"
-/>
+<DataTable col="blog-authors" {headers} baseLink="/dashboard/blog/authors/" />
 
 <svelte:head>
   <title>Authors - Blog - Jaspero</title>

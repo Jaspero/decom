@@ -31,17 +31,7 @@
 </script>
 
 {#if href}
-  <a
-    class:loading
-    {href}
-    {target}
-    {rel}
-    {download}
-    {hreflang}
-    {id}
-    aria-label={label}
-    on:click
-  >
+  <a class:loading {href} {target} {rel} {download} {hreflang} {id} aria-label={label} on:click>
     {#if loading}
       <Loader />
     {:else}
@@ -49,16 +39,7 @@
     {/if}
   </a>
 {:else}
-  <button
-          class=""
-          class:loading
-          class:disabled
-          {type}
-          {form}
-          {disabled}
-          name={label}
-          on:click
-  >
+  <button class="" class:loading class:disabled {type} {form} {disabled} name={label} on:click>
     {#if loading}
       <Loader />
     {:else}
@@ -66,4 +47,3 @@
     {/if}
   </button>
 {/if}
-

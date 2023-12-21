@@ -3,11 +3,11 @@
   import TabsItem from '$lib/tabs/TabsItem.svelte';
   import Pagination from '$lib/Pagination.svelte';
   import BlogSnippets from '$lib/blog/BlogSnippets.svelte';
-  import {meta} from '$lib/meta/meta.store';
+  import { meta } from '$lib/meta/meta.store';
 
   export let data: { categories: any[]; page: any[]; pageSize: number };
 
-  meta.set({title: 'Blog'})
+  meta.set({ title: 'Blog' });
 </script>
 
 <div class="banner">
