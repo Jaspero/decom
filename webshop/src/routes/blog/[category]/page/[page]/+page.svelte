@@ -28,6 +28,5 @@
       prefix={'/self-care/' + $page.params.category + '/page/'}
       current={parseInt($page.params.page, 10)}
     />
-
   </div>
 </div>

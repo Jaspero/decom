@@ -3,7 +3,6 @@ import { db } from '../utils/firebase';
 
 export function populatePipe(collection: string, key: string, fallback = '-') {
   return async (value: any) => {
-
     if (!value) {
       return fallback;
     }

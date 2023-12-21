@@ -1,5 +1,5 @@
 import { paginateArray } from '$lib/utils/paginate-array';
-import {blogData} from '$lib/server/blog';
+import { blogData } from '$lib/server/blog';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {

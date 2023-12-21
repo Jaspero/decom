@@ -34,8 +34,8 @@
     <meta property="og:image" content={$meta.og.image} />
     <meta property="twitter:image" content={$meta.og.image} />
   {/if}
-	{#if $meta.noIndex}
-		<meta name="robots" content="noindex, nofollow" />
-	{/if}
+  {#if $meta.noIndex}
+    <meta name="robots" content="noindex, nofollow" />
+  {/if}
   {@html structured}
 </svelte:head>

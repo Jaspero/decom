@@ -31,9 +31,7 @@ export async function load({ params, parent }) {
       field: '/role',
       options: {
         label: 'Role',
-        options: [
-          {label: 'Admin', value: 'admin'}
-        ]
+        options: [{ label: 'Admin', value: 'admin' }]
       }
     }
   ];
@@ -48,7 +46,7 @@ export async function load({ params, parent }) {
     throw redirect(303, '/404');
   }
 
-  const value = {id: snap.id, ...snap.data() as any};
+  const value = { id: snap.id, ...(snap.data() as any) };
 
   return { snap, col, items, value };
 }

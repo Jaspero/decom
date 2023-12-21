@@ -36,11 +36,7 @@
   >
 </div>
 
-<DataTable
-  col="blog-categories"
-  {headers}
-  baseLink="/dashboard/blog/categories/"
-/>
+<DataTable col="blog-categories" {headers} baseLink="/dashboard/blog/categories/" />
 
 <svelte:head>
   <title>Categories - Science Magazine - GlycanAge</title>

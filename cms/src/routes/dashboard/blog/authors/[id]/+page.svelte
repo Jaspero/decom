@@ -49,7 +49,6 @@
     await formModule.render.save(id);
 
     if (data.snap) {
-      
       delete data.value.id;
 
       await alertWrapper(

@@ -21,7 +21,7 @@
       label: 'Sales',
       links: [
         { label: 'Orders', href: '/dashboard/sales/orders' },
-        { label: 'Customers', href: '/dashboard/sales/customers' },
+        { label: 'Customers', href: '/dashboard/sales/customers' }
       ]
     },
     {
@@ -34,9 +34,7 @@
     },
     {
       label: 'Management',
-      links: [
-        { label: 'Admins', href: '/dashboard/admins' }
-      ]
+      links: [{ label: 'Admins', href: '/dashboard/admins' }]
     }
   ];
 </script>

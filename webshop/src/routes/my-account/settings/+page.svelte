@@ -50,7 +50,6 @@
         }
         console.log('your new password:', newPassword)
     };
-
 </script>
 
 <svelte:head>
@@ -68,4 +67,3 @@
     <button type="submit">Update Password</button>
     </form>
 </main>
-

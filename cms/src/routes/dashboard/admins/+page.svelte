@@ -4,7 +4,7 @@
   import DataTable from '$lib/DataTable.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
-  import {datePipe} from '$lib/column-pipes/date.pipe';
+  import { datePipe } from '$lib/column-pipes/date.pipe';
 
   const headers = [
     {

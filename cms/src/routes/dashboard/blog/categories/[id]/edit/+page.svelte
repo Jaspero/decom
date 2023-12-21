@@ -28,7 +28,8 @@
     segments
       .slice(0, segments.length - 1)
       .map((it) => it.value)
-      .join('/') + '/info';
+      .join('/') +
+    '/info';
 
   let saveLoading = false;
   let formModule: FormModule;

@@ -14,23 +14,23 @@ export async function load({ params, parent }) {
 
   const { id } = params;
   const col = 'blog-articles';
-  
+
   const imageService = new BucketImageService();
-  imageService.prefix = col + '/',
-  imageService.metadata = [
-    {
-      height: 1000,
-      width: 1000,
-      filePrefix: 'thumb_m_',
-      folder: '../../generated'
-    },
-    {
-      width: 500,
-      height: 500,
-      filePrefix: 'thumb_s_',
-      folder: '../../generated'
-    }
-  ];
+  (imageService.prefix = col + '/'),
+    (imageService.metadata = [
+      {
+        height: 1000,
+        width: 1000,
+        filePrefix: 'thumb_m_',
+        folder: '../../generated'
+      },
+      {
+        width: 500,
+        height: 500,
+        filePrefix: 'thumb_s_',
+        folder: '../../generated'
+      }
+    ]);
 
   const items = [
     {
@@ -115,7 +115,7 @@ export async function load({ params, parent }) {
     throw redirect(303, '/404');
   }
 
-  const value = {id: snap.id, ...snap.data() as any};
+  const value = { id: snap.id, ...(snap.data() as any) };
 
   return { snap, col, items, value };
 }

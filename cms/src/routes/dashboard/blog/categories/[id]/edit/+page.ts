@@ -35,14 +35,14 @@ export async function load({ params, parent }) {
       }
     }
   ];
-  
+
   const snap = await getDoc(doc(db, col, id));
 
   if (!snap.exists) {
     throw redirect(303, '/404');
   }
 
-  const value = {id: snap.id, ...snap.data() as any};
+  const value = { id: snap.id, ...(snap.data() as any) };
 
   return { snap, col, items, value };
 }

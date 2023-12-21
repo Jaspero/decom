@@ -41,23 +41,84 @@
   {/if}
 
   {#if type === 'text'}
-    <input type="text" {required} {placeholder} {minlength} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="text"
+      {required}
+      {placeholder}
+      {minlength}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'password'}
-    <input type="password" {required} {placeholder} {minlength} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="password"
+      {required}
+      {placeholder}
+      {minlength}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'email'}
-    <input type="email" {required} {placeholder} {minlength} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="email"
+      {required}
+      {placeholder}
+      {minlength}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'number'}
-    <input type="number" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="number"
+      {required}
+      {placeholder}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'tel'}
-    <input type="tel" {required} {placeholder} {minlength} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="tel"
+      {required}
+      {placeholder}
+      {minlength}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'url'}
-    <input type="url" {required} {placeholder} {minlength} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="url"
+      {required}
+      {placeholder}
+      {minlength}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'date'}
     <input type="date" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'time'}
     <input type="time" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'datetime-local'}
-    <input type="datetime-local" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="datetime-local"
+      {required}
+      {placeholder}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'month'}
     <input type="month" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'week'}
@@ -67,17 +128,58 @@
   {:else if type === 'file'}
     <input type="file" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'submit'}
-    <input type="submit" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="submit"
+      {required}
+      {placeholder}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'reset'}
     <input type="reset" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'button'}
-    <input type="button" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="button"
+      {required}
+      {placeholder}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'image'}
-    <input type="image" {alt} {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="image"
+      {alt}
+      {required}
+      {placeholder}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'hidden'}
-    <input type="hidden" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="hidden"
+      {required}
+      {placeholder}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {:else if type === 'search'}
-    <input type="search" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input
+      type="search"
+      {required}
+      {placeholder}
+      {disabled}
+      {autocomplete}
+      name={type}
+      bind:value
+    />
   {/if}
 
   {#if $$slots.hint}
