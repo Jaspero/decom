@@ -39,7 +39,7 @@
   "dependencies": {
     "@jaspero/modular": "1.17.0",
     "@jaspero/utils": "1.12.0",
-    "@jaspero/web-components": "1.71.2",
+    "@jaspero/web-components": "1.72.0",
     "deepcopy": "2.1.0",
     "firebase": "10.7.1",
     "svelte-material-icons": "3.0.5"

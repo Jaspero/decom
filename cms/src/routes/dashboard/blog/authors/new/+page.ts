@@ -1,22 +1,23 @@
 import { BucketImageService } from '$lib/services/image.service';
 import { quillFiled } from '$lib/form-fields/quill.field.js';
+import { META_FORM_FIELDS } from '$lib/consts/meta.form-fields.js';
 
 export async function load({ parent }) {
   await parent();
 
   const col = 'blog-authors';
-
   const imageService = new BucketImageService();
-  (imageService.prefix = col + '/'),
-    (imageService.metadata = [
-      {
-        filePrefix: 'thumb_',
-        height: 100,
-        webpVersion: true,
-        width: 100,
-        folder: '../../generated'
-      }
-    ]);
+
+  imageService.prefix = col + '/';
+  imageService.metadata = [
+    {
+      filePrefix: 'thumb_',
+      height: 100,
+      webpVersion: true,
+      width: 100,
+      folder: '../../generated'
+    }
+  ];
 
   const items = [
     {
@@ -36,7 +37,8 @@ export async function load({ parent }) {
         service: imageService
       }
     },
-    quillFiled(col, 'about', 'About')
+    quillFiled(col, 'about', 'About'),
+    ...META_FORM_FIELDS(col)
   ];
 
   return { col, items, value: {} };

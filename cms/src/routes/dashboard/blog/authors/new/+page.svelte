@@ -35,7 +35,7 @@
     saveLoading = true;
 
     data.value = unflatten(data.value);
-    data.value.lastUpdatedOn = Date.now();
+    data.value.lastUpdatedOn = new Date().toISOString();
     data.value.id = `sma-${random.string(24)}`;
 
     const { id, ...dt } = data.value;

@@ -1,3 +1,4 @@
+import { META_FORM_FIELDS } from '$lib/consts/meta.form-fields.js';
 import { db } from '$lib/utils/firebase';
 import { redirect } from '@sveltejs/kit';
 import { doc, getDoc } from 'firebase/firestore';
@@ -33,7 +34,8 @@ export async function load({ params, parent }) {
         label: 'Description',
         name: 'description'
       }
-    }
+    },
+    ...META_FORM_FIELDS(col)
   ];
 
   const snap = await getDoc(doc(db, col, id));

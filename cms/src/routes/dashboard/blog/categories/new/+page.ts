@@ -1,3 +1,5 @@
+import { META_FORM_FIELDS } from '$lib/consts/meta.form-fields.js';
+
 export async function load({ parent }) {
   await parent();
 
@@ -27,7 +29,8 @@ export async function load({ parent }) {
         label: 'Description',
         name: 'description'
       }
-    }
+    },
+    ...META_FORM_FIELDS(col)
   ];
 
   return { col, items, value: {} };

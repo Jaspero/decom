@@ -3,24 +3,25 @@ import { redirect } from '@sveltejs/kit';
 import { doc, getDoc } from 'firebase/firestore';
 import { BucketImageService } from '$lib/services/image.service';
 import { quillFiled } from '$lib/form-fields/quill.field.js';
+import { META_FORM_FIELDS } from '$lib/consts/meta.form-fields.js';
 
 export async function load({ params, parent }) {
   await parent();
 
   const { id } = params;
   const col = 'blog-authors';
-
   const imageService = new BucketImageService();
-  (imageService.prefix = col + '/'),
-    (imageService.metadata = [
-      {
-        filePrefix: 'thumb_',
-        height: 100,
-        webpVersion: true,
-        width: 100,
-        folder: '../../generated'
-      }
-    ]);
+
+  imageService.prefix = col + '/';
+  imageService.metadata = [
+    {
+      filePrefix: 'thumb_',
+      height: 100,
+      webpVersion: true,
+      width: 100,
+      folder: '../../generated'
+    }
+  ];
 
   const items = [
     {
@@ -40,7 +41,8 @@ export async function load({ params, parent }) {
         service: imageService
       }
     },
-    quillFiled(col, 'about', 'About')
+    quillFiled(col, 'about', 'About'),
+    ...META_FORM_FIELDS(col)
   ];
 
   const snap = await getDoc(doc(db, col, id));

@@ -36,9 +36,9 @@
     saveLoading = true;
 
     data.value = unflatten(data.value);
-    data.value.lastUpdatedOn = Date.now();
+    data.value.lastUpdatedOn = new Date().toISOString();
     data.value.id = generateSlug(data.value.title);
-    data.value.publicationDate = data.value.publicationDate || Date.now();
+    data.value.publicationDate = data.value.publicationDate || new Date().toISOString();
 
     const { id, ...dt } = data.value;
 

@@ -17,6 +17,5 @@
     imageAlt={article.imageAlt || 'Blog image'}
     link="{baseLink}{article.categoryId ? '/' + article.categoryId : ''}/{article.id}"
     title={article.title}
-    position={article.position}
   />
 {/each}

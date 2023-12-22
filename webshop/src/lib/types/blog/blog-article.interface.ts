@@ -1,3 +1,4 @@
+import type { Meta } from '../../meta/meta.interface';
 import type { BlogAuthor } from './blog-author.interface';
 
 export interface BlogArticle {
@@ -7,9 +8,12 @@ export interface BlogArticle {
   title: string;
   content: string;
   description?: string;
-  meta: any;
+  meta: Meta;
   status: string;
   author?: BlogAuthor;
   image: string;
+  thumb?: string;
   imageAlt: string;
+  lastUpdatedOn?: string;
+  publicationDate?: string;
 }

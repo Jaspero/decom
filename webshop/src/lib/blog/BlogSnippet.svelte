@@ -7,17 +7,16 @@
   export let link: string;
   export let author: any = null;
   export let authorLink = '';
-  export let position = '50% 50%';
 </script>
 
 <article>
   <header>
-    <div class="image">
-      <img src={image} alt={imageAlt} style="object-position: {position}" />
-      {#if category}
-        <span>{category}</span>
-      {/if}
-    </div>
+    {#if image}
+      <img src={image} alt={imageAlt} />
+    {/if}
+    {#if category}
+      <span>{category}</span>
+    {/if}
   </header>
 
   <main>

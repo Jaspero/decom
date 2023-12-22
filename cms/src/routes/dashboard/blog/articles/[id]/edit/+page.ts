@@ -11,26 +11,25 @@ export async function load({ params, parent }) {
 
   const authors: Array<{ label: string; value: string }> = [];
   const categories: Array<{ label: string; value: string }> = [];
-
   const { id } = params;
   const col = 'blog-articles';
-
   const imageService = new BucketImageService();
-  (imageService.prefix = col + '/'),
-    (imageService.metadata = [
-      {
-        height: 1000,
-        width: 1000,
-        filePrefix: 'thumb_m_',
-        folder: '../../generated'
-      },
-      {
-        width: 500,
-        height: 500,
-        filePrefix: 'thumb_s_',
-        folder: '../../generated'
-      }
-    ]);
+
+  imageService.prefix = col + '/';
+  imageService.metadata = [
+    {
+      height: 1000,
+      width: 1000,
+      filePrefix: 'thumb_m_',
+      folder: '../../generated'
+    },
+    {
+      width: 500,
+      height: 500,
+      filePrefix: 'thumb_s_',
+      folder: '../../generated'
+    }
+  ];
 
   const items = [
     {
@@ -74,7 +73,7 @@ export async function load({ params, parent }) {
       field: '/publicationDate',
       options: {
         label: 'Publication Date',
-        returnFormat: 'unix'
+        returnFormat: 'iso'
       }
     },
     {
@@ -82,6 +81,7 @@ export async function load({ params, parent }) {
       field: '/image',
       options: {
         name: 'featuredImage',
+        label: 'Featured image',
         service: imageService
       }
     },
@@ -93,7 +93,7 @@ export async function load({ params, parent }) {
         name: 'shortDescription'
       }
     },
-    ...META_FORM_FIELDS,
+    ...META_FORM_FIELDS(col),
     quillFiled(col, 'content', 'Content')
   ];
 

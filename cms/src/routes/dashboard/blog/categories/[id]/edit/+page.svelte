@@ -37,7 +37,7 @@
     saveLoading = true;
 
     data.value = unflatten(data.value);
-    data.value.lastUpdatedOn = Date.now();
+    data.value.lastUpdatedOn = new Date().toISOString();
 
     const id = data.snap.id;
 

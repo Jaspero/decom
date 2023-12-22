@@ -9,7 +9,7 @@
 <section class:about={type === 'about'}>
   <div class="flex">
     {#if image}
-      <img src={image} alt="" class="m-r-m" />
+      <img src={image} alt={name} />
     {/if}
     <div class="flex-1">
       {#if type === 'by'}

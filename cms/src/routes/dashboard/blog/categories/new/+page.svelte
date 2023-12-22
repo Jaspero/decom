@@ -36,7 +36,7 @@
     saveLoading = true;
 
     data.value = unflatten(data.value);
-    data.value.lastUpdatedOn = Date.now();
+    data.value.lastUpdatedOn = new Date().toISOString();
     data.value.id = generateSlug(data.value.name);
 
     const { id, ...dt } = data.value;

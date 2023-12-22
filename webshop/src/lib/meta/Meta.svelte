@@ -17,6 +17,9 @@
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="og:title" content={ogTitle} />
   <meta property="twitter:title" content={ogTitle} />
+  {#if $meta.author}
+    <meta name="author" content={$meta.author} />
+  {/if}
   {#if $meta.description}
     <meta name="description" content={$meta.description} />
   {/if}
@@ -36,6 +39,30 @@
   {/if}
   {#if $meta.noIndex}
     <meta name="robots" content="noindex, nofollow" />
+  {/if}
+  {#if $meta.og?.articleAuthor}
+    <meta property="article:author" content={$meta.og.articleAuthor} />
+  {/if}
+  {#if $meta.og?.articlePublishedTime}
+    <meta property="article:published_time" content={$meta.og.articlePublishedTime} />
+  {/if}
+  {#if $meta.og?.articleModifiedTime}
+    <meta property="article:modified_time" content={$meta.og.articleModifiedTime} />
+  {/if}
+  {#if $meta.og?.articleSection}
+    <meta property="article:section" content={$meta.og.articleSection} />
+  {/if}
+  {#if $meta.og?.articleTag}
+    <meta property="article:tag" content={$meta.og.articleTag} />
+  {/if}
+  {#if $meta.og?.profileFirstName}
+    <meta property="profile:first_name" content={$meta.og.profileFirstName} />
+  {/if}
+  {#if $meta.og?.profileLastName}
+    <meta property="profile:last_name" content={$meta.og.profileLastName} />
+  {/if}
+  {#if $meta.og?.profileUsername}
+    <meta property="profile:username" content={$meta.og.profileUsername} />
   {/if}
   {@html structured}
 </svelte:head>

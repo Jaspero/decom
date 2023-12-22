@@ -1,18 +1,6 @@
 import { writable } from 'svelte/store';
+import type { Meta } from './meta.interface';
 
 export const META_SUFFIX = ` - Jaspero`;
 
-export const meta = writable<{
-  title: string;
-  description?: string;
-  keywords?: string;
-  author?: string;
-  structured?: string;
-  noIndex?: boolean;
-  og?: {
-    title?: string;
-    description?: string;
-    image?: string;
-    type?: string;
-  };
-}>({ title: 'Home' });
+export const meta = writable<Meta>({ title: 'Home' });
