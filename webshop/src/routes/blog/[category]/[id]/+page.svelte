@@ -2,10 +2,13 @@
   import BlogAuthor from '$lib/blog/BlogAuthor.svelte';
   import { cleanSlug } from '@jaspero/utils';
   import type { BlogArticle } from '$lib/types/blog/blog-article.interface';
+  import {meta} from '$lib/meta/meta.store';
 
   export let data: BlogArticle;
 
   const { author, content, image, imageAlt } = data;
+
+  meta.set(data.meta);
 </script>
 
 <div class="grid">

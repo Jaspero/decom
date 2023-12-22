@@ -6,10 +6,14 @@
   import { page } from '$app/stores';
   import type { BlogCategory } from '$lib/types/blog/blog-category.interface';
   import type { BlogArticle } from '$lib/types/blog/blog-article.interface';
+  import {meta} from '$lib/meta/meta.store';
 
   export let data: { categories: BlogCategory[]; page: BlogArticle[]; pageSize: number };
 
   $: activeCat = data.categories.find((it) => it.id === $page.params.category)!;
+  $: if (activeCat) {
+    meta.set(activeCat.meta);
+  }
 </script>
 
 <div class="grid">

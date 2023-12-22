@@ -1,5 +1,11 @@
 <script lang="ts">
+  import {META_SUFFIX, meta} from '$lib/meta/meta.store';
+
   export let data: { authors: any[] };
+
+  meta.set({
+    title: 'Authors - Blog ' + META_SUFFIX
+  });
 </script>
 
 <h1>Authors</h1>
