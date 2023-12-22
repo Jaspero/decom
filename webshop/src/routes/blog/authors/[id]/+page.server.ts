@@ -1,5 +1,5 @@
 import { blogData } from '$lib/server/blog';
-import { cleanSlug } from '$lib/utils/clean-slug';
+import { cleanSlug } from '@jaspero/utils';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {

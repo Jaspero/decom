@@ -4,8 +4,10 @@
   import Pagination from '$lib/Pagination.svelte';
   import BlogSnippets from '$lib/blog/BlogSnippets.svelte';
   import { meta } from '$lib/meta/meta.store';
+  import type { BlogCategory } from '$lib/types/blog/blog-category.interface';
+  import type { BlogArticle } from '$lib/types/blog/blog-article.interface';
 
-  export let data: { categories: any[]; page: any[]; pageSize: number };
+  export let data: { categories: BlogCategory[]; page: BlogArticle[]; pageSize: number };
 
   meta.set({ title: 'Blog' });
 </script>

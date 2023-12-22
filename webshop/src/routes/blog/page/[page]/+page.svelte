@@ -4,8 +4,10 @@
   import Pagination from '$lib/Pagination.svelte';
   import BlogSnippets from '$lib/blog/BlogSnippets.svelte';
   import { page } from '$app/stores';
+  import type { BlogCategory } from '$lib/types/blog/blog-category.interface';
+  import type { BlogArticle } from '$lib/types/blog/blog-article.interface';
 
-  export let data: { categories: any[]; page: any[]; pageSize: number };
+  export let data: { categories: BlogCategory[]; page: BlogArticle[]; pageSize: number };
 </script>
 
 <div class="grid">
@@ -17,7 +19,7 @@
       {/each}
     </Tabs>
 
-    <BlogSnippets articles={data.page} baseLink="/blog" baseAuthorLink="/blog-author" />
+    <BlogSnippets articles={data.page} baseLink="/blog" baseAuthorLink="/blog/authors" />
 
     <Pagination
       pages={data.pageSize}

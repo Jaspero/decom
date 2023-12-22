@@ -28,7 +28,7 @@
   $: back =
     '/' +
     segments
-      .slice(0, segments.length - 2)
+      .slice(0, segments.length - 1)
       .map((it) => it.value)
       .join('/');
 

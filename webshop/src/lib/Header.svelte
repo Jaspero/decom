@@ -15,6 +15,7 @@
 
     <a href="/" class:active={pathname === '/'}>Home</a>
     <a href="/shop" class:active={pathname === '/shop'}>Shop</a>
+    <a href="/blog" class:active={pathname === '/blog'}>Blog</a>
 
     <div class="flex gap-4 items-center ml-auto">
       {#if $authenticated}

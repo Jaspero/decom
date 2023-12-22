@@ -1,7 +1,14 @@
+import type { BlogArticle } from '../types/blog/blog-article.interface';
+import type { BlogAuthor } from '../types/blog/blog-author.interface';
+import type { BlogCategory } from '../types/blog/blog-category.interface';
 import { firestore } from '../utils/firebase-admin';
 import { getThumb } from '../utils/get-thumb';
 
-let _data: any;
+let _data: {
+  articles: BlogArticle[];
+  authors: BlogAuthor[];
+  categories: BlogCategory[];
+};
 
 /**
  * Pulls in categories, authors and the featured article
@@ -69,7 +76,6 @@ async function blog() {
   });
 
   return {
-    featured: articles[0],
     articles,
     categories,
     authors

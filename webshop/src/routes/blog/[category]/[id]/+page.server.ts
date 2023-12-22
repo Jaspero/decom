@@ -3,5 +3,5 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
   const { articles } = await blogData();
-  return articles.find((it: any) => it.id === params.id);
+  return articles.find((it) => it.id === params.id);
 };
