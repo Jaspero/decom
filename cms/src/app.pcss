@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary: #E65100;
+    --primary-contrast: #FFFFFF;
+
+    --secondary: #0095e6;
+    --secondary-contrast: #FFFFFF;
+
+    --warn: #FDCC00;
+    --warn-contrast: #FFFFFF;
+
+    --error: #ff3333;
+    --error-contrast: #FFFFFF;
+
+    --ripple-color: rgba(0,0,0,.16);
+
+    --border-radius-base: 4px;
+}
+
+:is(:focus) {
+    @apply outline-1;
+    outline-color: var(--primary);
+}

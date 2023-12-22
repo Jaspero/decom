@@ -10,6 +10,7 @@ import { CURRENCIES } from '$lib/consts/currencies.const';
 
 let productDialog = false;
 let trackQuantity = false;
+let attributes = [];
 let currencies = CURRENCIES;
 
 function handleSubmit(e) {
@@ -18,88 +19,84 @@ function handleSubmit(e) {
   const data = {};
   for (let field of formData) {
     const [key, value] = field;
-    console.log(11111, field);
     if (value) {
       data[key] = value;
     }
   }
 
-  console.log('data', data);
+}
+
+function addAttribute() {
+  attributes = [...attributes, attributes.length];
 }
 
 </script>
 
 <Button variant="filled" color="secondary" on:click={() => (productDialog = true)}>Add product</Button>
 
-<Dialog bind:open={productDialog}>
-    <svelte:fragment slot="title">Product</svelte:fragment>
 
-    <form name="filters" id="filters" on:submit|preventDefault={handleSubmit}>
-        <Grid>
-            <GridCol span="12">
-                <Field
-                        label="Name"
-                        name="name"
-                        value={''}
-                />
-            </GridCol>
-            <GridCol span="12">
-                <Field
-                        label="Description"
-                        name="description"
-                        value={''}
-                />
-            </GridCol>
-            <GridCol span="12">
-                <Field
-                        label="Short Description"
-                        name="shortDescription"
-                        value={''}
-                />
-            </GridCol>
-            <GridCol span="9">
-                <Field
-                        label="Price"
-                        name="price"
-                        type="number"
-                        value={''}
-                />
-            </GridCol>
-            <GridCol span="3">
-                <Select
-                        label="Currency"
-                        name="currency"
-                        value={''}
-                >
-                    {#each currencies as currency}
-                        <option value={'EUR'}>{currency}</option>
-                    {/each}
+<form name="filters" id="filters" on:submit|preventDefault={handleSubmit}>
+    <Grid>
+        <GridCol span="12">
+            <Field
+                    label="Name"
+                    name="productName"
+                    value={''}
+            />
+        </GridCol>
+        <GridCol span="12">
+            <Field
+                    label="Description"
+                    name="description"
+                    value={''}
+            />
+        </GridCol>
+        <GridCol span="12">
+            <Field
+                    label="Short Description"
+                    name="shortDescription"
+                    value={''}
+            />
+        </GridCol>
+        <GridCol span="9">
+            <Field
+                    label="Price"
+                    name="price"
+                    type="number"
+                    value={''}
+            />
+        </GridCol>
+        <GridCol span="3">
+            <Select
+                    label="Currency"
+                    name="currency"
+                    value={''}
+            >
+                {#each currencies as currency}
+                    <option value={'EUR'}>{currency}</option>
+                {/each}
 
-                </Select>
-            </GridCol>
-            <GridCol span="12">
-                <Field
-                        label="Tag"
-                        type="chip"
-                        name="tag"
-                        value={''}
-                />
-            </GridCol>
-            <label>
-                <input type="checkbox" bind:checked={trackQuantity}/>
-                Track Quantity
-            </label>
+            </Select>
+        </GridCol>
+        <GridCol span="12">
+            <Field
+                    label="Tag"
+                    type="chip"
+                    name="tag"
+                    value={''}
+            />
+        </GridCol>
+        <label>
+            <input type="checkbox" name="trackQuantity" bind:checked={trackQuantity}/>
+            Track Quantity
+        </label>
 
-            <GridCol span="12">
-                Attributes
+        <GridCol span="12">
+            Attributes  <Button variant="filled" color="primary" on:click={addAttribute}>Add</Button>
+            {#each attributes as attribute}
                 <Field
                         label="Key"
                         name="key"
-                        value={''}
-                />
-                <Field
-                        label="Type"
-                        name="type"
                         value={''}
                 />
                 <Field
@@ -107,12 +104,96 @@ function handleSubmit(e) {
                         name="values"
                         value={''}
                 />
-            </GridCol>
+            {/each}
+        </GridCol>
 
-        </Grid>
-    </form>
+    </Grid>
+</form>
 
-    <slot slot="actions">
-        <Button variant="filled" color="primary" type="submit" form="filters">Submit</Button>
-    </slot>
+<Button variant="filled" color="primary" type="submit" form="filters">Submit</Button>
+
+<Dialog bind:open={productDialog}>
+<!--    <svelte:fragment slot="title">Product</svelte:fragment>-->
+
+<!--    <form name="filters" id="filters" on:submit|preventDefault={handleSubmit}>-->
+<!--        <Grid>-->
+<!--            <GridCol span="12">-->
+<!--                <Field-->
+<!--                        label="Name"-->
+<!--                        name="name"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+<!--            <GridCol span="12">-->
+<!--                <Field-->
+<!--                        label="Description"-->
+<!--                        name="description"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+<!--            <GridCol span="12">-->
+<!--                <Field-->
+<!--                        label="Short Description"-->
+<!--                        name="shortDescription"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+<!--            <GridCol span="9">-->
+<!--                <Field-->
+<!--                        label="Price"-->
+<!--                        name="price"-->
+<!--                        type="number"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+<!--            <GridCol span="3">-->
+<!--                <Select-->
+<!--                        label="Currency"-->
+<!--                        name="currency"-->
+<!--                        value={''}-->
+<!--                >-->
+<!--                    {#each currencies as currency}-->
+<!--                        <option value={'EUR'}>{currency}</option>-->
+<!--                    {/each}-->
+
+<!--                </Select>-->
+<!--            </GridCol>-->
+<!--            <GridCol span="12">-->
+<!--                <Field-->
+<!--                        label="Tag"-->
+<!--                        type="chip"-->
+<!--                        name="tag"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+<!--            <label>-->
+<!--                <input type="checkbox" bind:checked={trackQuantity}/>-->
+<!--                Track Quantity-->
+<!--            </label>-->
+
+<!--            <GridCol span="12">-->
+<!--                Attributes-->
+<!--                <Field-->
+<!--                        label="Key"-->
+<!--                        name="key"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--                <Field-->
+<!--                        label="Type"-->
+<!--                        name="type"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--                <Field-->
+<!--                        label="Values"-->
+<!--                        name="values"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+
+<!--        </Grid>-->
+<!--    </form>-->
+
+<!--    <slot slot="actions">-->
+<!--        <Button variant="filled" color="primary" type="submit" form="filters">Submit</Button>-->
+<!--    </slot>-->
 </Dialog>
