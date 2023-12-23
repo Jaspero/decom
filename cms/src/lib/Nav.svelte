@@ -21,6 +21,7 @@
       label: string;
       href: string;
     }>;
+    checked?: boolean;
   }>;
 
   let dropdown = false;

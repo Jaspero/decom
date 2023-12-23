@@ -4,9 +4,9 @@
   import { clickOutside } from './utils/clickOutside';
 
   /* Link-specific */
-  export let href: string = '';
-  export let hreflang: string = '';
-  export let target: '_blank' | '_self' | '_parent' | '_top' | '' = '';
+  export let href = '';
+  export let hreflang: string | null = null;
+  export let target: '_blank' | '_self' | '_parent' | '_top' | null = null;
   export let rel:
     | 'alternate' /* Link to an alternative page (ex. translated page) */
     | 'author' /* Link to the author of the document */
@@ -20,7 +20,7 @@
     | 'noopener noreferrer' /* When linking to an external website, using noopener and noreferrer improves user privacy and security */
     | 'search' /* Links to a search tool for the document */
     | 'tag' /* Specifies that the linked page contains the tag, keyword, or subject of the current page. */
-    | '' = '';
+    | null = null;
   export let download: boolean | null = null;
 
   /* Button-specific */
@@ -57,9 +57,7 @@
     {rel}
     {download}
     {hreflang}
-    class="variant-{variant} color-{color} size-{size}"
-    on:click|stopPropagation
-  >
+    class="variant-{variant} color-{color} size-{size}">
     {#if loading}
       <Loader />
     {:else}
