@@ -1,10 +1,23 @@
 <script lang="ts">
-  import type { QueryDocumentSnapshot } from 'firebase/firestore';
-  import { collection, getDocs, query, orderBy, limit, startAfter } from 'firebase/firestore';
+  import type { QueryDocumentSnapshot, WhereFilterOp } from 'firebase/firestore';
+  import {
+    collection,
+    getDocs,
+    query,
+    orderBy,
+    limit,
+    startAfter,
+    where
+  } from 'firebase/firestore';
   import { onMount } from 'svelte';
   import { db } from './utils/firebase';
   import '@jaspero/web-components/dist/async-table.wc';
   import { goto } from '$app/navigation';
+  import type { Filter } from './interfaces/filter.interface';
+  import Button from './Button.svelte';
+  import Dialog from './Dialog.svelte';
+  import FormModule from './FormModule.svelte';
+  import type {FilterOperators} from './interfaces/filter-operators.interface';
 
   export let col: string;
   export let headers: any[];
@@ -14,12 +27,35 @@
     key: string;
     direction: 'asc' | 'desc';
   } | null = null;
+  export let filterOptions: (() => Promise<any[]>) | null = null;
+  export let filterOperators: FilterOperators = {};
+  export let defaultFilters: Filter[] = [];
+  export let filtersValue: any = {};
 
   let el: HTMLDivElement;
   let ref: QueryDocumentSnapshot<any> | null = null;
+  let instance: any;
+  let filtersLoading = false;
+  let filterItems: any[];
+  let filterDialogOpen = false;
 
   async function get(sort?: any) {
-    const queries: any[] = [collection(db, col)];
+    const queries: any[] = [
+      collection(db, col),
+      ...defaultFilters.map((filter) => where(filter.key, filter.operation, filter.value))
+    ];
+
+    if (Object.keys(filtersValue).length) {
+      queries.push(
+        ...Object.entries(filtersValue)
+          /**
+           * We consider undefined and '' as empty values
+           * while null and false are valid
+           */
+          .filter(([key, value]) => value !== '' && value !== undefined)
+          .map(([key, value]) => where(filterOperators[key]?.key || key, filterOperators[key]?.operator || '==', value))
+      );
+    }
 
     if (sort) {
       queries.push(orderBy(sort.key.replace('/', ''), sort.direction));
@@ -68,23 +104,64 @@
     };
   }
 
-  onMount(() => {
-    const instanceEl = document.createElement('jp-async-table') as any;
+  async function openFilters() {
+    filtersLoading = true;
 
-    instanceEl.service = { get, loadMore };
-    instanceEl.headers = headers;
-
-    if (initialSort) {
-      instanceEl.sort = initialSort;
+    if (!filterItems) {
+      filterItems = await filterOptions!();
     }
 
-    instanceEl.addEventListener('rowClick', (e: any) => {
+    filterDialogOpen = true;
+    filtersLoading = false;
+  }
+
+  async function clearFilters() {
+    filterDialogOpen = false;
+    filtersValue = {};
+    await instance.getData();
+  }
+
+  async function applyFilters() {
+    filterDialogOpen = false;
+    await instance.getData();
+  }
+
+  onMount(() => {
+    instance = document.createElement('jp-async-table') as any;
+
+    instance.service = { get, loadMore };
+    instance.headers = headers;
+
+    if (initialSort) {
+      instance.sort = initialSort;
+    }
+
+    instance.addEventListener('rowClick', (e: any) => {
       const { row } = e.detail;
       goto(baseLink + row.id);
     });
 
-    el.appendChild(instanceEl);
+    el.appendChild(instance);
   });
 </script>
 
+{#if filterOptions}
+  <Button on:click={openFilters} loading={filtersLoading}>Filters</Button>
+{/if}
+
 <div bind:this={el} />
+
+<Dialog bind:open={filterDialogOpen} removePadding>
+  <svelte:fragment slot="title">Filters</svelte:fragment>
+
+  <form name="filters" on:submit|preventDefault={applyFilters}>
+    <FormModule items={filterItems} bind:value={filtersValue} />
+  </form>
+
+  <slot slot="actions">
+    <Button variant="filled" color="secondary" type="submit" form="filters" on:click={applyFilters}
+      >Apply filters</Button
+    >
+    <Button variant="outlined" color="warning" on:click={clearFilters}>Clear</Button>
+  </slot>
+</Dialog>

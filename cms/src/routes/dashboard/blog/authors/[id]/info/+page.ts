@@ -14,7 +14,5 @@ export async function load({ params, parent }) {
     throw redirect(303, '/404');
   }
 
-  const value = { id: snap.id, ...(snap.data() as any) };
-
-  return { value };
+  return { id: snap.id, ...(snap.data() as any) };
 }
