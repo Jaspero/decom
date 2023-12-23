@@ -4,7 +4,7 @@
   import { cleanSlug } from '@jaspero/utils';
   import type { BlogArticle } from '$lib/types/blog/blog-article.interface';
   import type { BlogAuthor as BlogAuthorType } from '$lib/types/blog/blog-author.interface';
-  import {meta} from '$lib/meta/meta.store';
+  import { meta } from '$lib/meta/meta.store';
 
   export let data: { articles: BlogArticle[]; author: BlogAuthorType };
 

@@ -57,7 +57,8 @@
     {rel}
     {download}
     {hreflang}
-    class="variant-{variant} color-{color} size-{size}">
+    class="variant-{variant} color-{color} size-{size}"
+  >
     {#if loading}
       <Loader />
     {:else}

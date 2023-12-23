@@ -19,8 +19,8 @@
   import FormModule from './FormModule.svelte';
   import type { FilterOperators } from './interfaces/filter-operators.interface';
   import { page } from '$app/stores';
-  import { base64UrlEncode, base64UrlDecode } from '@jaspero/utils'
- 
+  import { base64UrlEncode, base64UrlDecode } from '@jaspero/utils';
+
   export let col: string;
   export let headers: any[];
   export let pageSize = 10;
@@ -55,7 +55,9 @@
            * while null and false are valid
            */
           .filter(([key, value]) => value !== '' && value !== undefined)
-          .map(([key, value]) => where(filterOperators[key]?.key || key, filterOperators[key]?.operator || '==', value))
+          .map(([key, value]) =>
+            where(filterOperators[key]?.key || key, filterOperators[key]?.operator || '==', value)
+          )
       );
     }
 
@@ -126,7 +128,7 @@
   async function applyFilters() {
     filterDialogOpen = false;
 
-    $page.url.searchParams.set('filters', base64UrlEncode(filtersValue))
+    $page.url.searchParams.set('filters', base64UrlEncode(filtersValue));
 
     goto($page.url.toString());
 

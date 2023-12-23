@@ -1,8 +1,8 @@
-import type {WhereFilterOp} from 'firebase/firestore'
+import type { WhereFilterOp } from 'firebase/firestore';
 
 export interface FilterOperators {
-	[key: string]: {
-		operator: WhereFilterOp;
-		key?: string;
-	}
+  [key: string]: {
+    operator: WhereFilterOp;
+    key?: string;
+  };
 }

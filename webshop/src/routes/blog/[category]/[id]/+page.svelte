@@ -2,7 +2,7 @@
   import BlogAuthor from '$lib/blog/BlogAuthor.svelte';
   import { cleanSlug } from '@jaspero/utils';
   import type { BlogArticle } from '$lib/types/blog/blog-article.interface';
-  import {meta} from '$lib/meta/meta.store';
+  import { meta } from '$lib/meta/meta.store';
 
   export let data: BlogArticle;
 

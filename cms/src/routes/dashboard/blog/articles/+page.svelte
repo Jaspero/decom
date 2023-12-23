@@ -59,8 +59,8 @@
   };
 
   async function filterOptions() {
-    const authors: Array<{ label: string; value: string }> = [{label: 'Any', value: ''}];
-    const categories: Array<{ label: string; value: string }> = [{label: 'Any', value: ''}];
+    const authors: Array<{ label: string; value: string }> = [{ label: 'Any', value: '' }];
+    const categories: Array<{ label: string; value: string }> = [{ label: 'Any', value: '' }];
 
     const items = [
       {
