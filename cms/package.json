@@ -40,7 +40,7 @@
   "type": "module",
   "dependencies": {
     "@jaspero/modular": "1.17.0",
-    "@jaspero/utils": "1.14.0",
+    "@jaspero/utils": "1.15.3",
     "@jaspero/web-components": "1.72.0",
     "deepcopy": "2.1.0",
     "firebase": "10.7.1",

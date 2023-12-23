@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { QueryDocumentSnapshot, WhereFilterOp } from 'firebase/firestore';
+  import type { QueryDocumentSnapshot } from 'firebase/firestore';
   import {
     collection,
     getDocs,
@@ -17,8 +17,10 @@
   import Button from './Button.svelte';
   import Dialog from './Dialog.svelte';
   import FormModule from './FormModule.svelte';
-  import type {FilterOperators} from './interfaces/filter-operators.interface';
-
+  import type { FilterOperators } from './interfaces/filter-operators.interface';
+  import { page } from '$app/stores';
+  import { base64UrlEncode, base64UrlDecode } from '@jaspero/utils'
+ 
   export let col: string;
   export let headers: any[];
   export let pageSize = 10;
@@ -123,10 +125,19 @@
 
   async function applyFilters() {
     filterDialogOpen = false;
+
+    $page.url.searchParams.set('filters', base64UrlEncode(filtersValue))
+
+    goto($page.url.toString());
+
     await instance.getData();
   }
 
   onMount(() => {
+    if ($page.url.searchParams.has('filters')) {
+      filtersValue = base64UrlDecode($page.url.searchParams.get('filters')!);
+    }
+
     instance = document.createElement('jp-async-table') as any;
 
     instance.service = { get, loadMore };
