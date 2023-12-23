@@ -40,6 +40,23 @@ service cloud.firestore {
 
     match /blog-articles/{document} {
       allow read, write: if admin();
+
+      match /blog-comments/{comment} {
+        allow list: if true || admin();
+        allow get: if admin();
+        allow create: if admin() || (
+          authenticated() &&
+          request.resource.data.author == request.auth.uid &&
+          request.resource.data.keys().hasOnly(
+            ['author', 'comment', 'createdOn']
+          )
+        );
+        allow update: if admin() || (
+          request.resource.data.author == request.auth.uid &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['comment'])
+        );
+        allow delete: if admin() || request.resource.data.author == request.auth.uid;
+      }
     }
 
     match /blog-categories/{document} {
