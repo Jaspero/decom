@@ -52,6 +52,7 @@
     <slot />
   </div>
 </div>
+
 <svelte:head>
   <meta name="robots" content="noindex, nofollow" />
 </svelte:head>

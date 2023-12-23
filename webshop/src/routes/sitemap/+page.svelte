@@ -13,6 +13,7 @@
         category: BlogCategory;
         pages: number[];
       }>;
+      allPages: number[];
     };
   };
 
@@ -50,6 +51,12 @@
 </ul>
 
 <h4>Pages</h4>
+
+<h5>All Posts</h5>
+
+{#each data.blog.allPages as page}
+  <li><a href="/blog/page/{page}">{page}</a></li>
+{/each}
 
 {#each data.blog.pages as category}
   <h5>{category.category.name}</h5>

@@ -4,9 +4,11 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
   const { categories, articles, authors } = await blogData();
+  const { pages } = paginateArray(articles);
 
   return {
     blog: {
+      allPages: pages.map((p, i) => i + 1),
       pages: categories.map((category) => {
         const categoryArticles = articles.filter((it) => it.categoryId === category.id);
         const { pages } = paginateArray(categoryArticles);
