@@ -12,7 +12,7 @@
         href="/{segments
           .slice(0, index + 1)
           .map((it) => it.value)
-          .join('/') + suffix}">{segment.label}</a
+          .join('/')}">{segment.label}</a
       > /
     {:else}
       <span class="font-bold truncate">{title || segment.label}</span>

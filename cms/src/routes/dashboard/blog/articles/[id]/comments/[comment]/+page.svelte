@@ -15,7 +15,6 @@
   import { DocumentSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
   export let data: {
-    col: string;
     items: any[];
     value: any;
     snap: DocumentSnapshot;
@@ -36,7 +35,6 @@
     saveLoading = true;
 
     data.value = unflatten(data.value);
-    data.value.lastUpdatedOn = new Date().toISOString();
 
     const { id } = data.snap;
 
@@ -60,7 +58,7 @@
         return;
       }
 
-      await alertWrapper(deleteDoc(doc(db, data.col, data.value.id)), `Item deleted successfully`);
+      await alertWrapper(deleteDoc(doc(db, 'blog-articles', $page.params.id, 'blog-comments', data.value.id)), `Item deleted successfully`);
 
       goto(back);
     });
@@ -72,11 +70,11 @@
     <GridCol span="12">
       <Card>
         <slot slot="title">
-          Editing {data.value.title}
+          Editing Comment
         </slot>
 
         <slot slot="subtitle">
-          <Breadcrumbs suffix="/info" title="Edit" {segments} />
+          <Breadcrumbs suffix="/comments" title="Comment" {segments} />
         </slot>
 
         <div class="flex flex-col gap-6">
@@ -99,5 +97,5 @@
 </form>
 
 <svelte:head>
-  <title>Edit Article - Blog - Jaspero</title>
+  <title>Edit Comment - Blog - Jaspero</title>
 </svelte:head>

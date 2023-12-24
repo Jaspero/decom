@@ -6,13 +6,13 @@
     link: string;
   }>;
 
-  $: active = $page.url.pathname.split('/').pop();
+  $: active = $page.url.pathname;
 </script>
 
 <nav>
   <div class="inner-nav">
     {#each links as link}
-      <a href={link.link} class:active={active === link.link}>{link.label}</a>
+      <a href={link.link} class:active={active.startsWith(link.link)}>{link.label}</a>
     {/each}
   </div>
 </nav>

@@ -1,10 +1,13 @@
 <script lang="ts">
+  import {page} from '$app/stores';
   import ItemNav from '$lib/ItemNav.svelte';
 
+  const baseLink = `/dashboard/blog/authors/${$page.params.id}/`;
+
   const links = [
-    { label: 'Info', link: 'info' },
-    { label: 'Reporting', link: 'reporting' },
-    { label: 'Edit', link: 'edit' }
+    { label: 'Info', link: baseLink + 'info' },
+    { label: 'Reporting', link: baseLink + 'reporting' },
+    { label: 'Edit', link: baseLink + 'edit' }
   ];
 </script>
 
