@@ -6,7 +6,7 @@ export async function load({ params, parent }) {
   await parent();
 
   const { id } = params;
-  const col = 'tags';
+  const col = 'categories';
   const items = [
     {
       component: 'jp-input',
