@@ -1,6 +1,5 @@
 <script lang="ts">
   export let segments: Array<{ label: string; value: string }> = [];
-  export let suffix = '';
   export let title = '';
 </script>
 

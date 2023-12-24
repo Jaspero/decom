@@ -280,7 +280,7 @@
 </Dialog>
 
 <svelte:head>
-  <title>Login - GlycanAge</title>
+  <title>Login - Jaspero</title>
 </svelte:head>
 
 <style>

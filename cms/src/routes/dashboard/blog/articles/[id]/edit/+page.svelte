@@ -76,7 +76,7 @@
         </slot>
 
         <slot slot="subtitle">
-          <Breadcrumbs suffix="/info" title="Edit" {segments} />
+          <Breadcrumbs title="Edit" {segments} />
         </slot>
 
         <div class="flex flex-col gap-6">

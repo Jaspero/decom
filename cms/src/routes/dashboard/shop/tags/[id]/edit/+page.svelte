@@ -37,9 +37,8 @@
     saveLoading = true;
 
     data.value = unflatten(data.value);
-    data.value.lastUpdatedOn = new Date().toISOString();
 
-    const id = data.snap.id;
+    const { id } = data.snap;
 
     await formModule.render.save(id);
 

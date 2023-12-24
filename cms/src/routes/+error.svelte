@@ -13,6 +13,6 @@
 </div>
 
 <svelte:head>
-  <title>Error - GlycanAge</title>
+  <title>Error - Jaspero</title>
   <meta name="description" content="This page doesn't exist or something went wrong" />
 </svelte:head>

@@ -39,5 +39,5 @@
 <DataTable col="blog-categories" {headers} baseLink="/dashboard/blog/categories/" />
 
 <svelte:head>
-  <title>Categories - Science Magazine - GlycanAge</title>
+  <title>Categories - Blog - Jaspero</title>
 </svelte:head>
