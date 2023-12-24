@@ -45,9 +45,7 @@
       {/await}
     </span>
     <span class="counter-text">All comments</span>
-    <a
-      href="comments">View Comments</a
-    >
+    <a href="comments">View Comments</a>
   </div>
   <div class="counter">
     <span class="counter-number">

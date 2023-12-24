@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {page} from '$app/stores';
+  import { page } from '$app/stores';
   import ItemNav from '$lib/ItemNav.svelte';
 
   const baseLink = `/dashboard/blog/authors/${$page.params.id}/`;

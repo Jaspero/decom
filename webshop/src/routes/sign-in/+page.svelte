@@ -208,11 +208,7 @@
 
     <Field required label="MFA Verification Code:" type="text" bind:value={codeInput} />
 
-    <Button
-      loading={confirmLoader}
-      on:click={confirm}
-      label="Confirm and sign in"
-    />
+    <Button loading={confirmLoader} on:click={confirm} label="Confirm and sign in" />
   {:else}
     <form on:submit|preventDefault={submit}>
       <div class="flex flex-col gap-4">

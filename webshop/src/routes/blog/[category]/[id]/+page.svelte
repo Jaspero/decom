@@ -25,7 +25,7 @@
   } from 'firebase/firestore';
   import { onMount } from 'svelte';
   import Recaptcha from '../../../../lib/Recaptcha.svelte';
-  import {page} from '$app/stores';
+  import { page } from '$app/stores';
 
   export let data: BlogArticle;
 
@@ -84,13 +84,14 @@
     };
 
     const resp = await alertWrapper(
-      recaptchaVerify().then(() =>
-        (selectedComment
-          ? updateDoc(doc(db, 'blog-articles', data.id, 'blog-comments', selectedComment), {
-              comment,
-              authorName
-            })
-          : addDoc(collection(db, 'blog-articles', data.id, 'blog-comments'), added)) as any
+      recaptchaVerify().then(
+        () =>
+          (selectedComment
+            ? updateDoc(doc(db, 'blog-articles', data.id, 'blog-comments', selectedComment), {
+                comment,
+                authorName
+              })
+            : addDoc(collection(db, 'blog-articles', data.id, 'blog-comments'), added)) as any
       ),
       'Comment saved',
       '',

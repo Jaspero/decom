@@ -1,10 +1,10 @@
 <script lang="ts">
-  import {page} from '$app/stores';
+  import { page } from '$app/stores';
   import DataTable from '$lib/DataTable.svelte';
-  import {datePipe} from '$lib/column-pipes/date.pipe';
-  import {indexPipe} from '$lib/column-pipes/index.pipe';
-  import type {FilterOperators} from '$lib/interfaces/filter-operators.interface';
-  import type {Sort} from '$lib/interfaces/sort.interface';
+  import { datePipe } from '$lib/column-pipes/date.pipe';
+  import { indexPipe } from '$lib/column-pipes/index.pipe';
+  import type { FilterOperators } from '$lib/interfaces/filter-operators.interface';
+  import type { Sort } from '$lib/interfaces/sort.interface';
 
   const headers = [
     {

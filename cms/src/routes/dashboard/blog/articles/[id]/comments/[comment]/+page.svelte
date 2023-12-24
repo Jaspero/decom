@@ -58,7 +58,10 @@
         return;
       }
 
-      await alertWrapper(deleteDoc(doc(db, 'blog-articles', $page.params.id, 'blog-comments', data.value.id)), `Item deleted successfully`);
+      await alertWrapper(
+        deleteDoc(doc(db, 'blog-articles', $page.params.id, 'blog-comments', data.value.id)),
+        `Item deleted successfully`
+      );
 
       goto(back);
     });
@@ -69,9 +72,7 @@
   <Grid>
     <GridCol span="12">
       <Card>
-        <slot slot="title">
-          Editing Comment
-        </slot>
+        <slot slot="title">Editing Comment</slot>
 
         <slot slot="subtitle">
           <Breadcrumbs suffix="/comments" title="Comment" {segments} />
