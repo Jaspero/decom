@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import type { User } from '../types/user.interface';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, type User } from 'firebase/auth';
+import type {User as DbUser} from '../types/user.interface';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { writable } from 'svelte/store';
@@ -14,7 +14,7 @@ export const db = getFirestore(firebaseApp);
 export const functions = getFunctions(firebaseApp, ENV_CONFIG.region);
 
 export const authenticated = writable<null | false | User>(null);
-export const user = writable<null | User>(null);
+export const user = writable<null | DbUser>(null);
 
 onAuthStateChanged(auth, async (authUser) => {
   if (authUser) {
@@ -24,7 +24,7 @@ onAuthStateChanged(auth, async (authUser) => {
 
       if (docSnap.exists()) {
         const userData = docSnap.data();
-        user.set({ id: authUser.uid, ...userData } as User);
+        user.set({ id: authUser.uid, ...userData } as DbUser);
       } else {
         user.set({ id: authUser.uid } as any);
       }

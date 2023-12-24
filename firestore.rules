@@ -48,14 +48,14 @@ service cloud.firestore {
           authenticated() &&
           request.resource.data.author == request.auth.uid &&
           request.resource.data.keys().hasOnly(
-            ['author', 'comment', 'createdOn']
+            ['author', 'authorName', 'comment', 'createdOn']
           )
         );
         allow update: if admin() || (
           request.resource.data.author == request.auth.uid &&
-          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['comment'])
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['comment', 'authorName'])
         );
-        allow delete: if admin() || request.resource.data.author == request.auth.uid;
+        allow delete: if admin() || (resource.data.author == request.auth.uid);
       }
     }
 

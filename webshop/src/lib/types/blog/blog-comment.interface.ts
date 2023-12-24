@@ -1,6 +1,7 @@
 export interface BlogComment {
+	id: string;
 	author: string;
 	authorName: string;
-	content: string;
+	comment: string;
 	createdOn: string;
 }

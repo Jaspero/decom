@@ -1,35 +1,29 @@
 <script lang="ts">
   import Button from '$lib/Button.svelte';
+  import Dialog from '$lib/Dialog.svelte';
   import BlogAuthor from '$lib/blog/BlogAuthor.svelte';
   import {meta} from '$lib/meta/meta.store';
   import type {BlogArticle} from '$lib/types/blog/blog-article.interface';
   import type {BlogComment} from '$lib/types/blog/blog-comment.interface';
-  import {authenticated, db} from '$lib/utils/firebase';
+  import {alertWrapper} from '$lib/utils/alert-wrapper';
+  import {confirmation} from '$lib/utils/confirmation';
+  import {authenticated, db, user} from '$lib/utils/firebase';
   import {fromIso} from '$lib/utils/format-date';
   import {cleanSlug} from '@jaspero/utils';
+  import type {User} from 'firebase/auth';
   import {
     QueryDocumentSnapshot,
+    addDoc,
     collection,
+    deleteDoc,
+    doc,
     getDocs,
     limit,
     orderBy,
     startAt,
-
-    type DocumentData,
-
-    addDoc,
-
-    updateDoc,
-
-    doc
-
-
-
-
+    updateDoc
   } from 'firebase/firestore';
   import {onMount} from 'svelte';
-  import {alertWrapper} from '$lib/utils/alert-wrapper';
-  import type {User} from '$lib/types/user.interface';
 
   export let data: BlogArticle;
 
@@ -43,38 +37,75 @@
   let loading = false;
   let commentsLoading = false;
   let selectedComment: string | null;
+  let commentDialog = false;
 
   meta.set(data.meta);
 
-  function editComment() {}
+  function openDialog() {
+    selectedComment = null;
+    comment = '';
+    commentDialog = true;
+  }
 
-  function deleteComment() {}
+  function editComment(item: BlogComment) {
+    selectedComment = item.id;
+    comment = item.comment;
+    commentDialog = true;
+  }
+
+  function deleteComment(comment: BlogComment) {
+    confirmation(async ({ confirmed }) => {
+      if (!confirmed) {
+        return;
+      }
+
+      await alertWrapper(
+        deleteDoc(doc(db, 'blog-aricles', data.id, 'blog-comments', comment.id)),
+        `Comment deleted successfully`
+      );
+
+      comments.splice(comments.indexOf(comment), 1);
+      comments = [...comments];
+    });
+  }
 
   async function saveComment() {
     loading = true;
 
-    await alertWrapper(
-      selectedComment ? 
-      updateDoc(
-        doc(db, 'blog-articles', data.id, 'blog-comments', selectedComment),
-        {comment}
-      ) :
-      addDoc(
-        collection(db, 'blog-articles', data.id, 'blog-comments'),
-        {
-          author: ($authenticated as User).id,
-          comment,
-          createdOn: new Date().toISOString()
-        }
-      ),
+    const authorName = $user?.name || ($authenticated as User).displayName || 'Anonymous';
+    const added = {
+      author: ($authenticated as User).uid,
+      authorName,
+      comment,
+      createdOn: new Date().toISOString()
+    };
+
+    const resp = await alertWrapper(
+      selectedComment
+        ? updateDoc(doc(db, 'blog-articles', data.id, 'blog-comments', selectedComment), {
+            comment,
+            authorName
+          })
+        : addDoc(collection(db, 'blog-articles', data.id, 'blog-comments'), added),
       'Comment saved',
       '',
-      () => loading = false
-    )
+      () => (loading = false)
+    );
+
+    if (selectedComment) {
+      const index = comments.findIndex((it) => it.id === selectedComment);
+      comments[index].comment = comment;
+      comments[index].authorName = authorName;
+    } else {
+      comments = [{ id: resp.id, ...added }, ...comments];
+    }
+
+    comments = [...comments];
 
     selectedComment = null;
     comment = '';
     loading = false;
+    commentDialog = false;
   }
 
   async function loadComments() {
@@ -96,9 +127,10 @@
 
     hasMore = docs.length === itemsPerPage + 1;
     ref = docs[docs.length - 1];
-    comments.push(
+    comments = [
+      ...(comments || []),
       ...docs.slice(0, itemsPerPage).map((doc) => ({ id: doc.id, ...(doc.data() as any) }))
-    );
+    ];
   }
 
   onMount(async () => {
@@ -158,12 +190,12 @@
   {#if comments.length}
     {#each comments as comment}
       <div>
-        <span>{comment.authorName}</span>
+        <span>{comment.authorName || ''}</span>
         <span>{fromIso(comment.createdOn)}</span>
-        <div>{comment.content}</div>
-        {#if $authenticated && comment.author === $authenticated.id}
-          <Button on:click={editComment}>Edit</Button>
-          <Button on:click={deleteComment}>Delete</Button>
+        <div>{comment.comment}</div>
+        {#if $authenticated && comment.author === $authenticated.uid}
+          <Button on:click={() => editComment(comment)} label="Edit" />
+          <Button on:click={() => deleteComment(comment)} label="Delete" />
         {/if}
       </div>
       {#if hasMore}
@@ -176,13 +208,16 @@
 {:else}
   <p>comments loading</p>
 {/if}
+<Button on:click={openDialog} label="Add a comment" />
 
-{#if $authenticated}
-  <form on:submit|preventDefault={saveComment}>
-    <textarea bind:value={comment} rows="5" required placeholder="Add a comment" />
-    <Button type="submit" {loading}>Save</Button>
-  </form>
-{:else}
-  <p>Sign in to comment</p>
-  <Button href="/sign-in">Sign In</Button>
-{/if}
+<Dialog bind:showing={commentDialog}>
+  {#if $authenticated}
+    <form on:submit|preventDefault={saveComment}>
+      <textarea bind:value={comment} rows="5" required placeholder="Add a comment" />
+      <Button type="submit" {loading} label="Save" />
+    </form>
+  {:else}
+    <p>Sign in to comment</p>
+    <Button href="/sign-in" label="Sign In" />
+  {/if}
+</Dialog>
