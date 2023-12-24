@@ -2,15 +2,15 @@
   import Button from '$lib/Button.svelte';
   import Dialog from '$lib/Dialog.svelte';
   import BlogAuthor from '$lib/blog/BlogAuthor.svelte';
-  import {meta} from '$lib/meta/meta.store';
-  import type {BlogArticle} from '$lib/types/blog/blog-article.interface';
-  import type {BlogComment} from '$lib/types/blog/blog-comment.interface';
-  import {alertWrapper} from '$lib/utils/alert-wrapper';
-  import {confirmation} from '$lib/utils/confirmation';
-  import {authenticated, db, user} from '$lib/utils/firebase';
-  import {fromIso} from '$lib/utils/format-date';
-  import {cleanSlug} from '@jaspero/utils';
-  import type {User} from 'firebase/auth';
+  import { meta } from '$lib/meta/meta.store';
+  import type { BlogArticle } from '$lib/types/blog/blog-article.interface';
+  import type { BlogComment } from '$lib/types/blog/blog-comment.interface';
+  import { alertWrapper } from '$lib/utils/alert-wrapper';
+  import { confirmation } from '$lib/utils/confirmation';
+  import { authenticated, db, user } from '$lib/utils/firebase';
+  import { fromIso } from '$lib/utils/format-date';
+  import { cleanSlug } from '@jaspero/utils';
+  import type { User } from 'firebase/auth';
   import {
     QueryDocumentSnapshot,
     addDoc,
@@ -23,7 +23,9 @@
     startAt,
     updateDoc
   } from 'firebase/firestore';
-  import {onMount} from 'svelte';
+  import { onMount } from 'svelte';
+  import Recaptcha from '../../../../lib/Recaptcha.svelte';
+  import {page} from '$app/stores';
 
   export let data: BlogArticle;
 
@@ -38,6 +40,7 @@
   let commentsLoading = false;
   let selectedComment: string | null;
   let commentDialog = false;
+  let recaptchaVerify: () => Promise<string>;
 
   meta.set(data.meta);
 
@@ -81,12 +84,14 @@
     };
 
     const resp = await alertWrapper(
-      selectedComment
-        ? updateDoc(doc(db, 'blog-articles', data.id, 'blog-comments', selectedComment), {
-            comment,
-            authorName
-          })
-        : addDoc(collection(db, 'blog-articles', data.id, 'blog-comments'), added),
+      recaptchaVerify().then(() =>
+        (selectedComment
+          ? updateDoc(doc(db, 'blog-articles', data.id, 'blog-comments', selectedComment), {
+              comment,
+              authorName
+            })
+          : addDoc(collection(db, 'blog-articles', data.id, 'blog-comments'), added)) as any
+      ),
       'Comment saved',
       '',
       () => (loading = false)
@@ -218,6 +223,8 @@
     </form>
   {:else}
     <p>Sign in to comment</p>
-    <Button href="/sign-in" label="Sign In" />
+    <Button href="/sign-in?forward={encodeURIComponent($page.url.pathname)}" label="Sign In" />
   {/if}
 </Dialog>
+
+<Recaptcha bind:verify={recaptchaVerify} />

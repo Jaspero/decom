@@ -38,7 +38,7 @@
           description={article.description}
           image={article.image}
           imageAlt={article.imageAlt}
-          link="/self-care{article.categoryId ? '/' + article.categoryId : ''}/{article.id}"
+          link="/blog{article.categoryId ? '/' + article.categoryId : ''}/{article.id}"
           title={article.title}
         />
       </div>

@@ -3,7 +3,7 @@
   import { page } from '$app/stores';
   import Button from '$lib/Button.svelte';
   import Field from '$lib/Field.svelte';
-  import { auth, authenticated } from '$lib/utils/firebase';
+  import { auth } from '$lib/utils/firebase';
   import Recaptcha from '$lib/Recaptcha.svelte';
   import { notificationWrapper } from '$lib/notification/notification';
   import {
@@ -18,8 +18,6 @@
   } from 'firebase/auth';
   import Dialog from '$lib/Dialog.svelte';
   import { onMount } from 'svelte';
-  import GridCol from '$lib/GridCol.svelte';
-  import Loader from '../../lib/Loader.svelte';
 
   let email = '';
   let password = '';
@@ -37,10 +35,6 @@
   let codeInput: string;
   let resolver: any;
   let verId: string;
-
-  $: if ($authenticated) {
-    goto('/');
-  }
 
   async function submit() {
     const { searchParams } = $page.url;
@@ -140,7 +134,7 @@
           ? decodeURIComponent(searchParams.get('forward') as string)
           : '/'
       );
-    }, 2000);
+    }, 1000);
   }
 
   async function resetPassword() {
@@ -207,7 +201,7 @@
   <div id="recaptcha-container-id" />
 
   {#if showCodeInput}
-    <Button color="error" href="/login" on:click={back}>Back to login</Button>
+    <Button href="/login" on:click={back}>Back to login</Button>
     <p>
       We have sent you a 6-digit verification code to: <!--<b>{resolver.hints[0].phoneNumber}</b>-->
     </p>
@@ -215,7 +209,6 @@
     <Field required label="MFA Verification Code:" type="text" bind:value={codeInput} />
 
     <Button
-      color="primary"
       loading={confirmLoader}
       on:click={confirm}
       label="Confirm and sign in"
