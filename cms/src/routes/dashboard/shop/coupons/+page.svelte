@@ -2,7 +2,6 @@
   import DataTable from '$lib/DataTable.svelte';
   import { indexPipe } from '$lib/column-pipes/index.pipe';
   import Button from '$lib/Button.svelte';
-  import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
 
   const headers = [
     {
@@ -15,18 +14,24 @@
       label: 'Name'
     },
     {
-      key: '/description',
-      label: 'Description'
+      key: '/code',
+      label: 'Code'
+    },
+    {
+      key: '/type',
+      label: 'Type'
     }
   ];
 </script>
 
 <div class="pb-4">
-  <Button variant="filled" color="secondary" href="/dashboard/shop/tags/new">Add new tags</Button>
+  <Button variant="filled" color="secondary" href="/dashboard/shop/coupons/new"
+    >Add new coupon</Button
+  >
 </div>
 
-<DataTable col="tags" {headers} baseLink="/dashboard/shop/tags/" />
+<DataTable col="coupons" {headers} baseLink="/dashboard/shop/coupons/" />
 
 <svelte:head>
-  <title>Tags - Shop - Jaspero</title>
+  <title>Coupons - Shop - Jaspero</title>
 </svelte:head>

@@ -22,7 +22,9 @@
 </script>
 
 <div class="pb-4">
-  <Button variant="filled" color="secondary" href="/dashboard/shop/discounts/new">Add discount</Button>
+  <Button variant="filled" color="secondary" href="/dashboard/shop/discounts/new"
+    >Add discount</Button
+  >
 </div>
 
 <DataTable col="discounts" {headers} baseLink="/dashboard/shop/discounts/" />

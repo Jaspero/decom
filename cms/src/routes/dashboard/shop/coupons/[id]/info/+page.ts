@@ -6,7 +6,7 @@ export async function load({ params, parent }) {
   await parent();
 
   const { id } = params;
-  const col = 'tags';
+  const col = 'coupons';
 
   const snap = await getDoc(doc(db, col, id));
 

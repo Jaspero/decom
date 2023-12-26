@@ -9,19 +9,19 @@
 
   export let data: any;
 
-  async function allTags() {
+  async function allCoupons() {
     const doc = await getCountFromServer(
-      query(collection(db, 'products'), where('tags', 'array-contains-any', [data.id]))
+      query(collection(db, 'orders'), where('coupons', 'array-contains', data.id))
     );
 
     return doc.data().count;
   }
 
-  async function recentTags() {
+  async function recentCoupons() {
     const doc = await getCountFromServer(
       query(
-        collection(db, 'products'),
-        where('tags', 'array-contains-any', [data.id]),
+        collection(db, 'orders'),
+        where('coupons', 'array-contains', data.id),
         where('createdOn', '>=', DateTime.now().minus({ days: 30 }).toISODate())
       )
     );
@@ -39,22 +39,22 @@
   </GridCol>
   <div class="counter">
     <span class="counter-number">
-      {#await allTags()}
+      {#await allCoupons()}
         -
       {:then count}
         {count}
       {/await}
     </span>
-    <span class="counter-text">All Tags</span>
+    <span class="counter-text">All Coupons</span>
     <a
       href="/dashboard/shop/products?filters={base64UrlEncode({
-        tags: [data.id]
-      })}">View Products</a
+        coupons: data.id
+      })}">View Orders</a
     >
   </div>
   <div class="counter">
     <span class="counter-number">
-      {#await recentTags()}
+      {#await recentCoupons()}
         -
       {:then count}
         {count}
@@ -63,15 +63,15 @@
     <span class="counter-text">Recent</span>
     <a
       href="/dashboard/shop/products?filters={base64UrlEncode({
-        tags: [data.id],
+        coupons: data.id,
         createdOn: DateTime.now().minus({ days: 30 }).toISODate()
-      })}">View Products</a
+      })}">View Orders</a
     >
   </div>
 </Grid>
 
 <svelte:head>
-  <title>Tags - Shop - Jaspero</title>
+  <title>Coupon Information - Shop - Jaspero</title>
 </svelte:head>
 
 <style lang="postcss">
