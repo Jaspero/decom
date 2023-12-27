@@ -48,7 +48,7 @@ export async function notificationWrapper(
   try {
     resp = await request;
     if (successMessage) {
-      notification.set({ content: successMessage });
+      notification.set({ type: 'success', content: successMessage });
     }
   } catch (e: any) {
     if ((errorMessage as any) !== false) {

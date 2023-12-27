@@ -18,6 +18,7 @@
   } from 'firebase/auth';
   import Dialog from '$lib/Dialog.svelte';
   import { onMount } from 'svelte';
+  import {formatEmail} from "$lib/utils/format-emails";
 
   let email = '';
   let password = '';
@@ -39,7 +40,7 @@
   async function submit() {
     const { searchParams } = $page.url;
 
-    email = (email || '').toLowerCase().trim();
+    email = formatEmail(email);
 
     if (loading) {
       return;
