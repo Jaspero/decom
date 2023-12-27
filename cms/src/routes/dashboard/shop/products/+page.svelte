@@ -10,7 +10,8 @@
 
   let productDialog = false;
   let trackQuantity = false;
-  let currencies = CURRENCIES;
+  let attributes = [];
+let currencies = CURRENCIES;
   let multipleAttributes = [];
 
   function addRow() {
@@ -25,13 +26,16 @@
     const data = {};
     for (let field of formData) {
       const [key, value] = field;
-      console.log(11111, field);
+
       if (value) {
         data[key] = value;
       }
     }
 
-    console.log('data', data);
+    }
+
+function addAttribute() {
+  attributes = [...attributes, attributes.length];
   }
 </script>
 
@@ -39,13 +43,11 @@
   >Add product</Button
 >
 
-<Dialog bind:open={productDialog}>
-  <svelte:fragment slot="title">Product</svelte:fragment>
 
   <form name="filters" id="filters" on:submit|preventDefault={handleSubmit}>
     <Grid>
       <GridCol span="12">
-        <Field label="Name" name="name" value={''} />
+        <Field label="Name" name="productName" value={''} />
       </GridCol>
       <GridCol span="12">
         <Field label="Description" name="description" value={''} />
@@ -77,18 +79,109 @@
         </GridCol>
       {/if}
 
-      <GridCol span="12">
-        {#each multipleAttributes as attribute}
-          <Field label="Key" name="key" value={''} />
-          <Field label="Values" type="chip" name="values" value={''} />
-          <br /><br />
-        {/each}
-        <Button variant="outlined" color="secondary" on:click={addRow}>Add Row</Button>
-      </GridCol>
-    </Grid>
-  </form>
+        <GridCol span="12">
+            Attributes  <Button variant="filled" color="primary" on:click={addAttribute}>Add</Button>
+            {#each attributes as attribute}
+                <Field
+                        label="Key"
+                        name="key"
+                        value={''}
+                />
+                <Field
+                        label="Values"
+                        name="values"
+                        value={''}
+                />
+            {/each}
+        </GridCol>
 
-  <slot slot="actions">
-    <Button variant="filled" color="primary" type="submit" form="filters">Submit</Button>
-  </slot>
+    </Grid>
+</form>
+
+  <Button variant="filled" color="primary" type="submit" form="filters">Submit</Button>
+
+<Dialog bind:open={productDialog}>
+<!--    <svelte:fragment slot="title">Product</svelte:fragment>-->
+
+<!--    <form name="filters" id="filters" on:submit|preventDefault={handleSubmit}>-->
+<!--        <Grid>-->
+<!--            <GridCol span="12">-->
+<!--                <Field-->
+<!--                        label="Name"-->
+<!--                        name="name"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+<!--            <GridCol span="12">-->
+<!--                <Field-->
+<!--                        label="Description"-->
+<!--                        name="description"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+<!--            <GridCol span="12">-->
+<!--                <Field-->
+<!--                        label="Short Description"-->
+<!--                        name="shortDescription"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+<!--            <GridCol span="9">-->
+<!--                <Field-->
+<!--                        label="Price"-->
+<!--                        name="price"-->
+<!--                        type="number"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+<!--            <GridCol span="3">-->
+<!--                <Select-->
+<!--                        label="Currency"-->
+<!--                        name="currency"-->
+<!--                        value={''}-->
+<!--                >-->
+<!--                    {#each currencies as currency}-->
+<!--                        <option value={'EUR'}>{currency}</option>-->
+<!--                    {/each}-->
+
+<!--                </Select>-->
+<!--            </GridCol>-->
+<!--            <GridCol span="12">-->
+<!--                <Field-->
+<!--                        label="Tag"-->
+<!--                        type="chip"-->
+<!--                        name="tag"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+<!--            <label>-->
+<!--                <input type="checkbox" bind:checked={trackQuantity}/>-->
+<!--                Track Quantity-->
+<!--            </label>-->
+
+<!--            <GridCol span="12">-->
+<!--                Attributes-->
+<!--                <Field-->
+<!--                        label="Key"-->
+<!--                        name="key"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--                <Field-->
+<!--                        label="Type"-->
+<!--                        name="type"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--                <Field-->
+<!--                        label="Values"-->
+<!--                        name="values"-->
+<!--                        value={''}-->
+<!--                />-->
+<!--            </GridCol>-->
+
+<!--        </Grid>-->
+<!--    </form>-->
+
+<!--    <slot slot="actions">-->
+    <!--        <Button variant="filled" color="primary" type="submit" form="filters">Submit</Button>-->
+  <!--    </slot>-->
 </Dialog>
