@@ -1,27 +1,39 @@
 <script lang="ts">
-  import { updatePassword, sendEmailVerification, updateEmail, deleteUser } from 'firebase/auth';
-  import { notificationWrapper } from '$lib/notification/notification.ts';
+  import { updatePassword, sendEmailVerification, updateEmail, deleteUser, reauthenticateWithCredential,EmailAuthProvider } from 'firebase/auth';
+  import { notificationWrapper} from '$lib/notification/notification.ts';
   import { auth } from '$lib/utils/firebase';
   import { firebaseErrors } from '$lib/notification/notification';
   import Dialog from '$lib/Dialog.svelte';
 
+  import {goto} from "$app/navigation";
+
+
+
+
   let newPassword = '';
   let email = '';
   let isConfirmationVisible = false;
+  let relogDialog = false;
+
+  let emailForRelog = '';
+  let relogPassword = '';
 
   const handleUpdatePassword = async () => {
     try {
       if (auth.currentUser) {
         await notificationWrapper(
           updatePassword(auth.currentUser, newPassword),
-          'Password updated successfully.'
+          'Password updated successfully.',
         );
+        console.log('your new password:', newPassword);
+        newPassword = ''
       }
     } catch (error) {
-      ('Something went wrong');
-      console.error(error);
+      if (error.code === 'auth/requires-recent-login') {
+        openReloginDialog();
+      }
     }
-    console.log('your new password:', newPassword);
+
   };
 
   const handleUpdateEmail = async () => {
@@ -32,16 +44,15 @@
           'Email updated successfully.'
         );
       }
-    } catch (updateError) {
-      console.error(updateError);
-
-      if (updateError.code === 'auth/operation-not-allowed') {
+    } catch (error) {
+      if (error.code === 'auth/operation-not-allowed') {
         await notificationWrapper(
           sendEmailVerification(auth.currentUser),
           'Email verification sent. Please check your email.'
         );
       }
     }
+
   };
 
   const handleDeleteAccount = () => {
@@ -53,25 +64,41 @@
     isConfirmationVisible = false;
     try {
       if (auth.currentUser) {
-        // Delete user
-        await notificationWrapper(deleteUser(auth.currentUser), 'Account deleted successfully.');
+        await notificationWrapper(deleteUser(auth.currentUser),
+          'Account deleted successfully.'
+        );
       }
-    } catch (deleteError) {
-      console.error(deleteError);
-
-      // Handle errors using notificationWrapper
-      await notificationWrapper(
-        Promise.reject(deleteError), // Reject the promise to trigger notificationWrapper
-        firebaseErrors[deleteError.code] || 'An error occurred while deleting the account.'
-      );
+    } catch (error) {
+      console.error(error);
+      if (error.code === 'auth/requires-recent-login') {
+        openReloginDialog();
+      }
     }
+  };
 
-    console.log('Account deleted');
+
+  const handleRelog = async () => {
+    try {
+      const credential = EmailAuthProvider.credential(emailForRelog, relogPassword);
+
+      await notificationWrapper(reauthenticateWithCredential(auth.currentUser, credential),
+      'You have reloged successfully.',
+      );
+      relogDialog = false;
+      goto('/my-account/settings');
+    } catch (error) {
+      console.error('Error during relog:', error);
+    }
   };
 
   const cancelDelete = () => {
     isConfirmationVisible = false;
   };
+
+  const openReloginDialog = () => {
+    relogDialog = true;
+  };
+
 </script>
 
 <svelte:head>
@@ -83,14 +110,14 @@
 
   <form on:submit|preventDefault={handleUpdatePassword}>
     <label for="newPassword">New Password:</label>
-    <input type="password" id="newPassword" bind:value={newPassword} />
+    <input type="password" id="newPassword" bind:value={newPassword} required />
 
     <button type="submit">Update Password</button>
   </form>
 
   <form class="mt-[40px]" on:submit|preventDefault={handleUpdateEmail}>
     <label for="email">New Email:</label>
-    <input type="email" id="email" bind:value={email} />
+    <input type="email" id="email" bind:value={email} required />
 
     <button type="submit">Update Email</button>
   </form>
@@ -103,10 +130,29 @@
     <p>This action will delete your account permanently, are you sure you want to continue?</p>
   </div>
   <div class="flex w-full justify-center">
-    <button class="bg-red-700 p-4 text-white rounded-lg mr-[10px]" on:click={confirmDelete}
-      >Yes, delete my account</button
+    <button class="bg-red-700 p-4 text-white rounded-lg mr-[10px]" on:click={confirmDelete}>Yes, delete my account</button
     >
     <button class="bg-black text-white rounded-lg p-4" on:click={cancelDelete}>Cancel</button>
+  </div>
+</Dialog>
+
+
+
+<Dialog bind:showing={relogDialog}>
+  <div class="w-full text-center">
+    <h1>Relog</h1>
+    <p>Please enter your email and password for relog</p>
+    <form on:submit|preventDefault={handleRelog}>
+    <label for="emailForRelog">Email:</label>
+    <input type="email" id="emailForRelog" bind:value={emailForRelog} required />
+    <label for="relogPassword">Password:</label>
+    <input type="password" id="relogPassword" bind:value={relogPassword} required />
+      <div class="flex w-full justify-center">
+        <button class="bg-black text-white rounded-lg p-4" type="submit">
+          Relog
+        </button>
+      </div>
+    </form>
   </div>
 </Dialog>
 
