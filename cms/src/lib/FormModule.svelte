@@ -9,6 +9,8 @@
   import '@jaspero/web-components/dist/textarea.wc';
   import '@jaspero/web-components/dist/checkbox.wc';
   import '@jaspero/web-components/dist/file-upload.wc';
+  import '@jaspero/web-components/dist/toggle.wc';
+  import CardElement from './form-elements/CardElement.svelte';
 
   import { ModularSchema, ModularView } from '@jaspero/modular';
   import { onMount } from 'svelte';

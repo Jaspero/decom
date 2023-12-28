@@ -32,7 +32,7 @@
 
 <Grid>
   <GridCol span="12">
-    Tag Name:
+    Coupon Name:
     <Card>
       <slot slot="title">{data.name}</slot>
     </Card>

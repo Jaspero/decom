@@ -77,6 +77,16 @@ service cloud.firestore {
       allow write: if admin();
     }
 
+    match /coupons/{document} {
+      allow read: if admin()
+      allow write: if admin();
+    }
+
+    match /orders/{document} {
+      allow read: if admin() || (authenticated() && request.auth.uid == resource.data.customer);
+      allow write: if admin();
+    }
+
     match /categories/{document} {
       allow read: if true;
       allow write: if admin();

@@ -1,5 +1,5 @@
 <script lang="ts"></script>
 
 <svelte:head>
-  <title>Coupons - Shop - Jaspero</title>
+  <title>Coupon Reporting - Shop - Jaspero</title>
 </svelte:head>
