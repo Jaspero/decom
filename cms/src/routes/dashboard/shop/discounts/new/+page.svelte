@@ -59,7 +59,7 @@
   <Grid>
     <GridCol span="12">
       <Card>
-        <slot slot="title">New Tag</slot>
+        <slot slot="title">New Discount</slot>
 
         <slot slot="subtitle">
           <Breadcrumbs {segments} title={data.value.name} />
@@ -82,5 +82,5 @@
 </form>
 
 <svelte:head>
-  <title>New Tag - Shop - Jaspero</title>
+  <title>New Discount - Shop - Jaspero</title>
 </svelte:head>

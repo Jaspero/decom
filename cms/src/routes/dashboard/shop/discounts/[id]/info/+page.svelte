@@ -9,19 +9,19 @@
 
   export let data: any;
 
-  async function allTags() {
+  async function allOrders() {
     const doc = await getCountFromServer(
-      query(collection(db, 'products'), where('tags', 'array-contains-any', [data.id]))
+      query(collection(db, 'orders'), where('discounts', 'array-contains', data.id))
     );
 
     return doc.data().count;
   }
 
-  async function recentTags() {
+  async function recentOrders() {
     const doc = await getCountFromServer(
       query(
-        collection(db, 'products'),
-        where('tags', 'array-contains-any', [data.id]),
+        collection(db, 'orders'),
+        where('discounts', 'array-contains', data.id),
         where('createdOn', '>=', DateTime.now().minus({ days: 30 }).toISODate())
       )
     );
@@ -39,22 +39,22 @@
   </GridCol>
   <div class="counter">
     <span class="counter-number">
-      {#await allTags()}
+      {#await allOrders()}
         -
       {:then count}
         {count}
       {/await}
     </span>
-    <span class="counter-text">All Tags</span>
+    <span class="counter-text">All Orders</span>
     <a
-      href="/dashboard/shop/products?filters={base64UrlEncode({
-        tags: [data.id]
-      })}">View Products</a
+      href="/dashboard/shop/orders?filters={base64UrlEncode({
+        discounts: data.id
+      })}">View Orders</a
     >
   </div>
   <div class="counter">
     <span class="counter-number">
-      {#await recentTags()}
+      {#await recentOrders()}
         -
       {:then count}
         {count}
@@ -62,16 +62,16 @@
     </span>
     <span class="counter-text">Recent</span>
     <a
-      href="/dashboard/shop/products?filters={base64UrlEncode({
-        tags: [data.id],
+      href="/dashboard/shop/orders?filters={base64UrlEncode({
+        discounts: data.id,
         createdOn: DateTime.now().minus({ days: 30 }).toISODate()
-      })}">View Products</a
+      })}">View Orders</a
     >
   </div>
 </Grid>
 
 <svelte:head>
-  <title>Tags - Shop - Jaspero</title>
+  <title>Discounts - Shop - Jaspero</title>
 </svelte:head>
 
 <style lang="postcss">

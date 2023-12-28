@@ -13,10 +13,6 @@
     {
       key: '/name',
       label: 'Name'
-    },
-    {
-      key: '/description',
-      label: 'Description'
     }
   ];
 </script>
