@@ -9,6 +9,7 @@
   import '@jaspero/web-components/dist/textarea.wc';
   import '@jaspero/web-components/dist/checkbox.wc';
   import '@jaspero/web-components/dist/file-upload.wc';
+  import '@jaspero/web-components/dist/file-list.wc';
   import '@jaspero/web-components/dist/toggle.wc';
   import CardElement from './form-elements/CardElement.svelte';
 
