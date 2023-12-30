@@ -36,7 +36,7 @@
     saveLoading = true;
 
     data.value = unflatten(data.value);
-    data.value.id = generateSlug(data.value.name);
+    data.value.url = generateSlug(data.value.name);
 
     const { id, ...dt } = data.value;
 

@@ -21,7 +21,8 @@
   export let items: any[] = [];
   export let value: any = {};
   export let render: any = null;
-  export let id: string = '';
+  export let id = '';
+  export let container: string | null = null;
 
   let containerElement: HTMLDivElement;
 
@@ -34,8 +35,8 @@
       schema,
       views: [
         {
-          container: 'form',
-          id,
+          ...(container && { container }),
+          ...(id && { id }),
           items
         }
       ]

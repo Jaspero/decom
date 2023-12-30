@@ -8,21 +8,21 @@ export const PRODUCT_FORM = async (isNew: boolean) => {
   const tags: Array<{ label: string; value: string }> = [];
   const imageService = new BucketImageService();
 
-  imageService.prefix = 'products/',
-	imageService.metadata = [
-		{
-			height: 1000,
-			width: 1000,
-			filePrefix: 'thumb_m_',
-			folder: '/products/generated'
-		},
-		{
-			filePrefix: 'thumb_s_',
-			width: 500,
-			height: 500,
-			folder: '/products/generated'
-		}
-	];
+  imageService.prefix = 'products/';
+  imageService.metadata = [
+    {
+      height: 1000,
+      width: 1000,
+      filePrefix: 'thumb_m_',
+      folder: '/products/generated'
+    },
+    {
+      filePrefix: 'thumb_s_',
+      width: 500,
+      height: 500,
+      folder: '/products/generated'
+    }
+  ];
 
   const items = [
     {
@@ -44,7 +44,7 @@ export const PRODUCT_FORM = async (isNew: boolean) => {
           },
           {
             component: 'jp-input',
-            field: '/id',
+            field: '/url',
             options: {
               label: 'Url',
               name: 'url',
@@ -77,11 +77,11 @@ export const PRODUCT_FORM = async (isNew: boolean) => {
           quillFiled('products', 'content', 'Content'),
           {
             component: 'jp-file-list',
-						field: '/gallery',
-						options: {
-							label: 'Gallery',
-							service: imageService
-						}
+            field: '/gallery',
+            options: {
+              label: 'Gallery',
+              service: imageService
+            }
           }
         ]
       }
@@ -197,7 +197,7 @@ export const PRODUCT_FORM = async (isNew: boolean) => {
       columns: {
         desktop: 8,
         mobile: 12
-      },
+      }
     }
   ];
 

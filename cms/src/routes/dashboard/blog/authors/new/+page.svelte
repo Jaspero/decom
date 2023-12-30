@@ -66,13 +66,13 @@
         </slot>
 
         <div class="flex flex-col gap-6">
-          <FormModule id="form" bind:this={formModule} items={data.items} bind:value={data.value} />
+          <FormModule bind:this={formModule} items={data.items} bind:value={data.value} />
         </div>
 
         <slot slot="footerAction">
           <div class="flex-1" />
           <Button href={back} variant="outlined" color="secondary">Cancel</Button>
-          <Button type="submit" form="form" variant="filled" color="secondary" loading={saveLoading}
+          <Button type="submit" variant="filled" color="secondary" loading={saveLoading}
             >Save</Button
           >
         </slot>

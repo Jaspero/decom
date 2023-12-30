@@ -22,46 +22,80 @@
   import { generateSlug } from '../utils/generate-slug';
   import FormModule from '../FormModule.svelte';
   import Dialog from '../Dialog.svelte';
+  import Button from '../Button.svelte';
+  import { BucketImageService } from '../services/image.service';
+  import { quillFiled } from '../form-fields/quill.field';
 
   interface Variant {
     key: string;
     label: string;
-    price: number;
-    quantity: number;
+    price: number | null;
+    quantity: number | null;
     sku: string;
     barcode: string;
     content: string;
     gallery: string[];
-  };
+  }
 
   export let instance: ModularInstance;
+
+  const imageService = new BucketImageService();
+
+  imageService.prefix = 'products/';
+  imageService.metadata = [
+    {
+      height: 1000,
+      width: 1000,
+      filePrefix: 'thumb_m_',
+      folder: '/products/generated'
+    },
+    {
+      filePrefix: 'thumb_s_',
+      width: 500,
+      height: 500,
+      folder: '/products/generated'
+    }
+  ];
 
   const variantItems = [
     {
       component: 'jp-input',
       field: '/price',
-      columns: 3,
       options: {
+        label: 'Price',
         type: 'number'
       }
     },
     {
       component: 'jp-input',
       field: '/quantity',
-      columns: 3,
       options: {
+        label: 'Quantity',
         type: 'number'
       }
     },
     {
       component: 'jp-input',
       field: '/sku',
-      columns: 3
+      options: {
+        label: 'SKU'
+      }
     },
     {
       component: 'jp-input',
       field: '/barcode',
-      columns: 3
+      options: {
+        label: 'Barcode'
+      }
+    },
+    quillFiled('products', 'content', 'Content'),
+    {
+      component: 'jp-file-list',
+      field: '/gallery',
+      options: {
+        label: 'Gallery',
+        service: imageService
+      }
     }
   ];
 
@@ -92,32 +126,37 @@
       const options = set.options;
       const setKey = generateSlug(set.label);
 
-      segments.push(options.map((option) => [
-        setKey,
+      segments.push(
+        options.map((option) =>
+          [
+            setKey,
 
-        /**
-         * Since we use "_" as a separator in the id we need to replace it
-         * if found within the option it self
-         */
-        option.replace(/_/g, '-')
-      ].join(':')));
+            /**
+             * Since we use "_" as a separator in the id we need to replace it
+             * if found within the option it self
+             */
+            option.replace(/_/g, '-')
+          ].join(':')
+        )
+      );
     }
 
-		const newVariations = cartesian(segments)
-      .map(keys => keys.join('_'));
+    const newVariations = cartesian(segments).map((keys) => keys.join('_'));
 
     let hasChanges = false;
 
     for (const variant of newVariations) {
-      const item = variants.find(it => it.key === variant);
+      const item = variants.find((it) => it.key === variant);
 
       if (!item) {
-
         variants.push({
           key: variant,
-          label: variant.split('_').map(it => it.split(':')[1]).join(' / '),
-          price: 0,
-          quantity: 0,
+          label: variant
+            .split('_')
+            .map((it) => it.split(':')[1])
+            .join(' / '),
+          price: null,
+          quantity: null,
           sku: '',
           barcode: '',
           content: '',
@@ -136,8 +175,8 @@
       }
     }
 
-    let i = variants.length
-    
+    let i = variants.length;
+
     while (i--) {
       const variant = variants[i];
 
@@ -152,31 +191,30 @@
   }
 
   function cartesian(items: Array<string[]>) {
-
-		if (!items.length) {
-			return [];
-		}
+    if (!items.length) {
+      return [];
+    }
 
     const r: string[][] = [];
     const max = items.length - 1;
-    
-		function helper(arr: string[], i: number) {
+
+    function helper(arr: string[], i: number) {
       for (let j = 0, l = items[i].length; j < l; j++) {
         const a = arr.slice(0);
-        
-				a.push(items[i][j]);
-        
-				if (i === max) {
-					r.push(a);
-				} else {
-					helper(a, i + 1);
-				};
+
+        a.push(items[i][j]);
+
+        if (i === max) {
+          r.push(a);
+        } else {
+          helper(a, i + 1);
+        }
       }
     }
-    
-		helper([], 0);
-    
-		return r;
+
+    helper([], 0);
+
+    return r;
   }
 
   async function removeOptionSet(index: number) {
@@ -185,14 +223,14 @@
   }
 
   function openVariantDialog(variant: Variant) {
-    selectedVariant = {...variant};
+    selectedVariant = { ...variant };
     variantDialog = true;
   }
 
   async function updateVariant() {
-    const index = variants.findIndex(it => it.key === selectedVariant.key);
+    const index = variants.findIndex((it) => it.key === selectedVariant.key);
 
-    
+    await formModule.render.save(instance.value.id);
 
     variants[index] = selectedVariant;
     variants = [...variants];
@@ -249,18 +287,28 @@
         type="number"
         on:value={(event) => (variant.quantity = event.detail.value)}
       />
-      <jp-input placehold="SKU" value={variant.sku} on:value={(event) => (variant.sku = event.detail.value)} />
-      <jp-input placehold="Barcode" value={variant.barcode} on:value={(event) => (variant.sku = event.detail.value)} />
+      <jp-input
+        placehold="SKU"
+        value={variant.sku}
+        on:value={(event) => (variant.sku = event.detail.value)}
+      />
+      <jp-input
+        placehold="Barcode"
+        value={variant.barcode}
+        on:value={(event) => (variant.sku = event.detail.value)}
+      />
       <div>
-        <button type="button">Edit</button>
-        <button type="button">Remove</button>
+        <button type="button" on:click={() => openVariantDialog(variant)}>Edit</button>
       </div>
     {/each}
   </div>
 </div>
 
 <Dialog bind:open={variantDialog}>
-  <FormModule bind:this={formModule} items={variantItems} bind:value={selectedVariant} />
+  <form on:submit|preventDefault={updateVariant}>
+    <FormModule bind:this={formModule} items={variantItems} bind:value={selectedVariant} />
+    <Button type="submit">Save</Button>
+  </form>
 </Dialog>
 
 <style lang="postcss">
