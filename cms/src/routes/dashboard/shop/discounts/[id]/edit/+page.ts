@@ -1,7 +1,7 @@
 import { db } from '$lib/utils/firebase';
 import { redirect } from '@sveltejs/kit';
 import { doc, getDoc } from 'firebase/firestore';
-import {DISCOUNT_FORM} from '../../_discount-form.const.js';
+import { DISCOUNT_FORM } from '../../_discount-form.const.js';
 
 export async function load({ params, parent }) {
   await parent();

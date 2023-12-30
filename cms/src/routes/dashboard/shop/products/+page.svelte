@@ -2,10 +2,10 @@
   import DataTable from '$lib/DataTable.svelte';
   import { indexPipe } from '$lib/column-pipes/index.pipe';
   import Button from '$lib/Button.svelte';
-  import {populatePipe} from '$lib/column-pipes/populate.pipe';
-  import {checkboxPipe} from '$lib/column-pipes/checkbox.pipe';
-  import {releaseStatusPipe} from '$lib/column-pipes/release-status.pipe';
-  import {populateArrayPipe} from '$lib/column-pipes/populate-array.pipe';
+  import { populatePipe } from '$lib/column-pipes/populate.pipe';
+  import { checkboxPipe } from '$lib/column-pipes/checkbox.pipe';
+  import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
+  import { populateArrayPipe } from '$lib/column-pipes/populate-array.pipe';
 
   const headers = [
     {

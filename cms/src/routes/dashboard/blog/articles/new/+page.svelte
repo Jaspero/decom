@@ -8,12 +8,11 @@
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
   import { alertWrapper } from '$lib/utils/alert-wrapper';
-  import { confirmation } from '$lib/utils/confirmation';
   import { db } from '$lib/utils/firebase';
   import { generateSlug } from '$lib/utils/generate-slug';
   import { unflatten } from '$lib/utils/unflatten';
   import { urlSegments } from '$lib/utils/url-segments';
-  import { deleteDoc, doc, setDoc } from 'firebase/firestore';
+  import { doc, setDoc } from 'firebase/firestore';
 
   export let data: {
     col: string;
@@ -42,14 +41,14 @@
 
     const { id, ...dt } = data.value;
 
+    await formModule.render.save(id);
+
     await alertWrapper(
       setDoc(doc(db, data.col, id), dt),
       'Document created successfully',
       undefined,
       () => (saveLoading = false)
     );
-
-    await formModule.render.save(id);
 
     saveLoading = false;
 

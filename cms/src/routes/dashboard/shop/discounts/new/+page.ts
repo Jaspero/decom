@@ -1,4 +1,4 @@
-import {DISCOUNT_FORM} from '../_discount-form.const.js';
+import { DISCOUNT_FORM } from '../_discount-form.const.js';
 
 export async function load({ parent }) {
   await parent();

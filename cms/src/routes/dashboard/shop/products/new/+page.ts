@@ -1,4 +1,4 @@
-import {PRODUCT_FORM} from '../_product-form.const';
+import { PRODUCT_FORM } from '../_product-form.const';
 
 export async function load({ parent }) {
   await parent();

@@ -7,10 +7,12 @@ export function populateArrayPipe(collection: string, key: string, fallback = '-
       return fallback;
     }
 
-    return Promise.all(values.map(async value => {
-      const ref = await getDoc(doc(db, collection, value));
+    return Promise.all(
+      values.map(async (value) => {
+        const ref = await getDoc(doc(db, collection, value));
 
-      return ref.exists() && ref.data().hasOwnProperty(key) ? ref.data()[key] : fallback;
-    }));
+        return ref.exists() && ref.data().hasOwnProperty(key) ? ref.data()[key] : fallback;
+      })
+    );
   };
 }

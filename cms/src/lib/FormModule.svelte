@@ -11,15 +11,18 @@
   import '@jaspero/web-components/dist/file-upload.wc';
   import '@jaspero/web-components/dist/file-list.wc';
   import '@jaspero/web-components/dist/toggle.wc';
+  import '@jaspero/web-components/dist/chips.wc';
   import CardElement from './form-elements/CardElement.svelte';
+  import ProductVariants from './form-elements/ProductVariants.svelte';
 
   import { ModularSchema, ModularView } from '@jaspero/modular';
   import { onMount } from 'svelte';
 
   export let items: any[] = [];
   export let value: any = {};
-
   export let render: any = null;
+  export let id: string = '';
+
   let containerElement: HTMLDivElement;
 
   onMount(() => {
@@ -31,6 +34,8 @@
       schema,
       views: [
         {
+          container: 'form',
+          id,
           items
         }
       ]
