@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fly } from 'svelte/transition';
   import Loader from './Loader.svelte';
-  import { clickOutside } from './utils/clickOutside';
+  import { clickOutside } from './utils/click-outside';
 
   /* Link-specific */
   export let href = '';
