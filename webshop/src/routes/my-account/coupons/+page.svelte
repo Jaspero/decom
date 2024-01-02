@@ -7,21 +7,14 @@
   let items = [];
 
   const filter = writable({
-    used: false,
-    unused: false,
-    active: false,
-    inactive: false
+    showAll: true,
+    statusFilter: 'showAll', // Added status filter
+    validityFilter: 'showAll', // Added validity filter
   });
 
   onMount(async () => {
     try {
       const querySnapshot = await getDocs(collection(db, 'coupons'));
-      filter.set({
-        used: false,
-        unused: false,
-        active: false,
-        inactive: false
-      });
       items = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
       console.log('Fetched Collection:', items);
@@ -30,15 +23,17 @@
     }
   });
 
-  $: filteredItems = items.filter((item) => {
-    // Apply filters based on the filter store state
-    const usedFilter = $filter.used ? item.used : true;
-    const unusedFilter = $filter.unused ? !item.used : true;
-    const activeFilter = $filter.active ? isCouponActive(item.endDate) : true;
-    const inactiveFilter = $filter.inactive ? !isCouponActive(item.endDate) : true;
+  function updateFilter(filterType, value) {
+    filter.update((currentFilter) => {
+      return { ...currentFilter, [filterType]: value, showAll: false };
+    });
+  }
 
-    // Return true if the item passes all filters
-    return usedFilter && unusedFilter && activeFilter && inactiveFilter;
+  $: filteredItems = items.filter(item => {
+    const statusFilter = $filter.statusFilter === 'showAll' || ($filter.statusFilter === 'used' ? item.used : !item.used);
+    const validityFilter = $filter.validityFilter === 'showAll' || ($filter.validityFilter === 'active' ? isCouponActive(item.endDate) : !isCouponActive(item.endDate));
+
+    return statusFilter && validityFilter;
   });
 
   function copyToClipboard(text) {
@@ -51,30 +46,31 @@
   }
 
   function isCouponActive(endDate) {
-    // Convert the endDate string to a Date object
     const endDateTime = new Date(endDate);
-
-    // Get the current date
     const currentDate = new Date();
-
-    // Compare the endDate with the current date
     return endDateTime > currentDate;
   }
+
 </script>
+
 
 <main>
   <div class="w-full flex items-center">
-    <label>
-      <input type="checkbox" bind:checked={$filter.used} /> Used
+    <label for="statusFilter">
+      Coupon Status:
+      <select id="statusFilter" bind:value={$filter.statusFilter} on:change={() => updateFilter('statusFilter', $event.target.value)}>
+        <option value="showAll">Show All</option>
+        <option value="used">Used</option>
+        <option value="unused">Unused</option>
+      </select>
     </label>
-    <label>
-      <input type="checkbox" bind:checked={$filter.unused} /> Unused
-    </label>
-    <label>
-      <input type="checkbox" bind:checked={$filter.active} /> Active
-    </label>
-    <label>
-      <input type="checkbox" bind:checked={$filter.inactive} /> Inactive
+    <label for="validityFilter">
+      Coupon Validity:
+      <select id="validityFilter" bind:value={$filter.validityFilter} on:change={() => updateFilter('validityFilter', $event.target.value)}>
+        <option value="showAll">Show All</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
     </label>
   </div>
   <div class="flex flex-wrap justify-start align-start gap-4">
@@ -82,8 +78,7 @@
       <div
         class="{item.used
           ? 'used-card'
-          : 'normal-card'} block rounded-lg bg-white coupon-card p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 mr-[10px]"
-      >
+          : 'normal-card'} block rounded-lg bg-white coupon-card p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 mr-[10px]">
         <h5
           class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50 text-center"
         >
@@ -137,7 +132,8 @@
 </svelte:head>
 
 <style lang="postcss">
-  .coupon-card {
+
+.coupon-card {
     max-width: 300px;
     width: 100%;
   }
@@ -149,5 +145,10 @@
 
   .used-card button {
     cursor: not-allowed;
-  }
+}
+
+button[aria-pressed="true"] {
+  background-color: #4caf50;
+  color: white;
+}
 </style>
