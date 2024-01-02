@@ -39,9 +39,9 @@
   },
   "type": "module",
   "dependencies": {
-    "@jaspero/modular": "1.18.1",
+    "@jaspero/modular": "1.19.0",
     "@jaspero/utils": "1.15.3",
-    "@jaspero/web-components": "1.72.0",
+    "@jaspero/web-components": "1.76.5",
     "deepcopy": "2.1.0",
     "firebase": "10.7.1",
     "luxon": "3.4.4",

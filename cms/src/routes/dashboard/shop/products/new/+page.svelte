@@ -1,27 +1,25 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
+  import FormModule from '$lib/FormModule.svelte';
+  import { db } from '$lib/utils/firebase';
+  import { doc, setDoc } from 'firebase/firestore';
+
   import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import Button from '$lib/Button.svelte';
   import Card from '$lib/Card.svelte';
-  import FormModule from '$lib/FormModule.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
   import { alertWrapper } from '$lib/utils/alert-wrapper';
-  import { db } from '$lib/utils/firebase';
-  import { generateSlug } from '$lib/utils/generate-slug';
   import { unflatten } from '$lib/utils/unflatten';
   import { urlSegments } from '$lib/utils/url-segments';
-  import { doc, setDoc } from 'firebase/firestore';
+  import { generateSlug } from '$lib/utils/generate-slug';
 
   export let data: {
     col: string;
     items: any[];
     value: any;
   };
-
-  let saveLoading = false;
-  let formModule: FormModule;
 
   $: segments = urlSegments($page.url.pathname);
   $: back =
@@ -31,13 +29,14 @@
       .map((it) => it.value)
       .join('/');
 
+  let saveLoading = false;
+  let formModule: FormModule;
+
   async function submit() {
     saveLoading = true;
 
     data.value = unflatten(data.value);
-    data.value.lastUpdatedOn = new Date().toISOString();
-    data.value.id = generateSlug(data.value.title);
-    data.value.publicationDate = data.value.publicationDate || new Date().toISOString();
+    data.value.url = generateSlug(data.value.name);
 
     const { id, ...dt } = data.value;
 
@@ -60,10 +59,10 @@
   <Grid>
     <GridCol span="12">
       <Card>
-        <slot slot="title">New Blog Article</slot>
+        <slot slot="title">New Product</slot>
 
         <slot slot="subtitle">
-          <Breadcrumbs {segments} title={data.value.title} />
+          <Breadcrumbs {segments} title={data.value.name} />
         </slot>
 
         <div class="flex flex-col gap-6">
@@ -72,7 +71,6 @@
 
         <slot slot="footerAction">
           <div class="flex-1" />
-
           <Button href={back} variant="outlined" color="secondary">Cancel</Button>
           <Button type="submit" variant="filled" color="secondary" loading={saveLoading}
             >Save</Button
@@ -84,5 +82,5 @@
 </form>
 
 <svelte:head>
-  <title>New Article - Blog - Jaspero</title>
+  <title>New Product - Shop - Jaspero</title>
 </svelte:head>

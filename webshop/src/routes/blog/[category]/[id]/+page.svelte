@@ -24,7 +24,7 @@
     updateDoc
   } from 'firebase/firestore';
   import { onMount } from 'svelte';
-  import Recaptcha from '../../../../lib/Recaptcha.svelte';
+  import Recaptcha from '$lib/Recaptcha.svelte';
   import { page } from '$app/stores';
 
   export let data: BlogArticle;

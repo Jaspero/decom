@@ -1,14 +1,18 @@
 <script lang="ts">
-  import { updatePassword, sendEmailVerification, updateEmail, deleteUser, reauthenticateWithCredential,EmailAuthProvider } from 'firebase/auth';
-  import { notificationWrapper} from '$lib/notification/notification.ts';
+  import {
+    updatePassword,
+    sendEmailVerification,
+    updateEmail,
+    deleteUser,
+    reauthenticateWithCredential,
+    EmailAuthProvider
+  } from 'firebase/auth';
+  import { notificationWrapper } from '$lib/notification/notification.ts';
   import { auth } from '$lib/utils/firebase';
   import { firebaseErrors } from '$lib/notification/notification';
   import Dialog from '$lib/Dialog.svelte';
 
-  import {goto} from "$app/navigation";
-
-
-
+  import { goto } from '$app/navigation';
 
   let newPassword = '';
   let email = '';
@@ -23,17 +27,16 @@
       if (auth.currentUser) {
         await notificationWrapper(
           updatePassword(auth.currentUser, newPassword),
-          'Password updated successfully.',
+          'Password updated successfully.'
         );
         console.log('your new password:', newPassword);
-        newPassword = ''
+        newPassword = '';
       }
     } catch (error) {
       if (error.code === 'auth/requires-recent-login') {
         openReloginDialog();
       }
     }
-
   };
 
   const handleUpdateEmail = async () => {
@@ -52,7 +55,6 @@
         );
       }
     }
-
   };
 
   const handleDeleteAccount = () => {
@@ -64,9 +66,7 @@
     isConfirmationVisible = false;
     try {
       if (auth.currentUser) {
-        await notificationWrapper(deleteUser(auth.currentUser),
-          'Account deleted successfully.'
-        );
+        await notificationWrapper(deleteUser(auth.currentUser), 'Account deleted successfully.');
       }
     } catch (error) {
       console.error(error);
@@ -76,13 +76,13 @@
     }
   };
 
-
   const handleRelog = async () => {
     try {
       const credential = EmailAuthProvider.credential(emailForRelog, relogPassword);
 
-      await notificationWrapper(reauthenticateWithCredential(auth.currentUser, credential),
-      'You have reloged successfully.',
+      await notificationWrapper(
+        reauthenticateWithCredential(auth.currentUser, credential),
+        'You have reloged successfully.'
       );
       relogDialog = false;
       goto('/my-account/settings');
@@ -98,7 +98,6 @@
   const openReloginDialog = () => {
     relogDialog = true;
   };
-
 </script>
 
 <svelte:head>
@@ -130,27 +129,24 @@
     <p>This action will delete your account permanently, are you sure you want to continue?</p>
   </div>
   <div class="flex w-full justify-center">
-    <button class="bg-red-700 p-4 text-white rounded-lg mr-[10px]" on:click={confirmDelete}>Yes, delete my account</button
+    <button class="bg-red-700 p-4 text-white rounded-lg mr-[10px]" on:click={confirmDelete}
+      >Yes, delete my account</button
     >
     <button class="bg-black text-white rounded-lg p-4" on:click={cancelDelete}>Cancel</button>
   </div>
 </Dialog>
-
-
 
 <Dialog bind:showing={relogDialog}>
   <div class="w-full text-center">
     <h1>Relog</h1>
     <p>Please enter your email and password for relog</p>
     <form on:submit|preventDefault={handleRelog}>
-    <label for="emailForRelog">Email:</label>
-    <input type="email" id="emailForRelog" bind:value={emailForRelog} required />
-    <label for="relogPassword">Password:</label>
-    <input type="password" id="relogPassword" bind:value={relogPassword} required />
+      <label for="emailForRelog">Email:</label>
+      <input type="email" id="emailForRelog" bind:value={emailForRelog} required />
+      <label for="relogPassword">Password:</label>
+      <input type="password" id="relogPassword" bind:value={relogPassword} required />
       <div class="flex w-full justify-center">
-        <button class="bg-black text-white rounded-lg p-4" type="submit">
-          Relog
-        </button>
+        <button class="bg-black text-white rounded-lg p-4" type="submit"> Relog </button>
       </div>
     </form>
   </div>

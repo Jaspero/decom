@@ -56,21 +56,13 @@ const TIME_OPTIONS = [
   `23:30`
 ].map((time) => ({ label: time, value: time }));
 
-export const COUPON_FORM = [
+export const DISCOUNT_FORM = [
   {
     component: 'jp-input',
     field: '/name',
     options: {
       label: 'Name',
       name: 'name'
-    }
-  },
-  {
-    component: 'jp-input',
-    field: '/code',
-    options: {
-      label: 'Code',
-      name: 'code'
     }
   },
   {
@@ -177,68 +169,20 @@ export const COUPON_FORM = [
     component: 'card-element',
     columns: { desktop: 6, mobile: 12 },
     options: {
-      title: 'Maximum Discount Uses',
-      items: [
-        {
-          component: 'jp-toggle',
-          field: '/applyMaximumUses',
-          options: {
-            label: 'Limit number of times this coupon can be used in total'
-          }
-        },
-        {
-          component: 'jp-input',
-          field: '/maximumUses',
-          hidden: {
-            deps: ['/applyMaximumUses'],
-            check: (value: any) => value.applyMaximumUses
-          },
-          options: {
-            type: 'number',
-            label: 'Maximum Uses'
-          }
-        },
-        {
-          component: 'jp-toggle',
-          field: '/applyMaximumUsesPerCustomer',
-          options: {
-            type: 'number',
-            label: 'Limit number of times this coupon can be used by a single customer'
-          }
-        },
-        {
-          component: 'jp-input',
-          field: '/maximumUsesPerCustomer',
-          hidden: {
-            deps: ['/applyMaximumUsesPerCustomer'],
-            check: (value: any) => value.applyMaximumUsesPerCustomer
-          },
-          options: {
-            type: 'number',
-            label: 'Maximum Uses Per Customer'
-          }
-        }
-      ]
-    }
-  },
-  {
-    component: 'card-element',
-    columns: { desktop: 6, mobile: 12 },
-    options: {
       title: 'Combinations',
       items: [
         {
           component: 'jp-toggle',
-          field: '/canBeCombinedWithOtherCoupons',
+          field: '/canBeCombinedWithOtherDiscounts',
           options: {
-            label: 'Can be combined with other coupons'
+            label: 'Can be combined with other discounts'
           }
         },
         {
           component: 'jp-toggle',
-          field: '/canBeCombinedWithDiscounts',
+          field: '/canBeCombinedWithCoupons',
           options: {
-            label: 'Can be combined with discounts'
+            label: 'Can be combined with coupons'
           }
         }
       ]

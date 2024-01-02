@@ -1,25 +1,10 @@
+import { DISCOUNT_FORM } from '../_discount-form.const.js';
+
 export async function load({ parent }) {
   await parent();
 
-  const col = 'tags';
-  const items = [
-    {
-      component: 'jp-input',
-      field: '/name',
-      options: {
-        label: 'Name',
-        name: 'name'
-      }
-    },
-    {
-      component: 'jp-textarea',
-      field: '/description',
-      options: {
-        label: 'Description',
-        name: 'description'
-      }
-    }
-  ];
+  const col = 'discounts';
+  const items = DISCOUNT_FORM;
 
   return { col, items, value: {} };
 }

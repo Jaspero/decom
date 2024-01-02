@@ -99,5 +99,5 @@
 </form>
 
 <svelte:head>
-  <title>Edit Category - Blog - Jaspero</title>
+  <title>Edit Discount - Blog - Jaspero</title>
 </svelte:head>
