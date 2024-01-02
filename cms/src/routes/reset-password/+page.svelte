@@ -37,5 +37,5 @@
 </div>
 
 <svelte:head>
-  <title>Reset Password - GlycanAge</title>
+  <title>Reset Password - Jaspero</title>
 </svelte:head>

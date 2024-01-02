@@ -1,21 +1,15 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
-  import {
-    collection,
-    getDocs,
-    query,
-    orderBy,
-    limit,
-    startAfter
-  } from 'firebase/firestore';
+  import { collection, getDocs, query, limit, startAfter, where } from 'firebase/firestore';
   import { db } from '$lib/utils/firebase';
 
+  let currentFilters = {};
+  let products;
   let lastProductDoc;
   let loading = false;
   let btnLoading = false;
-  let showBtn = true;
-  let products = [];
   const pageSize = 15;
+  let showBtn = true;
 
   async function loadProducts() {
     if (!lastProductDoc) {
@@ -27,13 +21,13 @@
     const discountsRef = collection(db, 'products');
     let filters = [];
 
-    // if (currentFilters) {
-    //   for (const [key, value] of Object.entries(currentFilters)) {
-    //     filters.push(where(key, '==', value));
-    //   }
-    // }
+    if (currentFilters) {
+      for (const [key, value] of Object.entries(currentFilters)) {
+        filters.push(where(key, '==', value));
+      }
+    }
 
-    let queryRef = query(discountsRef, ...(filters.length ? filters : []), orderBy('created', 'desc'), limit(pageSize + 1));
+    let queryRef = query(discountsRef, ...(filters.length ? filters : []), limit(pageSize + 1));
 
     if (lastProductDoc) {
       queryRef = query(
@@ -48,7 +42,7 @@
 
     if (!snap.empty) {
       if (snap.docs.length === 16) {
-        snap.docs.pop()
+        snap.docs.pop();
       } else {
         showBtn = false;
       }
@@ -63,7 +57,7 @@
         })
       );
       products = products ? [...products, ...moreProducts] : moreProducts;
-
+      console.log('products', products);
       if (moreProducts.length < pageSize) {
         showBtn = false;
       }
@@ -77,8 +71,4 @@
   });
 </script>
 
-
-
-{#each products as product}
-    <div>{product.name}</div>
-{/each}
+<p>Shop</p>

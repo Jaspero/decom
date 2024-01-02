@@ -163,6 +163,12 @@
 
 <div id="recaptcha-container-id" />
 <div class="flex items-center">
+  <img
+    src="/images/patternmidtext.svg"
+    alt=""
+    class="hidden lg:block h-screen max-w-md object-cover"
+  />
+
   <div class="flex flex-1">
     <Grid>
       <GridCol span="2" />
@@ -206,7 +212,7 @@
               </div>
               <div class="flex items-center gap-4">
                 <Button variant="filled" color="secondary" type="submit" {loading}>Log in</Button>
-                <button class="gsi-material-button" on:click={loginGoogle}>
+                <button class="gsi-material-button" type="button" on:click={loginGoogle}>
                   <div class="gsi-material-button-state" />
                   <div class="gsi-material-button-content-wrapper">
                     <div class="gsi-material-button-icon">
@@ -255,8 +261,6 @@
       <GridCol span="2" />
     </Grid>
   </div>
-
-  <img src="/images/success-bg.svg" alt="" class="hidden lg:block h-screen max-w-md object-cover" />
 </div>
 
 <Dialog bind:open={resetPasswordDialog}>
@@ -276,7 +280,7 @@
 </Dialog>
 
 <svelte:head>
-  <title>Login - GlycanAge</title>
+  <title>Login - Jaspero</title>
 </svelte:head>
 
 <style>

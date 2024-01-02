@@ -133,6 +133,5 @@ export const CURRENCIES = [
   'XPF',
   'YER',
   'ZAR',
-  'ZMW',
-
-]
+  'ZMW'
+];

@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from './Button.svelte';
-  import { clickOutside } from './utils/clickOutside';
+  import { clickOutside } from './utils/click-outside';
 
   export let open: boolean;
   export let removePadding = false;

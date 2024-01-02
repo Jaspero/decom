@@ -31,7 +31,71 @@ service cloud.firestore {
 
     match /settings/status {
       allow write, read: if admin();
+    }
+
+    match /products/{document=**} {
+      allow read;
+      allow write: if admin();
+    }
+
+    match /blog-articles/{document} {
+      allow read, write: if admin();
+
+      match /blog-comments/{comment} {
+        allow list: if true || admin();
+        allow get: if admin();
+        allow create: if admin() || (
+          authenticated() &&
+          request.resource.data.author == request.auth.uid &&
+          request.resource.data.keys().hasOnly(
+            ['author', 'authorName', 'comment', 'createdOn']
+          )
+        );
+        allow update: if admin() || (
+          request.resource.data.author == request.auth.uid &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['comment', 'authorName'])
+        );
+        allow delete: if admin() || (resource.data.author == request.auth.uid);
+      }
+    }
+
+    match /blog-categories/{document} {
+      allow read, write: if admin();
+    }
+
+    match /blog-authors/{document} {
+      allow read, write: if admin();
+    }
+
+    match /tags/{document} {
+      allow read: if true;
+      allow write: if admin();
+    }
+
+    match /products/{document} {
+      allow read: if true;
+      allow write: if admin();
+    }
+
+    match /coupons/{document} {
+      allow read: if admin()
+      allow write: if admin();
+    }
+
+    match /discounts/{document} {
+      allow read: if true;
+      allow write: if admin();
     }    
+
+    match /orders/{document} {
+      allow read: if admin() || (authenticated() && request.auth.uid == resource.data.customer);
+      allow write: if admin();
+    }
+
+    match /categories/{document} {
+      allow read: if true;
+      allow write: if admin();
+    }
 
     match /{document=**} {
       allow read, write: if false;

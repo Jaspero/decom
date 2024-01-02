@@ -24,11 +24,11 @@
   <aside transition:fade={{ duration: 200 }}>
     <main>
       {#if $notification.type === 'success'}
-        <img src="/images/notification/success.svg" alt="Success" width="32" height="32" />
+        <img src="/images/success.svg" alt="Success" width="32" height="32" />
       {:else if $notification.type === 'error'}
-        <img src="/images/notification/error.svg" alt="Error" width="32" height="32" />
+        <img src="/images/error.svg" alt="Error" width="32" height="32" />
       {:else}
-        <img src="/images/notification/info.svg" alt="Info" width="32" height="32" />
+        <img src="/images/info.svg" alt="Info" width="32" height="32" />
       {/if}
       <section>
         <h1>{$notification.title || 'Notification'}</h1>

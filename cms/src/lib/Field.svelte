@@ -79,7 +79,7 @@
   {:else if type === 'hidden'}
     <input type="hidden" {required} {placeholder} {disabled} {name} bind:value />
   {:else if type === 'chip'}
-    <jp-chips label="" {name}></jp-chips>
+    <jp-chips label="" {name} />
   {:else if type === 'search'}
     <input type="search" {required} {placeholder} {disabled} {name} bind:value />
   {/if}

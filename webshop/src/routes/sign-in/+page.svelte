@@ -3,7 +3,7 @@
   import { page } from '$app/stores';
   import Button from '$lib/Button.svelte';
   import Field from '$lib/Field.svelte';
-  import { auth, authenticated } from '$lib/utils/firebase';
+  import { auth } from '$lib/utils/firebase';
   import Recaptcha from '$lib/Recaptcha.svelte';
   import { notificationWrapper } from '$lib/notification/notification';
   import {
@@ -18,8 +18,7 @@
   } from 'firebase/auth';
   import Dialog from '$lib/Dialog.svelte';
   import { onMount } from 'svelte';
-  import GridCol from '$lib/GridCol.svelte';
-  import Loader from '../../lib/Loader.svelte';
+  import { formatEmail } from '$lib/utils/format-emails';
 
   let email = '';
   let password = '';
@@ -38,14 +37,10 @@
   let resolver: any;
   let verId: string;
 
-  $: if ($authenticated) {
-    goto('/dashboard');
-  }
-
   async function submit() {
     const { searchParams } = $page.url;
 
-    email = (email || '').toLowerCase().trim();
+    email = formatEmail(email);
 
     if (loading) {
       return;
@@ -140,7 +135,7 @@
           ? decodeURIComponent(searchParams.get('forward') as string)
           : '/'
       );
-    }, 2000);
+    }, 1000);
   }
 
   async function resetPassword() {
@@ -204,29 +199,41 @@
 </script>
 
 <div class="max-w-7xl mx-auto p-12">
-  <div id="recaptcha-container-id"></div>
+  <div id="recaptcha-container-id" />
 
   {#if showCodeInput}
-    <Button color="error" href="/login" on:click={back}>Back to login</Button>
+    <Button href="/login" on:click={back}>Back to login</Button>
     <p>
       We have sent you a 6-digit verification code to: <!--<b>{resolver.hints[0].phoneNumber}</b>-->
     </p>
 
     <Field required label="MFA Verification Code:" type="text" bind:value={codeInput} />
 
-    <Button color="primary" loading={confirmLoader} on:click={confirm} label="Confirm and sign in" />
+    <Button loading={confirmLoader} on:click={confirm} label="Confirm and sign in" />
   {:else}
     <form on:submit|preventDefault={submit}>
       <div class="flex flex-col gap-4">
         <Field label="Email" type="email" bind:value={email} autocomplete="email" required />
-        <Field label="Password" {type} bind:value={password} autocomplete="current-password" required />
+        <Field
+          label="Password"
+          {type}
+          bind:value={password}
+          autocomplete="current-password"
+          required
+        />
         <div>
-          <Button type="button" on:click={toggleVisible} label={type === 'password' ? 'Show password' : 'Hide password'} />
+          <Button
+            type="button"
+            on:click={toggleVisible}
+            label={type === 'password' ? 'Show password' : 'Hide password'}
+          />
         </div>
       </div>
 
       <Button id="login-password" type="submit" {loading} label="Sign in" />
-      <button type="button" on:click={loginGoogle} class="googleButton" name="Sign in with Google">Sign in with google</button>
+      <button type="button" on:click={loginGoogle} class="googleButton" name="Sign in with Google"
+        >Sign in with google</button
+      >
 
       <p>Forgot your password?</p>
       <Button type="button" on:click={() => (rDialog = true)} label="Reset password" />

@@ -1,7 +1,9 @@
 <script lang="ts">
-  import '../../app.postcss';
   import Nav from '$lib/Nav.svelte';
-  import Footer from '$lib/Footer.svelte';
+
+  // Needs to be imported so the component is registered
+  import ColumnToggle from '$lib/column-elements/ColumnToggle.svelte';
+  import ColumnStatus from '$lib/column-elements/ColumnStatus.svelte';
 
   const links = [
     { label: 'Home', href: '/dashboard' },
@@ -19,7 +21,7 @@
       label: 'Sales',
       links: [
         { label: 'Orders', href: '/dashboard/sales/orders' },
-        { label: 'Customers', href: '/dashboard/sales/customers' },
+        { label: 'Customers', href: '/dashboard/sales/customers' }
       ]
     },
     {
@@ -27,13 +29,12 @@
       links: [
         { label: 'Articles', href: '/dashboard/blog/articles' },
         { label: 'Categories', href: '/dashboard/blog/categories' },
+        { label: 'Authors', href: '/dashboard/blog/authors' }
       ]
     },
     {
       label: 'Management',
-      links: [
-        { label: 'Admins', href: '/dashboard/admins' }
-      ]
+      links: [{ label: 'Admins', href: '/dashboard/admins' }]
     }
   ];
 </script>
@@ -43,6 +44,5 @@
 
   <main class="flex-1 overflow-y-auto">
     <slot />
-    <Footer />
   </main>
 </div>

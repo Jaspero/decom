@@ -16,7 +16,7 @@ export async function redirectAuthorized(path = '/') {
   });
 
   if (user) {
-    throw redirect(301, path);
+    redirect(301, path);
   }
 
   return user;

@@ -3,7 +3,7 @@
   import Close from 'svelte-material-icons/Close.svelte';
   import AccountCircle from 'svelte-material-icons/AccountCircle.svelte';
   import Button from './Button.svelte';
-  import { clickOutside } from './utils/clickOutside';
+  import { clickOutside } from './utils/click-outside';
   import { fly } from 'svelte/transition';
   import { goto } from '$app/navigation';
   import { auth, db } from '$lib/utils/firebase';
@@ -11,7 +11,7 @@
   import { doc, onSnapshot, setDoc } from 'firebase/firestore';
   import { onMount } from 'svelte';
   import { lastPublishedOn } from './stores/last-published-on.store';
-  import {page} from "$app/stores";
+  import { page } from '$app/stores';
 
   export let label: string;
   export let links: Array<{
@@ -21,6 +21,7 @@
       label: string;
       href: string;
     }>;
+    checked?: boolean;
   }>;
 
   let dropdown = false;
@@ -47,14 +48,14 @@
 
   onMount(() => {
     onSnapshot(doc(db, 'settings', 'status'), (doc) => {
-      const {lastPublished} = doc.data() || {};
-      
+      const { lastPublished } = doc.data() || {};
+
       if (lastPublished) {
         lastPublishedOn.set(lastPublished);
       }
     });
 
-    links = links.map(link => {
+    links = links.map((link) => {
       if (link.links) {
         return {
           ...link,
@@ -68,7 +69,7 @@
 
 <nav>
   <a href="/dashboard" class="flex items-center gap-2">
-    <img src="/brand/logo.svg" alt="GlycanAge Logo" />
+    <img src="/brand/logo.svg" alt="GlycanAge Logo" class="logo-img" />
 
     {#if label}
       <p>{label}</p>
@@ -90,21 +91,35 @@
           </Button>
         {:else if link.links}
           <div class="relative">
-            <Button on:click={() => {link.checked = !link.checked}}>
+            <Button
+              on:click={() => {
+                link.checked = !link.checked;
+              }}
+            >
               {link.label}
-                <img class="ml-2"
-                     src={link.checked ? '/images/expand_less.svg' : '/images/expand_more.svg'}
-                     alt={link.checked ? 'Expand less' : 'Expand more'}>
+              <img
+                class="ml-2"
+                src={link.checked ? '/images/expand_less.svg' : '/images/expand_more.svg'}
+                alt={link.checked ? 'Expand less' : 'Expand more'}
+              />
             </Button>
 
             {#if link.checked}
-              <div class="dropdown"
-                   use:clickOutside
-                   on:click_outside={() => {link.checked = false}}
-                   transition:fly={{ duration: 300, y: 20 }}
+              <div
+                class="dropdown"
+                use:clickOutside
+                on:click_outside={() => {
+                  link.checked = false;
+                }}
+                transition:fly={{ duration: 300, y: 20 }}
               >
                 {#each link.links as inner}
-                  <Button href={inner.href} on:click={() => {link.checked = false}}>
+                  <Button
+                    href={inner.href}
+                    on:click={() => {
+                      link.checked = false;
+                    }}
+                  >
                     <span class="link-label" class:active={pathname === inner.href}>
                       {inner.label}
                     </span>
@@ -166,7 +181,7 @@
 
 <style lang="postcss">
   nav {
-    @apply z-20 relative flex items-center px-6 min-h-[4rem] h-16 border-b bg-white;
+    @apply z-20 relative flex items-center px-6 2xl:px-20  min-h-[5rem] h-16 bg-white;
   }
 
   .menu {
@@ -179,6 +194,10 @@
 
   img {
     @apply h-6;
+  }
+
+  .logo-img {
+    @apply h-10;
   }
 
   .link-label {

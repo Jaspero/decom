@@ -1,12 +1,12 @@
 <script lang="ts">
   import { fly } from 'svelte/transition';
   import Loader from './Loader.svelte';
-  import { clickOutside } from './utils/clickOutside';
+  import { clickOutside } from './utils/click-outside';
 
   /* Link-specific */
-  export let href: string = '';
-  export let hreflang: string = '';
-  export let target: '_blank' | '_self' | '_parent' | '_top' | '' = '';
+  export let href = '';
+  export let hreflang: string | null = null;
+  export let target: '_blank' | '_self' | '_parent' | '_top' | null = null;
   export let rel:
     | 'alternate' /* Link to an alternative page (ex. translated page) */
     | 'author' /* Link to the author of the document */
@@ -20,7 +20,7 @@
     | 'noopener noreferrer' /* When linking to an external website, using noopener and noreferrer improves user privacy and security */
     | 'search' /* Links to a search tool for the document */
     | 'tag' /* Specifies that the linked page contains the tag, keyword, or subject of the current page. */
-    | '' = '';
+    | null = null;
   export let download: boolean | null = null;
 
   /* Button-specific */
@@ -58,7 +58,6 @@
     {download}
     {hreflang}
     class="variant-{variant} color-{color} size-{size}"
-    on:click|stopPropagation
   >
     {#if loading}
       <Loader />
@@ -176,7 +175,7 @@
     @apply bg-transparent border-2 border-transparent;
   }
   .variant-default.color-primary {
-    @apply hover:bg-primary/[8%] text-primary duration-200;
+    @apply hover:text-secondary text-primary duration-200;
   }
   .variant-default.color-secondary {
     @apply hover:bg-secondary/[8%] text-secondary duration-200;
@@ -230,10 +229,10 @@
   }
 
   .size-regular {
-    @apply text-sm;
+    @apply text-base;
   }
 
   .size-large {
-    @apply text-base;
+    @apply text-lg;
   }
 </style>

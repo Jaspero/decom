@@ -8,11 +8,11 @@ import { getStorage } from 'firebase/storage';
 import { ENV_CONFIG } from './env-config';
 import type { FirestoreUser } from '../interfaces/firestore-user.interface';
 
-export const firebaseApp = initializeApp(ENV_CONFIG);
+export const firebaseApp = initializeApp(ENV_CONFIG.firebase);
 export const auth = getAuth(firebaseApp);
 export const storage = getStorage(firebaseApp);
 export const db = getFirestore(firebaseApp);
-export const functions = getFunctions(firebaseApp);
+export const functions = getFunctions(firebaseApp, ENV_CONFIG.region);
 
 export const authenticated = writable<null | false | User>(null);
 export const user = writable<null | FirestoreUser>(null);

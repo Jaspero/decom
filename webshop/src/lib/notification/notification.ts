@@ -1,7 +1,7 @@
 import { FirebaseError } from 'firebase/app';
 import { writable } from 'svelte/store';
 
-const firebaseErrors: { [key: string]: string } = {
+export const firebaseErrors: { [key: string]: string } = {
   'auth/wrong-password':
     'The email and password you entered did not match our records. Please double-check and try again.',
   'auth/too-many-requests':
@@ -12,12 +12,18 @@ const firebaseErrors: { [key: string]: string } = {
   'auth/user-token-expired': `This is a sensitive action. Please login again to perform it.`,
   'auth/invalid-login-credentials':
     'The email and password you entered did not match our records. Please double-check and try again.',
+  'auth/invalid-credential':
+    'The email and password you entered did not match our records. Please double-check and try again.',
   'auth/invalid-verification-code': 'The code you entered is invalid. Please try again.',
   'auth/code-expired': 'The code you entered has expired. Please try again.',
   'auth/missing-code': 'Please enter the code you received via SMS.',
   'auth/invalid-phone-number': 'Please enter a valid phone number.',
   'auth/unverified-email': 'Please verify your email first.',
-  'auth/requires-recent-login': 'This action requires you to login again.'
+  'auth/requires-recent-login': 'This action requires you to log in again.',
+  'auth/email-already-in-use': 'The email address is already in use',
+  'uth/operation-not-allowed': 'Please verify the new email before changing email',
+  'auth/unauthorized-domain':
+    'This app is not authorized to authenticate with the provided domain. Please contact support for assistance.'
 };
 
 export interface Notification {
@@ -42,7 +48,7 @@ export async function notificationWrapper(
   try {
     resp = await request;
     if (successMessage) {
-      notification.set({ content: successMessage });
+      notification.set({ type: 'success', content: successMessage });
     }
   } catch (e: any) {
     if ((errorMessage as any) !== false) {

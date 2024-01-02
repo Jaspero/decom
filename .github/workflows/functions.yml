@@ -16,9 +16,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
       - name: Install Dependencies
-        run: |
-          npm i -g firebase-tools@12.4.8
-          npm --prefix functions ci --legacy-peer-deps
+        run: npm --prefix functions ci --legacy-peer-deps
       - name: Build
         run: |
           npm --prefix functions run build
