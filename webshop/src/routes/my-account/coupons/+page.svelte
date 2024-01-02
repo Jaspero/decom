@@ -58,7 +58,7 @@
   <div class="w-full flex items-center">
     <label for="statusFilter">
       Coupon Status:
-      <select id="statusFilter" bind:value={$filter.statusFilter} on:change={() => updateFilter('statusFilter', $event.target.value)}>
+      <select id="statusFilter" bind:value={$filter.statusFilter} on:change={() => updateFilter('statusFilter', event.target.value)}>
         <option value="showAll">Show All</option>
         <option value="used">Used</option>
         <option value="unused">Unused</option>
@@ -66,7 +66,7 @@
     </label>
     <label for="validityFilter">
       Coupon Validity:
-      <select id="validityFilter" bind:value={$filter.validityFilter} on:change={() => updateFilter('validityFilter', $event.target.value)}>
+      <select id="validityFilter" bind:value={$filter.validityFilter} on:change={() => updateFilter('validityFilter', event.target.value)}>
         <option value="showAll">Show All</option>
         <option value="active">Active</option>
         <option value="inactive">Inactive</option>
