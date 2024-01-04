@@ -63,7 +63,7 @@
       }
 
       await alertWrapper(
-        deleteDoc(doc(db, 'blog-aricles', data.id, 'blog-comments', comment.id)),
+        deleteDoc(doc(db, 'blog-articles', data.id, 'blog-comments', comment.id)),
         `Comment deleted successfully`
       );
 
