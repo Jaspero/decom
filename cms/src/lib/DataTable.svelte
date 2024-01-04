@@ -6,7 +6,7 @@
     query,
     orderBy,
     limit,
-    startAfter,
+    startAt,
     where
   } from 'firebase/firestore';
   import { onMount } from 'svelte';
@@ -89,7 +89,7 @@
     }
 
     if (ref) {
-      queries.push(startAfter(ref));
+      queries.push(startAt(ref));
     }
 
     const snap = await getDocs(
