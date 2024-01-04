@@ -59,7 +59,7 @@
       }
 
       await alertWrapper(
-        deleteDoc(doc(db, 'blog-articles', $page.params.id, 'blog-comments', data.value.id)),
+        deleteDoc(doc(db, 'blog-articles', $page.params.id, 'blog-reviews', data.value.id)),
         `Item deleted successfully`
       );
 
