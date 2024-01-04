@@ -98,7 +98,6 @@
     initStars();
     setStars();
   });
-  $: console.log(value);
 </script>
 
 <style>

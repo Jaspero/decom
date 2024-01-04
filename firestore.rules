@@ -33,9 +33,19 @@ service cloud.firestore {
       allow write, read: if admin();
     }
 
-    match /products/{document=**} {
-      allow read;
+    match /coupons/{document=**} {
+      allow read: if true;
       allow write: if admin();
+    }
+
+    match /products/{document=**} {
+      allow read: if true;
+      allow write: if admin();
+
+      match /reviews/{review} {
+      	allow read: if true;
+        allow write: if admin();
+      }
     }
 
     match /blog-articles/{document} {
