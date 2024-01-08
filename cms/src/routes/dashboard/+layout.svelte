@@ -4,7 +4,6 @@
   // Needs to be imported so the component is registered
   import ColumnToggle from '$lib/column-elements/ColumnToggle.svelte';
   import ColumnStatus from '$lib/column-elements/ColumnStatus.svelte';
-  import ReviewStars from '$lib/column-elements/ReviewStars.svelte';
 
   const links = [
     { label: 'Home', href: '/dashboard' },

@@ -1,5 +1,5 @@
 export function reviewStarsPipe() {
   return (averageRating: number) =>
-    `<review-star-rating value="${averageRating}"></review-star-rating>`;
+    `<jp-review-star-rating value="${averageRating}"></jp-review-star-rating>`;
 }
 

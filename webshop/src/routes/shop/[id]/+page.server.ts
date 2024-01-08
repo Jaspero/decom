@@ -5,9 +5,8 @@ export const csr = true;
 export const prerender = false;
 
 
-export const load: PageServerLoad = async () => {
-  const productInfo = await productData('ji0EtATBMbp05IjuKej5');
-
+export const load: PageServerLoad = async ({params}) => {
+  const productInfo = await productData(params?.id);
   return {
     productInfo
   }

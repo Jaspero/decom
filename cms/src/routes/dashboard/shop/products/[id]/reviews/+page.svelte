@@ -12,7 +12,6 @@
   import GridCol from '$lib/GridCol.svelte';
   import Card from '$lib/Card.svelte';
   import { onMount } from 'svelte';
-  import ReviewStars from '$lib/column-elements/ReviewStars.svelte';
   import DataTable from '$lib/DataTable.svelte';
   import { reviewStarsPipe } from '$lib/column-pipes/review-stars.pipe';
   import { datePipe } from '$lib/column-pipes/date.pipe';
@@ -62,7 +61,7 @@
         {/await}
       </div>
       <a href="/dashboard/sales/orders?filters={base64UrlEncode({ category: data.id })}" class="text-blue-500 mb-8">View reviews</a>
-      <ReviewStars value={data.averageRating} />
+      <jp-review-star-rating value={data.averageRating} />
     </div>
 
     <div class="w-4/5">
