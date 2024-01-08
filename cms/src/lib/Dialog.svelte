@@ -19,15 +19,15 @@
     open = false;
   }
 
-  $: if (open) {
-    try {
-      document.documentElement.classList.add('overflow-hidden');
-    } catch (e) {}
-  } else {
-    try {
-      document.documentElement.classList.remove('overflow-hidden');
-    } catch (e) {}
-  }
+  // $: if (open) {
+  //   try {
+  //     document.documentElement.classList.add('overflow-hidden');
+  //   } catch (e) {}
+  // } else {
+  //   try {
+  //     document.documentElement.classList.remove('overflow-hidden');
+  //   } catch (e) {}
+  // }
 </script>
 
 <svelte:window on:keydown={closeOnEscape} />
