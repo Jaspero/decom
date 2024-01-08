@@ -2,9 +2,10 @@
   import { onMount } from 'svelte';
   import { collection, getDocs, query, limit, startAfter, where } from 'firebase/firestore';
   import { db } from '$lib/utils/firebase';
+  import Product from "$lib/Product.svelte";
 
   let currentFilters = {};
-  let products;
+  let products =[];
   let lastProductDoc;
   let loading = false;
   let btnLoading = false;
@@ -52,7 +53,10 @@
           const docData = it.data();
           return {
             id: it.id,
-            name: docData.name
+            name: docData.name,
+            gallery: docData.gallery,
+            quantity: docData.quantity,
+            description: docData.description
           };
         })
       );
@@ -71,4 +75,21 @@
   });
 </script>
 
-<p>Shop</p>
+<div class="w-full grid">
+    <div class="w-full text-center text-4xl py-12">
+        <h1>Products</h1>
+    </div>
+    <div class="container grid grid-cols-4 gap-4">
+        {#each products as product (product.id)}
+            <Product {product} />
+        {/each}
+    </div>
+</div>
+
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+</style>
