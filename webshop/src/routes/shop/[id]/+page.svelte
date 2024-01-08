@@ -14,7 +14,6 @@
   let currentImageIndex = 0;
 
   onMount(() => {
-    console.log(data);
   });
 
   function addToCart() {

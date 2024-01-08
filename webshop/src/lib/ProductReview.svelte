@@ -43,7 +43,6 @@
 
   function openModal() {
     selectedReview = null;
-    console.log(rating);
     comment = '';
     isModalOpen = true;
   }
@@ -64,8 +63,7 @@
       createdOn: new Date().toISOString()
     };
 
-    console.log(reviewData);
-    const resp = await alertWrapper(
+    await alertWrapper(
       recaptchaVerify().then(
         () =>
           (selectedReview
