@@ -1,6 +1,7 @@
 <script lang="ts">
   import Button from './Button.svelte';
   import { clickOutside } from './utils/click-outside';
+  import {browser} from "$app/environment";
 
   export let open: boolean;
   export let removePadding = false;
@@ -19,14 +20,10 @@
     open = false;
   }
 
-  $: if (open) {
-    try {
-      document.documentElement.classList.add('overflow-hidden');
-    } catch (e) {}
-  } else {
-    try {
-      document.documentElement.classList.remove('overflow-hidden');
-    } catch (e) {}
+  $: if (browser && open) {
+    document.documentElement.classList.add('scroll-disabled');
+  } else if (browser) {
+    document.documentElement.classList.remove('scroll-disabled');
   }
 </script>
 

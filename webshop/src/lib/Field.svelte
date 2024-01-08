@@ -194,6 +194,10 @@
     @apply relative flex border-b border-black/10 hover:border-black/30 transition-all;
   }
 
+  .field:has(input:placeholder-shown) .label {
+    @apply top-0 text-xs;
+  }
+
   .field:not(.wfull) {
     @apply max-w-[350px];
   }
