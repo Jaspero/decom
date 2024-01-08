@@ -53,10 +53,7 @@
           const docData = it.data();
           return {
             id: it.id,
-            name: docData.name,
-            gallery: docData.gallery,
-            quantity: docData.quantity,
-            description: docData.description
+              ...docData,
           };
         })
       );
