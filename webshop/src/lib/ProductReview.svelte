@@ -131,8 +131,10 @@
     <div class="modal-content">
       <h2>Enter your comment</h2>
       <textarea bind:value={comment} rows="4" placeholder="Optional comment"></textarea>
-      <Button on:click={saveReview} loading={loading} label="Save"></Button>
-      <Button on:click={closeModal} label="Cancel"></Button>
+      <div class="flex justify-center">
+      <Button on:click={saveReview} loading={loading}>Save</Button>
+      <Button on:click={closeModal} color="secondary">Cancel</Button>
+      </div>
     </div>
   </div>
 {/if}

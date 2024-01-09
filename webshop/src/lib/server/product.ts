@@ -1,12 +1,8 @@
 import { getThumb } from '$lib/utils/get-thumb';
 import type { ProductInfo } from '$lib/types/product/product-info.interface';
-import type { ProductReviews } from '$lib/types/product/product-reviews.interface';
 import { firestore } from '$lib/utils/firebase-admin';
 
-let _data: {
-  product: ProductInfo;
-  reviews: ProductReviews[];
-};
+let _data: { product: FirebaseFirestore.DocumentData } | null;
 
 async function product(productId: string) {
   const fs = firestore;
@@ -23,15 +19,15 @@ async function product(productId: string) {
     // Add the product ID to the productData
     productData.id = productDoc.id;
 
-    const reviewsCollectionRef = fs.collection('products').doc(productId).collection('reviews');
-    const reviewsQuerySnapshot = await reviewsCollectionRef.get();
-    const reviewsData = reviewsQuerySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    // const reviewsCollectionRef = fs.collection('products').doc(productId).collection('reviews');
+    // const reviewsQuerySnapshot = await reviewsCollectionRef.get();
+    // const reviewsData = reviewsQuerySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-    reviewsData.forEach((review) => {
-      console.log(review);
-    });
+    // reviewsData.forEach((review) => {
+    //   console.log(review);
+    // });
 
-    return { product: productData, reviews: reviewsData };
+    return { product: productData };
   }
 
   return null;

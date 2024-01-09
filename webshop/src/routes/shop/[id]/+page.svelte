@@ -1,8 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { ProductInfo } from '$lib/types/product/product-info.interface';
-  import type { ProductReviews } from '$lib/types/product/product-reviews.interface';
   import ProductReview from '$lib/ProductReview.svelte';
+  import { collection, getDocs, limit, orderBy, query, startAt } from 'firebase/firestore';
+  import { db } from '$lib/utils/firebase';
+  import type { ProductReviews } from '$lib/types/product/product-reviews.interface';
+  import Loader from '$lib/Loader.svelte';
+  import Button from '$lib/Button.svelte';
 
   export let data: {
     productInfo: {
@@ -11,7 +15,39 @@
     }
   };
 
+  let averageRating = 0;
   let currentImageIndex = 0;
+  let currentPage = 0;
+  const pageSize = 10;
+
+  async function allReviews(page: number) {
+    const reviewsCollectionRef = collection(db, 'products', data.productInfo.product.id, 'reviews');
+    const querySnapshot = await getDocs(query(reviewsCollectionRef, orderBy('createdOn'), limit(pageSize), startAt(page * pageSize)));
+
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as ProductReviews[];
+  }
+
+  onMount(() => {
+    allReviews(currentPage).then((reviews) => {
+      data.productInfo.reviews = reviews;
+    });
+
+  });
+
+  function loadMoreReviews() {
+    currentPage++;
+    allReviews(currentPage).then((reviews) => {
+      data.productInfo.reviews = [...data.productInfo.reviews, ...reviews];
+    });
+  }
+
+  async function calculateAverageRating(reviews: ProductReviews[]) {
+    reviews.forEach((review) => {
+      averageRating = (averageRating + review.rating);
+    });
+    averageRating = averageRating / reviews.length;
+    return averageRating;
+  }
 
   function addToCart() {
     console.log(`Added ${data.productInfo.product.name} to the cart!`);
@@ -30,13 +66,23 @@
 
 <div class="single-product">
   <div class="product-gallery">
-    <img alt="{data.productInfo.product.name}" class="product-img" src={data.productInfo.product.gallery[currentImageIndex]} />
+    <img alt="{data.productInfo.product.name}" class="product-img"
+         src={data.productInfo.product.gallery[currentImageIndex]} />
     <div class="navigation-bubbles">
       {#each data.productInfo.product.gallery as imageUrl, index}
         <div class="bubble" class:selected={index === currentImageIndex} on:click={() => navigateToImage(index)}></div>
       {/each}
     </div>
-    <ProductReview averageRating={data.productInfo.product.averageRating} enableStarsInput={true} data={data}/>
+    {#await allReviews(currentPage)}
+      <Loader />
+    {:then reviews}
+      {#await calculateAverageRating(reviews)}
+        <Loader />
+      {:then averageRating}
+        <ProductReview averageRating={averageRating} data={data} enableStarsInput={true} />
+      {/await}
+    {/await}
+
   </div>
 
   <div class="product-details">
@@ -46,19 +92,29 @@
     <p class="description">{data.productInfo.product.description}</p>
   </div>
 
-  <div class="reviews">
-    <h3>Customer Reviews</h3>
-    <div class="product-review">
-      {#each data.productInfo.reviews as review}
-        <div class="review">
-          <p class="customer">{review.customer}</p>
-          <p class="comment">{review.comment}</p>
-          <ProductReview averageRating={review.rating} enableStarsInput={false} data={data} />
-          <p class="created-on">{beautifyDate(review.createdOn)}</p>
-        </div>
-      {/each}
+  {#await allReviews(currentPage)}
+    <Loader />
+  {:then reviews}
+    <div class="reviews">
+      <h3>Customer Reviews</h3>
+      <div class="product-review">
+        {#each reviews as review}
+          <div class="review">
+            <p class="customer">{review.customer}</p>
+            <p class="comment">{review.comment}</p>
+            <ProductReview averageRating={review.rating} enableStarsInput={false} data={data} />
+            <p class="created-on">{beautifyDate(review.createdOn)}</p>
+          </div>
+        {/each}
+      </div>
+      <div class="pt-5 flex justify-center">
+      <Button on:click={loadMoreReviews}>Load More Reviews</Button>
+      </div>
     </div>
-  </div>
+  {:catch error}
+    <p>Something went wrong: {error.message}</p>
+  {/await}
+
 </div>
 
 <style>
