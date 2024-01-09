@@ -13,9 +13,6 @@
 
   let currentImageIndex = 0;
 
-  onMount(() => {
-  });
-
   function addToCart() {
     console.log(`Added ${data.productInfo.product.name} to the cart!`);
   }
@@ -23,56 +20,58 @@
   function navigateToImage(index: number) {
     currentImageIndex = index;
   }
-  function beautifyDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+
+  function beautifyDate(dateString: string) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
     const formattedDate = new Date(dateString).toLocaleString('en-US', options);
     return formattedDate;
   }
 </script>
-<div class="flex">
-  <div class="flex-col mt-5 ml-5 items-center justify-center w-1/3">
-    <div class="gallery">
-      <img alt="{data.productInfo.product.name}" class="product-img"
-           src={data.productInfo.product.gallery[currentImageIndex]} />
-    </div>
+
+<div class="single-product">
+  <div class="product-gallery">
+    <img alt="{data.productInfo.product.name}" class="product-img" src={data.productInfo.product.gallery[currentImageIndex]} />
     <div class="navigation-bubbles">
       {#each data.productInfo.product.gallery as imageUrl, index}
         <div class="bubble" class:selected={index === currentImageIndex} on:click={() => navigateToImage(index)}></div>
       {/each}
     </div>
     <ProductReview averageRating={data.productInfo.product.averageRating} enableStarsInput={true} data={data}/>
-
   </div>
-  <div class="product-details w-2/3">
-    <div class="flex">
-      <div class="product-info">
-        <h2>{data.productInfo.product.name}</h2>
-        <p>${data.productInfo.product.price}</p>
-      </div>
-    </div>
+
+  <div class="product-details">
+    <h2>{data.productInfo.product.name}</h2>
+    <p class="price">${data.productInfo.product.price}</p>
     <button class="add-to-cart-btn" on:click={addToCart}>Add to Cart</button>
+    <p class="description">{data.productInfo.product.description}</p>
+  </div>
+
+  <div class="reviews">
+    <h3>Customer Reviews</h3>
     <div class="product-review">
       {#each data.productInfo.reviews as review}
-        <p>{review.customer}</p>
-        <p>{review.comment}</p>
-        <ProductReview averageRating={review.rating} enableStarsInput={false} data={data}/>
-        <p>{beautifyDate(review.createdOn)}</p>
+        <div class="review">
+          <p class="customer">{review.customer}</p>
+          <p class="comment">{review.comment}</p>
+          <ProductReview averageRating={review.rating} enableStarsInput={false} data={data} />
+          <p class="created-on">{beautifyDate(review.createdOn)}</p>
+        </div>
       {/each}
     </div>
   </div>
 </div>
+
 <style>
-    .product-details {
+    .single-product {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 20px;
     }
 
-    .gallery {
-        position: relative;
+    .product-gallery {
+        flex: 1 1 40%;
+        margin-right: 20px;
     }
 
     .product-img {
@@ -99,9 +98,17 @@
         background-color: #4caf50;
     }
 
-    .product-info {
-        margin-top: 20px;
-        text-align: center;
+    .product-details {
+        flex: 1 1 50%;
+    }
+
+    h2, h3 {
+        margin-top: 0;
+    }
+
+    .price {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
     }
 
     .add-to-cart-btn {
@@ -111,5 +118,34 @@
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .description {
+        line-height: 1.4;
+    }
+
+    .reviews {
+        flex: 1 1 100%;
+        margin-top: 20px;
+    }
+
+    .product-review {
+        display: grid;
+        gap: 20px;
+    }
+
+    .review {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+    .customer {
+        font-weight: bold;
+    }
+
+    .created-on {
+        color: #888;
     }
 </style>
