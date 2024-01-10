@@ -38,6 +38,12 @@ service cloud.firestore {
       allow write: if admin();
     }
 
+    match /customers/{customer} {
+      allow read: if admin() || ((authenticated() && request.auth.uid == customer));
+      // TODO: Allow only updating of some fields
+      allow write: if admin() || ((authenticated() && request.auth.uid == customer));
+    }
+
     match /products/{document=**} {
       allow read: if true;
       allow write: if admin();

@@ -4,6 +4,8 @@
   import { db } from '$lib/utils/firebase';
   import Product from "$lib/Product.svelte";
 
+
+
   let currentFilters = {};
   let products =[];
   let lastProductDoc;
@@ -11,6 +13,8 @@
   let btnLoading = false;
   const pageSize = 15;
   let showBtn = true;
+
+
 
   async function loadProducts() {
     if (!lastProductDoc) {
@@ -57,7 +61,11 @@
           };
         })
       );
-      products = products ? [...products, ...moreProducts] : moreProducts;
+
+
+        products = products
+            ? [...products, ...moreProducts]
+            : moreProducts;
       console.log('products', products);
       if (moreProducts.length < pageSize) {
         showBtn = false;
@@ -78,7 +86,7 @@
     </div>
     <div class="container grid grid-cols-4 gap-4">
         {#each products as product (product.id)}
-            <Product {product} />
+            <Product {product}  />
         {/each}
     </div>
 </div>

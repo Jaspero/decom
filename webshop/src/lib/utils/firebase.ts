@@ -19,7 +19,7 @@ export const user = writable<null | DbUser>(null);
 onAuthStateChanged(auth, async (authUser) => {
   if (authUser) {
     try {
-      const userRef = doc(db, 'users', authUser.uid);
+      const userRef = doc(db, 'customers', authUser.uid);
       const docSnap = await getDoc(userRef);
 
       if (docSnap.exists()) {

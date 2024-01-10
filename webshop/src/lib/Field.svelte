@@ -37,14 +37,13 @@
 
 <label class="field" class:has-hint={$$slots.hint} class:wfull>
   {#if label}
-    <span class="label" class:move={value}>{label}</span>
+    <span class="label" class:move={value || placeholder}>{label}</span>
   {/if}
 
   {#if type === 'text'}
     <input
       type="text"
       {required}
-      {placeholder}
       {minlength}
       {disabled}
       {autocomplete}
@@ -55,7 +54,6 @@
     <input
       type="password"
       {required}
-      {placeholder}
       {minlength}
       {disabled}
       {autocomplete}
@@ -66,7 +64,6 @@
     <input
       type="email"
       {required}
-      {placeholder}
       {minlength}
       {disabled}
       {autocomplete}
@@ -77,7 +74,6 @@
     <input
       type="number"
       {required}
-      {placeholder}
       {disabled}
       {autocomplete}
       name={type}
@@ -87,7 +83,6 @@
     <input
       type="tel"
       {required}
-      {placeholder}
       {minlength}
       {disabled}
       {autocomplete}
@@ -98,7 +93,6 @@
     <input
       type="url"
       {required}
-      {placeholder}
       {minlength}
       {disabled}
       {autocomplete}
@@ -106,44 +100,41 @@
       bind:value
     />
   {:else if type === 'date'}
-    <input type="date" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input type="date" {required} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'time'}
-    <input type="time" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input type="time" {required} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'datetime-local'}
     <input
       type="datetime-local"
       {required}
-      {placeholder}
       {disabled}
       {autocomplete}
       name={type}
       bind:value
     />
   {:else if type === 'month'}
-    <input type="month" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input type="month" {required} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'week'}
-    <input type="week" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input type="week" {required} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'color'}
-    <input type="color" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input type="color" {required} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'file'}
-    <input type="file" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input type="file" {required} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'submit'}
     <input
       type="submit"
       {required}
-      {placeholder}
       {disabled}
       {autocomplete}
       name={type}
       bind:value
     />
   {:else if type === 'reset'}
-    <input type="reset" {required} {placeholder} {disabled} {autocomplete} name={type} bind:value />
+    <input type="reset" {required} {disabled} {autocomplete} name={type} bind:value />
   {:else if type === 'button'}
     <input
       type="button"
       {required}
-      {placeholder}
       {disabled}
       {autocomplete}
       name={type}
@@ -154,7 +145,6 @@
       type="image"
       {alt}
       {required}
-      {placeholder}
       {disabled}
       {autocomplete}
       name={type}
@@ -164,7 +154,6 @@
     <input
       type="hidden"
       {required}
-      {placeholder}
       {disabled}
       {autocomplete}
       name={type}
@@ -174,12 +163,15 @@
     <input
       type="search"
       {required}
-      {placeholder}
       {disabled}
       {autocomplete}
       name={type}
       bind:value
     />
+  {/if}
+
+  {#if placeholder && !value}
+    <span class="placeholder">{placeholder}</span>
   {/if}
 
   {#if $$slots.hint}
@@ -191,12 +183,7 @@
 
 <style lang="postcss">
   .field {
-    @apply relative flex border-b border-black/10 hover:border-black/30 transition-all;
-  }
-
-  .field:has(input:placeholder-shown) .label {
-    @apply top-0 text-xs;
-  }
+    @apply relative flex border-b border-black/10 hover:border-black/30 transition-all;}
 
   .field:not(.wfull) {
     @apply max-w-[350px];
@@ -208,6 +195,10 @@
 
   .label.move {
     @apply top-0 text-xs;
+  }
+
+  .placeholder {
+    @apply absolute top-4 left-0 opacity-50 select-none;
   }
 
   input {
