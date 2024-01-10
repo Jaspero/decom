@@ -8,7 +8,6 @@
   export let href = '';
   export let target = '';
   export let rel = '';
-  export let download = '';
 
   /* Button */
   export let disabled = false;
@@ -100,7 +99,6 @@
             {href}
             {target}
             {rel}
-            {download}
             aria-label={ariaLabel}
             on:click
             bind:this={bindingElement}

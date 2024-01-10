@@ -174,7 +174,7 @@
       <GridCol span="2" />
       {#if showCodeInput}
         <GridCol span="12" spanxl="6">
-          <form on:submit={confirm}>
+          <form on:submit|preventDefault={confirm}>
             <Button variant="outlined" color="warning" href="/" on:click={back}
               >Back to login</Button
             >
