@@ -33,6 +33,7 @@
   export let filterOperators: FilterOperators = {};
   export let defaultFilters: Filter[] = [];
   export let filtersValue: any = {};
+  export let rawClick: boolean = true;
 
   let el: HTMLDivElement;
   let ref: QueryDocumentSnapshot<any> | null = null;
@@ -149,11 +150,15 @@
       instance.sort = initialSort;
     }
 
-    instance.addEventListener('rowClick', (e: any) => {
+    const rowClickHandler = (e: any) => {
+      if (!rawClick) {
+        return;
+      }
       const { row } = e.detail;
       goto(baseLink + row.id);
-    });
+    };
 
+    instance.addEventListener('rowClick', rowClickHandler);
     el.appendChild(instance);
   });
 </script>
@@ -173,7 +178,8 @@
 
   <slot slot="actions">
     <Button variant="filled" color="secondary" type="submit" form="filters" on:click={applyFilters}
-      >Apply filters</Button
+    >Apply filters
+    </Button
     >
     <Button variant="outlined" color="warning" on:click={clearFilters}>Clear</Button>
   </slot>
