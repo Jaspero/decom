@@ -54,14 +54,14 @@
     {/if}
   </a>
 
-  <div class="ml-4">
+  <div class="ml-12">
     <Button loading={publishLoading} disabled={publishDisabled} on:click={publish}>Publish</Button>
   </div>
 </nav>
 
 <style lang="postcss">
   nav {
-    @apply flex items-center bg-black h-16 px-4;
+    @apply fixed top-0 flex items-center bg-black w-full h-16 px-4;
   }
 
   .logo-img {
