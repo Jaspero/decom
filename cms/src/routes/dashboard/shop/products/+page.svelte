@@ -6,6 +6,7 @@
   import { checkboxPipe } from '$lib/column-pipes/checkbox.pipe';
   import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
   import { populateArrayPipe } from '$lib/column-pipes/populate-array.pipe';
+  import { reviewStarsPipe } from '$lib/column-pipes/review-stars.pipe';
 
   const headers = [
     {
@@ -36,6 +37,11 @@
       key: '/lastUpdatedOn',
       label: 'Status',
       pipes: [releaseStatusPipe()]
+    },
+    {
+      key: '/averageRating',
+      label: 'Reviews',
+      pipes: [reviewStarsPipe()]
     }
   ];
 </script>
@@ -46,7 +52,7 @@
   >
 </div>
 
-<DataTable col="products" {headers} baseLink="/dashboard/shop/products/" />
+<DataTable col="products" {headers} baseLink="/dashboard/shop/products/"/>
 
 <svelte:head>
   <title>Products - Shop - Jaspero</title>
