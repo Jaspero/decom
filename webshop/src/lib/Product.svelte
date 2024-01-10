@@ -2,6 +2,7 @@
     import {db, user} from "./utils/firebase";
     import {doc, updateDoc,arrayRemove,arrayUnion } from "firebase/firestore";
     import {writable} from "svelte/store";
+    import {notification} from "./notification/notification";
 
 
     export let product;
@@ -22,10 +23,18 @@
             await updateDoc(userRef, {
                 favorites: arrayRemove(product.id)
             });
+            notification.set({
+                type: 'error',
+                content: `${product.name} has been removed from favorites.`
+            });
         } else {
             console.log('Adding product to user favorites in the database:', userId, product.id);
             await updateDoc(userRef, {
                 favorites: arrayUnion(product.id)
+            });
+            notification.set({
+                type: 'success',
+                content: `${product.name} has been added to favorites.`
             });
         }
         isFavoriteStore.set(!isFavorite);
