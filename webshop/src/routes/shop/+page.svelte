@@ -6,6 +6,7 @@
 
 
 
+
   let currentFilters = {};
   let products =[];
   let lastProductDoc;
@@ -13,7 +14,6 @@
   let btnLoading = false;
   const pageSize = 15;
   let showBtn = true;
-
 
 
   async function loadProducts() {
