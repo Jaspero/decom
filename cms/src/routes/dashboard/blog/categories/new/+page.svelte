@@ -82,7 +82,7 @@
 
         <slot slot="footerAction">
           <div class="flex-1" />
-          <Button href={back}>Cancel</Button>
+          <Button variant="ghost" href={back}>Cancel</Button>
           <Button type="submit" variant="filled" loading={saveLoading}
             >Save</Button
           >
