@@ -93,12 +93,12 @@
 
         <slot slot="footerAction">
           {#if data.snap}
-            <Button type="button" color="warning" on:click={deleteItem}>Delete</Button>
+            <Button type="button" color="warn" on:click={deleteItem}>Delete</Button>
           {/if}
           <div class="flex-1" />
 
-          <Button href={back} variant="outlined" color="secondary">Cancel</Button>
-          <Button type="submit" variant="filled" color="secondary" loading={saveLoading}
+          <Button href={back}>Cancel</Button>
+          <Button type="submit" variant="filled" loading={saveLoading}
             >Save</Button
           >
         </slot>
