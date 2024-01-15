@@ -49,9 +49,7 @@
 <Sidebar {links} />
 
 <main>
-  <div class="p-8">
-    <slot />
-  </div>
+  <slot />
 </main>
 
 <style lang="postcss">

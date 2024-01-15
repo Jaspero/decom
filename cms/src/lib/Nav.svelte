@@ -54,6 +54,8 @@
     {/if}
   </a>
 
+  <div class="flex-1"></div>
+
   <div class="ml-12">
     <Button loading={publishLoading} disabled={publishDisabled} on:click={publish}>Publish</Button>
   </div>

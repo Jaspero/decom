@@ -7,6 +7,8 @@
   import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
   import { populateArrayPipe } from '$lib/column-pipes/populate-array.pipe';
   import { reviewStarsPipe } from '$lib/column-pipes/review-stars.pipe';
+  import Grid from "$lib/Grid.svelte";
+  import GridCol from "$lib/GridCol.svelte";
 
   const headers = [
     {
@@ -46,13 +48,17 @@
   ];
 </script>
 
-<div class="pb-4">
-  <Button variant="filled" color="secondary" href="/dashboard/shop/products/new"
-    >Add new product</Button
-  >
-</div>
+<Grid>
+  <GridCol span="12">
+    <Button variant="filled" color="secondary" href="/dashboard/shop/products/new">
+      Add new product
+    </Button>
+  </GridCol>
 
-<DataTable col="products" {headers} baseLink="/dashboard/shop/products/"/>
+  <GridCol span="12">
+    <DataTable col="products" {headers} baseLink="/dashboard/shop/products/"/>
+  </GridCol>
+</Grid>
 
 <svelte:head>
   <title>Products - Shop - Jaspero</title>

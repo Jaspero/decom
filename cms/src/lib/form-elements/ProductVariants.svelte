@@ -240,68 +240,85 @@
   onMount(() => {});
 </script>
 
-<div class="card">
+<div class="card p-4">
   <h2>Options</h2>
 
-  {#each optionSets as os, index}
-    <div class="grid grid-cols-6 gap-4">
-      <jp-input
-        label="Name"
-        value={os.label}
-        on:value={(event) => (os.label = event.detail.value)}
-      />
-      <jp-chips
-        class="col-span-4"
-        label="Options"
-        value={os.options.join(',')}
-        on:value={(event) => (os.options = event.detail)}
-      />
-      <button type="button" on:click={() => removeOptionSet(index)}>Remove</button>
+  {#if optionSets.length}
+    <div class="flex flex-col gap-4 mt-4">
+      {#each optionSets as os, index}
+        <div class="flex items-center gap-2">
+          <div class="w-32">
+            <jp-input label="Name" value={os.label} on:value={(event) => (os.label = event.detail.value)}/>
+          </div>
+          <div class="flex-1">
+            <jp-chips label="Options" value={os.options.join(',')} on:value={(event) => (os.options = event.detail)}/>
+          </div>
+          <Button type="button" on:click={() => removeOptionSet(index)}>Remove</Button>
+        </div>
+      {/each}
     </div>
-  {/each}
+  {/if}
 
-  <button type="button" on:click={addOptionSet}>+ Add options like size or color</button>
+  <div class="mt-4">
+    <Button variant="ghost" type="button" on:click={addOptionSet}>+ Add options like size or color</Button>
+  </div>
 </div>
 
-<div class="card mt-[16px]">
-  <h2>Variants</h2>
+<div class="card p-2 mt-4">
+  <h2 class="px-2 pt-2">Variants</h2>
 
-  <div class="grid grid-cols-6 gap-4">
-    <div>Variant</div>
-    <div>Price</div>
-    <div>Available Quantity</div>
-    <div>SKU</div>
-    <div>Barcode</div>
-    <div />
+  <table class="variants-table">
+    <tr>
+      <th class="px-2 text-left">Variant</th>
+      <th class="px-2 text-left">Price</th>
+      <th class="px-2 text-left">Available Quantity</th>
+      <th class="px-2 text-left">SKU</th>
+      <th class="px-2 text-left">Barcode</th>
+      <th></th>
+    </tr>
     {#each variants as variant}
-      <div>{variant.label}</div>
-      <jp-input
-        placeholder="Price"
-        value={variant.price}
-        type="number"
-        on:value={(event) => (variant.price = event.detail.value)}
-      />
-      <jp-input
-        placehold="Quantity"
-        value={variant.quantity}
-        type="number"
-        on:value={(event) => (variant.quantity = event.detail.value)}
-      />
-      <jp-input
-        placehold="SKU"
-        value={variant.sku}
-        on:value={(event) => (variant.sku = event.detail.value)}
-      />
-      <jp-input
-        placehold="Barcode"
-        value={variant.barcode}
-        on:value={(event) => (variant.sku = event.detail.value)}
-      />
-      <div>
-        <button type="button" on:click={() => openVariantDialog(variant)}>Edit</button>
-      </div>
+    <tr>
+      <td class="p-2 break-words">{variant.label}</td>
+      <td class="p-2">
+        <div>
+          <jp-input
+                  placeholder="Price"
+                  value={variant.price}
+                  type="number"
+                  on:value={(event) => (variant.price = event.detail.value)} />
+        </div>
+      </td>
+      <td class="p-2">
+        <div>
+          <jp-input
+                  placeholder="Quantity"
+                  value={variant.quantity}
+                  type="number"
+                  on:value={(event) => (variant.quantity = event.detail.value)} />
+        </div>
+      </td>
+      <td class="p-2">
+        <div>
+          <jp-input
+                  placeholder="SKU"
+                  value={variant.sku}
+                  on:value={(event) => (variant.sku = event.detail.value)} />
+        </div>
+      </td>
+      <td class="p-2">
+        <div>
+          <jp-input
+                  placeholder="Barcode"
+                  value={variant.barcode}
+                  on:value={(event) => (variant.sku = event.detail.value)} />
+        </div>
+      </td>
+      <td class="p-2">
+        <Button variant="outlined" type="button" on:click={() => openVariantDialog(variant)}>Edit</Button>
+      </td>
+    </tr>
     {/each}
-  </div>
+  </table>
 </div>
 
 <Dialog bind:open={variantDialog}>
@@ -313,7 +330,12 @@
 
 <style lang="postcss">
   .card {
-    @apply p-2 rounded border;
+    @apply rounded border;
     border-color: var(--border-primary);
+  }
+
+  .variants-table {
+    @apply w-full;
+    table-layout: fixed;
   }
 </style>

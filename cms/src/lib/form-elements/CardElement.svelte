@@ -49,7 +49,7 @@
 
 <div class="card {classes}">
   {#if title}
-    <h2>{title}</h2>
+    <h2 class="px-2 pt-2">{title}</h2>
   {/if}
 
   {#if description}

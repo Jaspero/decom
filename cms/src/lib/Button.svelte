@@ -3,6 +3,7 @@
 
   export let variant: 'filled' | 'outlined' | 'ghost' | 'underlined' | 'icon' = 'filled';
   export let color: 'primary' | 'secondary' | 'warn' | 'error' = 'primary';
+  export let hfull: boolean = false;
 
   /* Anchor */
   export let href = '';
@@ -67,7 +68,8 @@
       color == 'primary' && 'color-primary',
       color == 'secondary' && 'color-secondary',
       color == 'error' && 'color-error',
-      color == 'warn' && 'color-warn'
+      color == 'warn' && 'color-warn',
+      hfull && 'h-full'
     ]
             .filter(Boolean)
             .join(' ')
@@ -92,7 +94,7 @@
   })
 </script>
 
-<div bind:this={containerElement}>
+<div class="h-10" bind:this={containerElement}>
   {#if href}
     <a {...properties}
        {href}
@@ -119,17 +121,19 @@
 
 <style lang="postcss">
   .button {
-    @apply relative transition-all overflow-hidden inline-block;
+    @apply relative transition-all overflow-hidden inline-block h-10;
     border-radius: var(--border-radius);
     font-size: .875rem;
+    font-weight: bold;
+    line-height: 2.5rem;
   }
 
   .button:not(.variant-icon) {
-    @apply px-[.875rem] py-[.375rem];
+    @apply px-4;
   }
 
   .button:not(.variant-filled, .variant-outlined, .variant-ghost, .variant-underlined) {
-    @apply w-10 h-10;
+    @apply w-10;
   }
 
   /* Button - Filled */
