@@ -61,7 +61,7 @@
 
 <style lang="postcss">
   nav {
-    @apply fixed top-0 flex items-center bg-black w-full h-16 px-4;
+    @apply fixed top-0 flex items-center bg-black w-full h-16 px-4 z-50;
   }
 
   .logo-img {

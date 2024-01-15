@@ -112,7 +112,7 @@
 
 <style lang="postcss">
     aside {
-        @apply fixed top-16 flex flex-col w-[256px] h-[calc(100%-4rem)] shadow;
+        @apply fixed top-16 flex flex-col w-[256px] h-[calc(100%-4rem)] border-r border-r-[#D6D6D6];
         background-color: var(--sidebar)
     }
     nav {
