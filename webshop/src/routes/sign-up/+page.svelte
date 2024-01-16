@@ -77,8 +77,24 @@
 
 <section class="sign-up">
   <div class="form-container">
-    <h2 class="title">Sign up</h2>
-    <form on:submit|preventDefault={signUp}>
+    <h3 class="text-center">Sign up</h3>
+    <div class="text-center py-4 flex flex-col gap-2">
+      <Button variant="outlined" color="gray" size="xl">
+        <div class="flex justify-center items-center">
+          <span><img src="images/google-icon.svg" alt="google icon"class="social-icon"/></span>
+          <span>Sign up with Google</span>
+        </div>  
+      </Button>
+      <Button variant="outlined" color="gray" size="xl">
+        <div class="flex justify-center items-center">
+          <span><img src="images/apple.svg" alt="google icon"class="social-icon"/></span>
+          <span>Sign up with Facebook</span>
+        </div>  
+      </Button>
+    </div>
+   
+
+    <!-- <form on:submit|preventDefault={signUp}>
       <label>
         <span>Name</span>
         <input type="text" name="name" required />
@@ -121,7 +137,7 @@
         <img class="w-6 h-6" src="/images/google-icon.svg" loading="lazy" alt="google logo" />
         Sign up with Google</button
       >
-    </form>
+    </form> -->
   </div>
 </section>
 
@@ -140,10 +156,10 @@
     padding: 20px;
     background: white;
     margin: 0 auto;
-    -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
-    border-radius: 16px;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
   }
 
   form {
@@ -193,16 +209,16 @@
     cursor: pointer;
   }
 
-  .title {
-    text-align: center;
-    color: black;
-    font-size: 40px;
-  }
 
   .error {
     font-size: 16px;
     color: #773434;
     font-weight: 600;
     margin-top: 20px;
+  }
+
+  .social-icon {
+    height: 24px;
+    margin-right: 12px;
   }
 </style>

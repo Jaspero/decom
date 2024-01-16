@@ -2,7 +2,9 @@
   import {onMount, tick} from "svelte";
 
   export let variant: 'filled' | 'outlined' | 'ghost' | 'underlined' | 'icon' = 'filled';
-  export let color: 'primary' | 'secondary' | 'warn' | 'error' = 'primary';
+  export let color: 'primary' | 'blackish' | 'gray' | 'secondary' | 'warn' | 'error' = 'primary';
+  export let size: 'xl';
+ 
 
   /* Anchor */
   export let href = '';
@@ -67,7 +69,10 @@
       color == 'primary' && 'color-primary',
       color == 'secondary' && 'color-secondary',
       color == 'error' && 'color-error',
-      color == 'warn' && 'color-warn'
+      color == 'warn' && 'color-warn',
+      color == 'blackish' && 'color-blackish',
+      color == 'gray' && 'color-gray',
+      size && 'xl',
     ]
             .filter(Boolean)
             .join(' ')
@@ -128,9 +133,16 @@
     font-size: .875rem;
   }
 
+ 
   .button:not(.variant-icon) {
     @apply px-[.875rem] py-[.375rem];
   }
+
+  .button.xl {
+    @apply w-96 py-3 text-lg font-semibold tracking-tight;
+    border-radius: var(--border-radius-xl);
+  }
+
 
   .button:not(.variant-filled, .variant-outlined, .variant-ghost, .variant-underlined) {
     @apply w-10 h-10;
@@ -165,6 +177,19 @@
     border-color: var(--secondary);
     color: var(--secondary);
   }
+
+  .button.variant-outlined.color-blackish {
+    box-shadow: inset 0 0 0 var(--border-width) var(--blackish);
+    border-color: var(--blackish);
+    color: var(--blackish);
+  }
+
+  .button.variant-outlined.color-gray {
+    box-shadow: inset 0 0 0 var(--border-width) var(--gray);
+    border-color: var(--gray);
+    color: var(--blackish);
+  }
+
   .button.variant-outlined.color-warn {
     box-shadow: inset 0 0 0 var(--border-width) var(--warn);
     border-color: var(--warn);
@@ -209,4 +234,5 @@
   .button.variant-underlined.color-error {
     border-color: var(--error);
   }
+
 </style>

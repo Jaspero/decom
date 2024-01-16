@@ -19,6 +19,7 @@
   import Dialog from '$lib/Dialog.svelte';
   import { onMount } from 'svelte';
   import { formatEmail } from '$lib/utils/format-emails';
+  import '../typography.pcss';
 
   let email = '';
   let password = '';
