@@ -9,6 +9,7 @@
     let lastProductDoc;
     let loading = false;
     let showBtn = true;
+    let noProductsFound = false;
     let currentFilters = {
         category: null,
         priceRange: { min: 0, max: 200 }
@@ -17,6 +18,7 @@
 
     $: if (currentFilters) {
         loadProducts().catch();
+        noProductsFound = false;
     }
 
     async function loadProducts() {
@@ -32,6 +34,9 @@
         if (!snap.empty) {
             lastProductDoc = snap.docs[snap.docs.length - 1];
             products = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
+        } else {
+            products = [];
+            noProductsFound = true;
         }
 
         loading = false;
@@ -81,11 +86,17 @@
             <span>{currentFilters.priceRange.min}$ - {currentFilters.priceRange.max}$</span>
         </div>
     </div>
-    <div class="container grid grid-cols-4 gap-4">
-        {#each products as product (product.id)}
-            <Product {product}/>
-        {/each}
-    </div>
+
+        {#if noProductsFound}
+            <div>No products found within the specified price range.</div>
+        {:else}
+            <div class="container grid grid-cols-4 gap-4">
+                {#each products as product (product.id)}
+                    <Product {product}/>
+                {/each}
+            </div>
+        {/if}
+
 </div>
 
 <style>
