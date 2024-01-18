@@ -35,7 +35,7 @@
   "type": "module",
   "dependencies": {
     "@jaspero/utils": "1.15.3",
-    "@jaspero/web-components": "1.78.0",
+    "@jaspero/web-components": "1.82.15",
     "firebase": "10.7.1",
     "firebase-admin": "12.0.0",
     "svelte-material-icons": "3.0.5"
