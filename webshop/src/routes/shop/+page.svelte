@@ -1,96 +1,92 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { collection, getDocs, query, limit, startAfter, where } from 'firebase/firestore';
-  import { db } from '$lib/utils/firebase';
-  import Product from "$lib/Product.svelte";
+    import {onMount} from 'svelte';
+    import {collection, getDocs, query, where} from 'firebase/firestore';
+    import {db} from '$lib/utils/firebase';
+    import Product from "$lib/Product.svelte";
 
 
+    let products = [];
+    let lastProductDoc;
+    let loading = false;
+    let showBtn = true;
+    let currentFilters = {
+        category: null,
+        priceRange: { min: 0, max: 200 }
+    };
+    let categories = [];
 
-
-  let currentFilters = {};
-  let products =[];
-  let lastProductDoc;
-  let loading = false;
-  let btnLoading = false;
-  const pageSize = 15;
-  let showBtn = true;
-
-
-  async function loadProducts() {
-    if (!lastProductDoc) {
-      loading = true;
-    } else {
-      btnLoading = true;
+    $: if (currentFilters) {
+        loadProducts().catch();
     }
 
-    const discountsRef = collection(db, 'products');
-    let filters = [];
+    async function loadProducts() {
+        loading = true;
 
-    if (currentFilters) {
-      for (const [key, value] of Object.entries(currentFilters)) {
-        filters.push(where(key, '==', value));
-      }
+        const discountsRef = collection(db, 'products');
+        let filters = buildFilters();
+
+        let queryRef = query(discountsRef, ...filters);
+
+        const snap = await getDocs(queryRef);
+
+        if (!snap.empty) {
+            lastProductDoc = snap.docs[snap.docs.length - 1];
+            products = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
+        }
+
+        loading = false;
     }
 
-    let queryRef = query(discountsRef, ...(filters.length ? filters : []), limit(pageSize + 1));
+    function buildFilters() {
+        let filters = [];
 
-    if (lastProductDoc) {
-      queryRef = query(
-        discountsRef,
-        ...(filters.length ? filters : []),
-        startAfter(lastProductDoc),
-        limit(pageSize + 1)
-      );
+        if (currentFilters.category !== null && currentFilters.category !== undefined) {
+            filters.push(where('category', '==', currentFilters.category));
+        }
+
+
+            filters.push(where('price', '>=', currentFilters.priceRange.min));
+            filters.push(where('price', '<=', currentFilters.priceRange.max));
+
+
+        return filters;
     }
 
-    const snap = await getDocs(queryRef);
-
-    if (!snap.empty) {
-      if (snap.docs.length === 16) {
-        snap.docs.pop();
-      } else {
-        showBtn = false;
-      }
-      lastProductDoc = snap.docs[snap.docs.length - 1];
-      const moreProducts = await Promise.all(
-        snap.docs.map(async (it) => {
-          const docData = it.data();
-          return {
-            id: it.id,
-              ...docData,
-          };
-        })
-      );
-
-
-        products = products
-            ? [...products, ...moreProducts]
-            : moreProducts;
-      console.log('products', products);
-      if (moreProducts.length < pageSize) {
-        showBtn = false;
-      }
+    async function loadCategories() {
+        const categoriesRef = collection(db, 'categories');
+        const categoriesSnap = await getDocs(categoriesRef);
+        categories = categoriesSnap.docs.map(doc => ({id: doc.id, ...doc.data()}));
     }
-    loading = false;
-    btnLoading = false;
-  }
 
-  onMount(() => {
-    loadProducts();
-  });
+    onMount(async () => {
+        await loadCategories();
+    });
 </script>
 
 <div class="w-full grid">
     <div class="w-full text-center text-4xl py-12">
         <h1>Products</h1>
     </div>
+    <div class="mb-[20px] w-[300px]">
+        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                bind:value={currentFilters.category}>
+            <option value={null}>All Categories</option>
+            {#each categories as cat (cat.id)}
+                <option value={cat.id}>{cat.name}</option>
+            {/each}
+        </select>
+        <div class="mb-[20px]">
+            <label for="priceRange">Price Range:</label>
+            <input type="range" id="priceRange" bind:value={currentFilters.priceRange.min} min="0" max="200" on:input={loadProducts} />
+            <span>{currentFilters.priceRange.min}$ - {currentFilters.priceRange.max}$</span>
+        </div>
+    </div>
     <div class="container grid grid-cols-4 gap-4">
         {#each products as product (product.id)}
-            <Product {product}  />
+            <Product {product}/>
         {/each}
     </div>
 </div>
-
 
 <style>
     .container {
