@@ -1,6 +1,8 @@
 <script>
   import { fly } from 'svelte/transition';
   import { clickOutside } from '$lib/utils/click-outside';
+  import {cartState} from "./cart-state.ts";
+  import Product from "$lib/Product.svelte";
 
   export let show = false;
 </script>
@@ -12,6 +14,9 @@
     on:click_outside={() => (show = false)}
   >
     SOME CART ITEMS
+    {#each $cartState as product (product.id)}
+      <Product {product} showAdd={false}/>
+    {/each}
   </nav>
 {/if}
 

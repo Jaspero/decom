@@ -4,14 +4,11 @@
     import {db} from '$lib/utils/firebase';
     import Product from "$lib/Product.svelte";
     import {writable} from "svelte/store";
-    // import '@jaspero/web-components/dist/range.wc.js';
-    // import '@jaspero/web-components/dist/chips.wc.js';
 
 
     let products = [];
     let lastProductDoc;
     let loading = false;
-    let showBtn = true;
     let noProductsFound = false;
     let currentFilters = {
         category: null,
@@ -20,18 +17,12 @@
     };
     let categories = [];
     let tags = [];
-    const tagsStore = writable([]);
 
     $: if (currentFilters) {
         loadProducts().catch();
         noProductsFound = false;
     }
 
-    // $: {
-    //     const activeTags = $tagsStore.filter(tag => tag.active);
-    //     currentFilters.tags = activeTags.map(tag => tag.id);
-    //     loadProducts().catch();
-    // }
 
     async function loadProducts() {
         loading = true;

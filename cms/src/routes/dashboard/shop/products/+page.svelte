@@ -7,8 +7,8 @@
   import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
   import { populateArrayPipe } from '$lib/column-pipes/populate-array.pipe';
   import { reviewStarsPipe } from '$lib/column-pipes/review-stars.pipe';
-  import Grid from "$lib/Grid.svelte";
-  import GridCol from "$lib/GridCol.svelte";
+  import Grid from '$lib/Grid.svelte';
+  import GridCol from '$lib/GridCol.svelte';
 
   const headers = [
     {

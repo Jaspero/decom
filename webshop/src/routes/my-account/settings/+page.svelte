@@ -1,15 +1,14 @@
 <script lang="ts">
   import {
-    updatePassword,
+    deleteUser,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
     sendEmailVerification,
     updateEmail,
-    deleteUser,
-    reauthenticateWithCredential,
-    EmailAuthProvider
+    updatePassword
   } from 'firebase/auth';
   import { notificationWrapper } from '$lib/notification/notification.ts';
   import { auth } from '$lib/utils/firebase';
-  import { firebaseErrors } from '$lib/notification/notification';
   import Dialog from '$lib/Dialog.svelte';
 
   import { goto } from '$app/navigation';

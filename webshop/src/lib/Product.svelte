@@ -3,10 +3,12 @@
     import {doc, updateDoc,arrayRemove,arrayUnion } from "firebase/firestore";
     import {writable} from "svelte/store";
     import {notification} from "$lib/notification/notification";
+    import { cartState } from './cart/cart-state';
 
 
     export let product;
     export let userId;
+    export let showAdd = true;
 
 
     const isFavoriteStore = writable(false);
@@ -14,7 +16,7 @@
     $: {
         userId = $user ? $user.id : null;
 
-        if ($user?.favorites.includes(product.id)) {
+        if ($user?.favorites && $user?.favorites.includes(product.id)) {
            isFavoriteStore.set(true)
         } else {
             isFavoriteStore.set(false)
@@ -48,10 +50,17 @@
         isFavoriteStore.set(!isFavorite);
     }
 
-
-
     const addToCart = () => {
-        console.log(`Adding ${product.name} to cart`);
+        // @ts-ignore
+        const currentCart: any[] = $cartState;
+        const findProduct = currentCart.find(x => x.id === product.id);
+        if (findProduct) {
+            return;
+        }
+        const updatedValue = [...currentCart, product]
+        cartState.set(updatedValue);
+        localStorage.setItem('cart', JSON.stringify({cart: updatedValue, created: Date.now()}));
+
     };
 
 </script>
@@ -67,17 +76,21 @@
         <div class="flex items-center justify-start flex-wrap">
             <span class="text-3xl w-full font-bold text-gray-900 dark:text-white">${product.price}</span>
             <span class="text-1xl w-full text-gray-900 dark:text-white">{product.shortDescription}</span>
-            <div class="w-full flex justify-between items-center">
-                <button on:click={addToCart} class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Add to cart
-                </button>
-                <img class="cursor-pointer transition-opacity duration-300 hover:opacity-80"
-                     src={$isFavoriteStore ? '/images/favorites.svg' : '/images/favorites-unselected.svg'}
-                     alt="Favorite"
-                     width="35px"
-                     height="35px"
-                     on:click={toggleFavorite} />
-            </div>
+
+                <div class="w-full flex justify-between items-center">
+                    {#if showAdd}
+                        <button on:click={addToCart} class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Add to cart
+                        </button>
+                    {/if}
+                    <img class="cursor-pointer transition-opacity duration-300 hover:opacity-80"
+                         src={$isFavoriteStore ? '/images/favorites.svg' : '/images/favorites-unselected.svg'}
+                         alt="Favorite"
+                         width="35px"
+                         height="35px"
+                         on:click={toggleFavorite} />
+                </div>
+
         </div>
     </div>
 </div>
