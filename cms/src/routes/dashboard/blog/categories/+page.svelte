@@ -3,6 +3,8 @@
   import { indexPipe } from '$lib/column-pipes/index.pipe';
   import Button from '$lib/Button.svelte';
   import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
+  import Grid from "$lib/Grid.svelte";
+  import GridCol from "$lib/GridCol.svelte";
 
   const headers = [
     {
@@ -30,13 +32,17 @@
   ];
 </script>
 
-<div class="pb-4">
-  <Button variant="filled" color="secondary" href="/dashboard/blog/categories/new"
-    >Add new category</Button
-  >
-</div>
+<Grid>
+  <GridCol span="12">
+    <Button variant="filled" color="secondary" href="/dashboard/blog/categories/new">
+      Add new category
+    </Button>
+  </GridCol>
 
-<DataTable col="blog-categories" {headers} baseLink="/dashboard/blog/categories/" />
+  <GridCol span="12">
+    <DataTable col="blog-categories" {headers} baseLink="/dashboard/blog/categories/" />
+  </GridCol>
+</Grid>
 
 <svelte:head>
   <title>Categories - Blog - Jaspero</title>

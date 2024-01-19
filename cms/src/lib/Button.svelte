@@ -1,238 +1,212 @@
 <script lang="ts">
-  import { fly } from 'svelte/transition';
-  import Loader from './Loader.svelte';
-  import { clickOutside } from './utils/click-outside';
+  import {onMount, tick} from "svelte";
 
-  /* Link-specific */
+  export let variant: 'filled' | 'outlined' | 'ghost' | 'underlined' | 'icon' = 'filled';
+  export let color: 'primary' | 'secondary' | 'warn' | 'error' = 'primary';
+  export let hfull: boolean = false;
+
+  /* Anchor */
   export let href = '';
-  export let hreflang: string | null = null;
-  export let target: '_blank' | '_self' | '_parent' | '_top' | null = null;
-  export let rel:
-    | 'alternate' /* Link to an alternative page (ex. translated page) */
-    | 'author' /* Link to the author of the document */
-    | 'bookmark' /* Useless */
-    | 'external' /* Indicates that the referenced document is not part of the same site as the current document */
-    | 'help' /* Provides a link to a help document */
-    | 'license' /* Provides a link to licensing information for the document */
-    | 'next' /* Provides a link to the next document in the series */
-    | 'prev' /* The previous document in a selection */
-    | 'nofollow' /* Use the nofollow value when other values don't apply, and you'd rather Google not associate your site with, or crawl the linked page from, your site. */
-    | 'noopener noreferrer' /* When linking to an external website, using noopener and noreferrer improves user privacy and security */
-    | 'search' /* Links to a search tool for the document */
-    | 'tag' /* Specifies that the linked page contains the tag, keyword, or subject of the current page. */
-    | null = null;
-  export let download: boolean | null = null;
+  export let target = '';
+  export let rel = '';
 
-  /* Button-specific */
-  export let type: 'button' | 'submit' | 'reset' = 'button';
-  export let name: string | null = null;
-  export let form: string | null = null;
-  export let disabled: boolean | null = null;
-  export let loading: boolean | null = null;
-  export let dropdown: boolean | null = null;
+  /* Button */
+  export let disabled = false;
+  export let loading = false;
+  export let form = '';
+  export let type: 'button' | 'submit' | 'reset' = 'button'
 
-  /* General */
-  export let variant: 'outlined' | 'filled' | 'icon' | 'default' = 'default';
-  export let color: 'primary' | 'secondary' | 'success' | 'warning' | 'error' = 'primary';
-  export let size: 'small' | 'regular' | 'large' = 'regular';
+  /* Other */
+  let containerElement;
+  let bindingElement;
+  let ariaLabel: string | null = null;
 
-  let x = 0;
-  let y = 0;
-  let clickedOnRight = false;
+  const rippleExpand = [
+    { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
+    { transform: 'translate(-50%, -50%) scale(3)', opacity: 0 }
+  ];
 
-  function handleClick(event: any) {
-    const elementRect = event.currentTarget.getBoundingClientRect();
-    clickedOnRight = elementRect.left >= window.innerWidth / 2;
-    x = clickedOnRight ? window.innerWidth - elementRect.left : elementRect.right;
-    y = elementRect.top;
-    dropdown = true;
+  const rippleTiming = {
+    duration: 600,
+    iterations: 1,
+  };
+
+  function ripple(event) {
+    const targetElement = event.target.closest('.button');
+    if (!targetElement) return;
+
+    const rect = targetElement.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const width = rect.width;
+
+    const ripple = document.createElement('span');
+    ripple.style.position = 'absolute';
+    ripple.style.top = `${y}px`;
+    ripple.style.left = `${x}px`;
+    ripple.style.width = `${width}px`;
+    ripple.style.height = `${width}px`;
+    ripple.style.background = 'var(--ripple-color)';
+    ripple.style.borderRadius = '50%';
+
+    targetElement.appendChild(ripple);
+    ripple.animate(rippleExpand, rippleTiming);
+
+    setTimeout(() => {
+      ripple.remove();
+    }, 590);
   }
+
+  $: properties = {
+    class: [
+      'button',
+      variant == 'filled' && 'variant-filled',
+      variant == 'outlined' && 'variant-outlined',
+      variant == 'ghost' && 'variant-ghost',
+      variant == 'underlined' && 'variant-underlined',
+      variant == 'icon' && 'variant-icon',
+      color == 'primary' && 'color-primary',
+      color == 'secondary' && 'color-secondary',
+      color == 'error' && 'color-error',
+      color == 'warn' && 'color-warn',
+      hfull && 'h-full'
+    ]
+            .filter(Boolean)
+            .join(' ')
+  };
+
+  function updateAriaLabel() {
+    if (bindingElement) {
+      ariaLabel = bindingElement.textContent.trim();
+    }
+  }
+
+  function handleRippleEvent(event) {
+    // Check if the clicked element is a button or a link with ripple
+    ripple(event);
+  }
+
+  onMount(async () => {
+    containerElement.addEventListener('click', handleRippleEvent);
+
+    await tick() // Wait for DOM to update
+    updateAriaLabel();
+  })
 </script>
 
-{#if href}
-  <a
-    class:loading
-    {href}
-    {target}
-    {rel}
-    {download}
-    {hreflang}
-    class="variant-{variant} color-{color} size-{size}"
-  >
-    {#if loading}
-      <Loader />
-    {:else}
-      {#if $$slots.prefix && variant !== 'icon'}
-        <span class="prefix">
-          <slot name="prefix" />
-        </span>
-      {/if}
+<div class="h-10" bind:this={containerElement}>
+  {#if href}
+    <a {...properties}
+       {href}
+       {target}
+       {rel}
+       aria-label={ariaLabel}
+       on:click
+       bind:this={bindingElement}>
       <slot />
-      {#if $$slots.suffix && variant !== 'icon'}
-        <span class="suffix">
-          <slot name="suffix" />
-        </span>
-      {/if}
-    {/if}
-  </a>
-{:else if $$slots.dropdown}
-  <button
-    class="variant-{variant} color-{color} size-{size} dropdown-buttonw"
-    class:loading
-    class:disabled
-    {type}
-    {name}
-    {form}
-    {disabled}
-    on:click={handleClick}
-  >
-    {#if loading}
-      <Loader />
-    {:else}
-      {#if $$slots.prefix && variant !== 'icon'}
-        <span class="prefix">
-          <slot name="prefix" />
-        </span>
-      {/if}
+    </a>
+  {:else}
+    <button {...properties}
+            class:loading
+            {disabled}
+            {form}
+            {type}
+            aria-label={ariaLabel}
+            on:click
+            bind:this={bindingElement}>
       <slot />
-      {#if $$slots.suffix && variant !== 'icon'}
-        <span class="suffix">
-          <slot name="suffix" />
-        </span>
-      {/if}
-    {/if}
-  </button>
-
-  {#if dropdown}
-    <div class="z-10 fixed top-0 left-0 w-screen h-screen bg-transparent" />
-    <div
-      class="z-20 fixed flex flex-col bg-white shadow"
-      style="top: {y}px; {clickedOnRight ? 'right' : 'left'}: {Math.abs(x)}px;"
-      transition:fly={{ y: -20, duration: 300 }}
-      use:clickOutside
-      on:click_outside={() => (dropdown = false)}
-    >
-      <slot name="dropdown" />
-      <!--TODO: add closing after clicking on a button inside-->
-    </div>
+    </button>
   {/if}
-{:else}
-  <button
-    class="variant-{variant} color-{color} size-{size}"
-    class:loading
-    class:disabled
-    {type}
-    {name}
-    {form}
-    {disabled}
-    on:click
-  >
-    {#if loading}
-      <Loader />
-    {:else}
-      {#if $$slots.prefix && variant !== 'icon'}
-        <span class="prefix">
-          <slot name="prefix" />
-        </span>
-      {/if}
-      <slot />
-      {#if $$slots.suffix && variant !== 'icon'}
-        <span class="suffix">
-          <slot name="suffix" />
-        </span>
-      {/if}
-    {/if}
-  </button>
-{/if}
+</div>
 
 <style lang="postcss">
-  button,
-  a {
-    @apply relative inline-flex justify-center items-center rounded cursor-pointer no-underline select-none font-bold overflow-hidden;
+  .button {
+    @apply relative transition-all overflow-hidden inline-block h-10;
+    border-radius: var(--border-radius);
+    font-size: .875rem;
+    font-weight: bold;
+    line-height: 2.5rem;
   }
 
-  button:not(.variant-icon),
-  a:not(.variant-icon) {
-    @apply px-4 py-2;
+  .button:not(.variant-icon) {
+    @apply px-4;
   }
 
-  button:active,
-  a:active {
-    @apply translate-y-px;
+  .button:not(.variant-filled, .variant-outlined, .variant-ghost, .variant-underlined) {
+    @apply w-10;
   }
 
-  button.loading,
-  a.loading {
-    @apply pointer-events-none bg-secondary;
+  /* Button - Filled */
+  .button.variant-filled.color-primary {
+    background-color: var(--primary-color);
+    color: var(--primary-contrast-color);
+  }
+  .button.variant-filled.color-secondary {
+    background-color: var(--secondary-color);
+    color: var(--secondary-contrast-color);
+  }
+  .button.variant-filled.color-warn {
+    background-color: var(--warn-color);
+    color: var(--warn-contrast);
+  }
+  .button.variant-filled.color-error {
+    background-color: var(--error-colors);
+    color: var(--error-contrast);
   }
 
-  button:disabled {
-    @apply pointer-events-none cursor-not-allowed bg-gray-200 !text-black/25;
+  /* Button - Outlined */
+  .button.variant-outlined.color-primary {
+    box-shadow: inset 0 0 0 var(--border-width) var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+  .button.variant-outlined.color-secondary {
+    box-shadow: inset 0 0 0 var(--border-width) var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+  }
+  .button.variant-outlined.color-warn {
+    box-shadow: inset 0 0 0 var(--border-width) var(--warn-color);
+    border-color: var(--warn-color);
+    color: var(--warn-color);
+  }
+  .button.variant-outlined.color-error {
+    box-shadow: inset 0 0 0 var(--border-width) var(--error-color);
+    border-color: var(--error-color);
+    color: var(--error-color);
   }
 
-  /* Variants */
-  .variant-default {
-    @apply bg-transparent border-2 border-transparent;
+  /* Button - Ghost */
+  .button.variant-ghost.color-primary {
+    color: var(--primary-color);
   }
-  .variant-default.color-primary {
-    @apply hover:text-secondary text-primary duration-200;
+  .button.variant-ghost.color-secondary {
+    color: var(--secondary-color);
   }
-  .variant-default.color-secondary {
-    @apply hover:bg-secondary/[8%] text-secondary duration-200;
+  .button.variant-ghost.color-warn {
+    color: var(--warn-color);
   }
-  .variant-default.color-warning {
-    @apply hover:bg-red-500/[8%] text-red-600 duration-200;
-  }
-
-  .variant-filled {
-    @apply border-2 border-transparent;
-  }
-  .variant-filled.color-primary {
-    @apply bg-primary/75 hover:bg-primary/90 text-white duration-200;
-  }
-  .variant-filled.color-secondary {
-    @apply bg-secondary/[85%] hover:bg-secondary text-white duration-200;
-  }
-  .variant-filled.color-warning {
-    @apply bg-red-500/[85%] hover:bg-red-500 text-white duration-200;
+  .button.variant-ghost.color-error {
+    color: var(--error-color);
   }
 
-  .variant-outlined {
-    @apply border-2;
+  /* Button - Underlined */
+  .button.variant-underlined {
+    border-bottom-width: var(--border-width);
+    border-bottom-style: solid;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
-  .variant-outlined.color-primary {
-    @apply border-primary/25 hover:border-primary text-primary duration-200;
+  .button.variant-underlined.color-primary {
+    border-color: var(--primary-color);
   }
-  .variant-outlined.color-secondary {
-    @apply border-secondary/25 hover:border-secondary text-secondary duration-200;
+  .button.variant-underlined.color-secondary {
+    border-color: var(--secondary-color);
   }
-  .variant-outlined.color-warning {
-    @apply border-red-500/25 hover:border-red-500 text-red-500 duration-200;
+  .button.variant-underlined.color-warn {
+    border-color: var(--warn-color);
   }
-
-  .variant-icon {
-    @apply flex justify-center items-center border-2 border-transparent rounded-full bg-transparent w-10 h-10;
-  }
-  .variant-icon.color-primary {
-    @apply hover:bg-primary/10 text-primary duration-200;
-  }
-  .variant-icon.color-secondary {
-    @apply hover:bg-secondary/10 text-secondary duration-200;
-  }
-  .variant-icon.color-warning {
-    @apply hover:bg-red-500/10 text-red-500 duration-200;
-  }
-
-  /* Sizes */
-  .size-small {
-    @apply text-xs;
-  }
-
-  .size-regular {
-    @apply text-base;
-  }
-
-  .size-large {
-    @apply text-lg;
+  .button.variant-underlined.color-error {
+    border-color: var(--error-color);
   }
 </style>

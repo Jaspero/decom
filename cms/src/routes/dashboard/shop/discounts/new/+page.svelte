@@ -55,7 +55,17 @@
   }
 </script>
 
-<form class="relative" on:submit|preventDefault={submit}>
+<div class="sticky-menu">
+  <Button variant="ghost" href={back}>
+    Cancel
+  </Button>
+
+  <Button type="submit" form="form" loading={saveLoading}>
+    Save
+  </Button>
+</div>
+
+<form name="form" class="relative m-16" on:submit|preventDefault={submit}>
   <Grid>
     <GridCol span="12">
       <Card>
@@ -71,8 +81,8 @@
 
         <slot slot="footerAction">
           <div class="flex-1" />
-          <Button href={back} variant="outlined" color="secondary">Cancel</Button>
-          <Button type="submit" variant="filled" color="secondary" loading={saveLoading}
+          <Button variant="ghost" href={back}>Cancel</Button>
+          <Button type="submit" variant="filled" loading={saveLoading}
             >Save</Button
           >
         </slot>

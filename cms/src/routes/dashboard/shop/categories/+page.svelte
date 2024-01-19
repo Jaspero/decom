@@ -2,6 +2,8 @@
   import DataTable from '$lib/DataTable.svelte';
   import { indexPipe } from '$lib/column-pipes/index.pipe';
   import Button from '$lib/Button.svelte';
+  import Grid from "$lib/Grid.svelte";
+  import GridCol from "$lib/GridCol.svelte";
 
   const headers = [
     {
@@ -20,13 +22,17 @@
   ];
 </script>
 
-<div class="pb-4">
-  <Button variant="filled" color="secondary" href="/dashboard/shop/categories/new"
-    >Add new category</Button
-  >
-</div>
+<Grid>
+  <GridCol span="12">
+    <Button variant="filled" color="secondary" href="/dashboard/shop/categories/new">
+      Add new category
+    </Button>
+  </GridCol>
 
-<DataTable col="categories" {headers} baseLink="/dashboard/shop/categories/" />
+  <GridCol span="12">
+    <DataTable col="categories" {headers} baseLink="/dashboard/shop/categories/" />
+  </GridCol>
+</Grid>
 
 <svelte:head>
   <title>Categories - Shop - Jaspero</title>

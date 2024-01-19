@@ -76,52 +76,67 @@
 </script>
 
 <section class="sign-up">
-  <div class="form-container">
-    <h2 class="title">Sign up</h2>
-    <form on:submit|preventDefault={signUp}>
-      <label>
-        <span>Name</span>
-        <input type="text" name="name" required />
-      </label>
-      <label>
-        <span>Email</span>
-        <input type="email" name="email" bind:value={email} required />
-      </label>
-      <label>
-        <span>Password</span>
-        <input
-          type="password"
-          name="password"
-          required
-          bind:value={password}
-          bind:this={passwordEl}
-        />
-      </label>
-      <label>
-        <span>Confirm password</span>
-        <input
-          type="password"
-          name="confirm-password"
-          required
-          bind:value={passwordConfirm}
-          bind:this={confirmEl}
-        />
-      </label>
-      <div class="show-password">
-        <input type="checkbox" class="checkbox" on:change|preventDefault={togglePasswordType} />
-        <p>Show/hide password</p>
-      </div>
-      <Button type="submit" {loading} label="Submit" />
-      <button
-        type="button"
-        on:click={signupGoogle}
-        class="px-4 py-2 border mt-[10px] flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
-        name="Sign up with Google"
-      >
-        <img class="w-6 h-6" src="/images/google-icon.svg" loading="lazy" alt="google logo" />
-        Sign up with Google</button
-      >
-    </form>
+  <div class="form-container text-center">
+    <h3 class="text-center pt-4">Sign up for Jaspero Webshop</h3>
+    <div class="py-4">
+      <span class="footnote">
+        By signing up, I agree to Jaspero's <a href="" target="_blank" class="notelink">Terms and Privacy Policy.</a>
+      </span>
+    </div>
+    <div class="text-center pt-4 pb-8 flex flex-col gap-2">
+      <Button variant="outlined" color="gray" size="xl"  name="Sign up with Google">
+        <div class="flex justify-center items-center">
+          <span><img src="images/google-icon.svg" alt="google icon"class="social-icon"/></span>
+          <span>Sign up with Google</span>
+        </div>  
+      </Button>
+      <Button variant="outlined" color="gray" size="xl">
+        <div class="flex justify-center items-center">
+          <span><img src="images/apple.svg" alt="google icon"class="social-icon"/></span>
+          <span>Sign up with Facebook</span>
+        </div>  
+      </Button>
+    </div>
+   <div class="flex my-8 w-[95%] m-auto h-0 justify-center items-center border-b-[2px] border-[--gray]">
+    <span class="footnote bg-[--white] px-3">or sign up through email</span>
+   </div>
+
+  <form on:submit|preventDefault={signUp}>
+    <label>
+      <span>Name</span>
+      <input type="text" name="name" required />
+    </label>
+    <label>
+      <span>Email</span>
+      <input type="email" name="email" bind:value={email} required />
+    </label>
+    <label>
+      <span>Password</span>
+      <input
+        type="password"
+        name="password"
+        required
+        bind:value={password}
+        bind:this={passwordEl}
+      />
+    </label>
+    <label>
+      <span>Confirm password</span>
+      <input
+        type="password"
+        name="confirm-password"
+        required
+        bind:value={passwordConfirm}
+        bind:this={confirmEl}
+      />
+    </label>
+    <div class="show-password">
+      <input type="checkbox" class="checkbox" on:change|preventDefault={togglePasswordType} />
+      <p>Show/hide password</p>
+    </div>
+    <Button type="submit" {loading} label="Submit" />
+    
+  </form>
   </div>
 </section>
 
@@ -140,10 +155,10 @@
     padding: 20px;
     background: white;
     margin: 0 auto;
-    -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
-    border-radius: 16px;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
   }
 
   form {
@@ -153,29 +168,6 @@
     align-items: center;
   }
 
-  label {
-    text-align: left;
-    width: 100%;
-    padding: 10px 0;
-    color: black;
-    font-weight: 600;
-    position: relative;
-  }
-
-  input {
-    border: 1px solid black;
-    outline: none;
-    border-radius: 8px;
-    padding: 15px;
-    color: black;
-    font-size: 16px;
-    width: 100%;
-    margin-top: 5px;
-  }
-
-  input::placeholder {
-    color: black;
-  }
 
   .show-password {
     width: 100%;
@@ -193,16 +185,9 @@
     cursor: pointer;
   }
 
-  .title {
-    text-align: center;
-    color: black;
-    font-size: 40px;
-  }
 
-  .error {
-    font-size: 16px;
-    color: #773434;
-    font-weight: 600;
-    margin-top: 20px;
+  .social-icon {
+    height: 24px;
+    margin-right: 12px;
   }
 </style>
