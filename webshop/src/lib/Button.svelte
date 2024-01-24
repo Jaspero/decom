@@ -3,7 +3,7 @@
 
   export let variant: 'filled' | 'outlined' | 'ghost' | 'underlined' | 'icon' = 'filled';
   export let color: 'primary' | 'blackish' | 'gray' | 'secondary' | 'warn' | 'error' = 'primary';
-  export let size: 'xl';
+  export let size: '' | 'xl' = '';
  
 
   /* Anchor */
@@ -99,28 +99,24 @@
 
 <div bind:this={containerElement}>
   {#if href}
-    <a
-            {...properties}
-            {href}
-            {target}
-            {rel}
-            aria-label={ariaLabel}
-            on:click
-            bind:this={bindingElement}
-    >
+    <a {...properties}
+       {href}
+       {target}
+       {rel}
+       aria-label={ariaLabel}
+       on:click
+       bind:this={bindingElement}>
       <slot />
     </a>
   {:else}
-    <button
-            {...properties}
+    <button {...properties}
             class:loading
             {disabled}
             {form}
             {type}
             aria-label={ariaLabel}
             on:click
-            bind:this={bindingElement}
-    >
+            bind:this={bindingElement}>
       <slot />
     </button>
   {/if}

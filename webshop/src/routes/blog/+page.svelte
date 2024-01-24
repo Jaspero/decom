@@ -12,25 +12,13 @@
   meta.set({ title: 'Blog' });
 </script>
 
-<div class="banner">
-  <div class="grid">
-    <div class="col-8 col-s-10 col-xs-12">
-      <h1>Blog</h1>
-    </div>
-  </div>
-</div>
+<Tabs>
+  <TabsItem href="/blog" active={true}>All posts</TabsItem>
+  {#each data.categories as category}
+    <TabsItem href="/blog/{category.id}">{category.name}</TabsItem>
+  {/each}
+</Tabs>
 
-<div class="grid">
-  <div class="col-8 col-s-10 col-xs-12">
-    <Tabs>
-      <TabsItem href="/blog" active={true}>All posts</TabsItem>
-      {#each data.categories as category}
-        <TabsItem href="/blog/{category.id}">{category.name}</TabsItem>
-      {/each}
-    </Tabs>
+<BlogSnippets articles={data.page} baseLink="/blog" baseAuthorLink="/blog/authors" />
 
-    <BlogSnippets articles={data.page} baseLink="/blog" baseAuthorLink="/blog/authors" />
-
-    <Pagination pages={data.pageSize} prefix="/blog/page/" current={1} />
-  </div>
-</div>
+<Pagination pages={data.pageSize} prefix="/blog/page/" current={1} />

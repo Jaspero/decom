@@ -7,24 +7,20 @@
   <slot />
 </a>
 
-<style>
+<style lang="postcss">
   a {
-    padding: 0.375rem 1rem;
-    background-color: rgba(9, 55, 31, 0.1);
-    color: var(--text-lighter);
-    font-size: 0.75rem;
-    font-weight: 700;
-    border-radius: 100px;
-    transition: 0.35s;
-    margin: 0.5rem;
+    @apply px-4 py-1 border rounded-full transition-colors;
   }
 
   a:hover {
-    color: var(--text);
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    border-color: var(--secondary);
   }
 
   a.active {
-    background-color: var(--accent);
-    color: var(--accent-c);
+    background-color: var(--primary);
+    color: var(--primary-contrast);
+    border-color: var(--primary);
   }
 </style>

@@ -97,6 +97,7 @@
 <div class="h-10" bind:this={containerElement}>
   {#if href}
     <a {...properties}
+       {...$$restProps.class}
        {href}
        {target}
        {rel}
@@ -107,6 +108,7 @@
     </a>
   {:else}
     <button {...properties}
+            {...$$restProps.class}
             class:loading
             {disabled}
             {form}

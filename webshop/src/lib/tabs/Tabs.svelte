@@ -1,9 +1,9 @@
-<nav class="flex fw-wrap">
+<nav>
   <slot />
 </nav>
 
-<style>
+<style lang="postcss">
   nav {
-    margin-left: -0.5rem;
+    @apply max-w-2xl mx-auto flex gap-4 py-8;
   }
 </style>
