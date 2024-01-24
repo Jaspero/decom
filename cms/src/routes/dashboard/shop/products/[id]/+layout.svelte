@@ -7,7 +7,8 @@
   const links = [
     { label: 'Info', link: baseLink + 'info' },
     { label: 'Reporting', link: baseLink + 'reporting' },
-    { label: 'Edit', link: baseLink + 'edit' }
+    { label: 'Edit', link: baseLink + 'edit' },
+    { label: 'Reviews', link: baseLink + 'reviews' }
   ];
 </script>
 

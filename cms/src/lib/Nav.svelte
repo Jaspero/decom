@@ -14,18 +14,6 @@
   import { page } from '$app/stores';
 
   export let label: string;
-  export let links: Array<{
-    label: string;
-    href?: string;
-    links?: Array<{
-      label: string;
-      href: string;
-    }>;
-    checked?: boolean;
-  }>;
-
-  let dropdown = false;
-  let menu = false;
 
   let publishLoading = false;
   let publishStart: number;
@@ -39,8 +27,8 @@
     publishStart = Date.now();
 
     await alertWrapper(
-      setDoc(doc(db, 'settings', 'status'), { publishStart }, { merge: true }),
-      'Deployment Started!'
+            setDoc(doc(db, 'settings', 'status'), { publishStart }, { merge: true }),
+            'Deployment Started!'
     );
 
     publishLoading = false;
@@ -54,16 +42,6 @@
         lastPublishedOn.set(lastPublished);
       }
     });
-
-    links = links.map((link) => {
-      if (link.links) {
-        return {
-          ...link,
-          checked: false
-        };
-      }
-      return link;
-    });
   });
 </script>
 
@@ -72,139 +50,23 @@
     <img src="/brand/logo.svg" alt="GlycanAge Logo" class="logo-img" />
 
     {#if label}
-      <p>{label}</p>
+      <p class="text-white text-2xl font-bold">{label}</p>
     {/if}
   </a>
 
-  <div class="flex-1" />
+  <div class="flex-1"></div>
 
-  <div class="hidden sm:flex">
+  <div class="ml-12">
     <Button loading={publishLoading} disabled={publishDisabled} on:click={publish}>Publish</Button>
-
-    {#if links}
-      {#each links as link}
-        {#if link.href}
-          <Button href={link.href}>
-            <span class="link-label" class:active={pathname === link.href}>
-              {link.label}
-            </span>
-          </Button>
-        {:else if link.links}
-          <div class="relative">
-            <Button
-              on:click={() => {
-                link.checked = !link.checked;
-              }}
-            >
-              {link.label}
-              <img
-                class="ml-2"
-                src={link.checked ? '/images/expand_less.svg' : '/images/expand_more.svg'}
-                alt={link.checked ? 'Expand less' : 'Expand more'}
-              />
-            </Button>
-
-            {#if link.checked}
-              <div
-                class="dropdown"
-                use:clickOutside
-                on:click_outside={() => {
-                  link.checked = false;
-                }}
-                transition:fly={{ duration: 300, y: 20 }}
-              >
-                {#each link.links as inner}
-                  <Button
-                    href={inner.href}
-                    on:click={() => {
-                      link.checked = false;
-                    }}
-                  >
-                    <span class="link-label" class:active={pathname === inner.href}>
-                      {inner.label}
-                    </span>
-                  </Button>
-                {/each}
-              </div>
-            {/if}
-          </div>
-        {/if}
-      {/each}
-    {/if}
-
-    <div class="relative">
-      <Button variant="icon" on:click={() => (dropdown = true)}>
-        <AccountCircle size="30" />
-      </Button>
-      {#if dropdown}
-        <div
-          class="absolute top-full right-0 bg-white shadow flex flex-col whitespace-nowrap"
-          use:clickOutside
-          on:click_outside={() => (dropdown = false)}
-        >
-          <Button href="/dashboard/account" on:click={() => (dropdown = false)}>Account</Button>
-          <Button
-            on:click={() => {
-              auth.signOut();
-              goto('/');
-            }}
-          >
-            Sign out
-          </Button>
-        </div>
-      {/if}
-    </div>
-  </div>
-
-  <div class="sm:hidden">
-    <Button variant="icon" on:click={() => (menu = !menu)}>
-      {#if menu}
-        <Close size="24" />
-      {:else}
-        <Menu size="24" />
-      {/if}
-    </Button>
   </div>
 </nav>
 
-{#if menu}
-  <div class="menu" transition:fly={{ y: -200, duration: 300 }}>
-    {#if links}
-      {#each links as link}
-        <Button size="large" href={link.href} on:click={() => (menu = false)}>
-          {link.label}
-        </Button>
-      {/each}
-    {/if}
-  </div>
-{/if}
-
 <style lang="postcss">
   nav {
-    @apply z-20 relative flex items-center px-6 2xl:px-20  min-h-[5rem] h-16 bg-white;
-  }
-
-  .menu {
-    @apply z-10 absolute top-16 w-full h-[calc(100vh-4rem)] bg-white flex flex-col;
-  }
-
-  .dropdown {
-    @apply absolute flex flex-col bg-white rounded overflow-hidden shadow-2xl;
-  }
-
-  img {
-    @apply h-6;
+    @apply fixed top-0 flex items-center bg-black w-full h-16 px-4 z-50;
   }
 
   .logo-img {
-    @apply h-10;
-  }
-
-  .link-label {
-    @apply opacity-90;
-  }
-
-  .link-label.active {
-    @apply underline underline-offset-4 opacity-100;
+    @apply h-12;
   }
 </style>

@@ -1,1 +1,0 @@
-<p>Single Product</p>

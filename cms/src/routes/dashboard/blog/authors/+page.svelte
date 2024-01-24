@@ -4,6 +4,8 @@
   import { indexPipe } from '$lib/column-pipes/index.pipe';
   import Button from '$lib/Button.svelte';
   import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
+  import Grid from "$lib/Grid.svelte";
+  import GridCol from "$lib/GridCol.svelte";
 
   const headers = [
     {
@@ -28,13 +30,17 @@
   ];
 </script>
 
-<div class="pb-4">
-  <Button variant="filled" color="secondary" href="/dashboard/blog/authors/new"
-    >Add new author</Button
-  >
-</div>
+<Grid>
+  <GridCol span="12">
+    <Button variant="filled" color="secondary" href="/dashboard/blog/authors/new">
+      Add new author
+    </Button>
+  </GridCol>
 
-<DataTable col="blog-authors" {headers} baseLink="/dashboard/blog/authors/" />
+  <GridCol span="12">
+    <DataTable col="blog-authors" {headers} baseLink="/dashboard/blog/authors/" />
+  </GridCol>
+</Grid>
 
 <svelte:head>
   <title>Authors - Blog - Jaspero</title>

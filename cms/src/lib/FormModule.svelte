@@ -12,6 +12,7 @@
   import '@jaspero/web-components/dist/file-list.wc';
   import '@jaspero/web-components/dist/toggle.wc';
   import '@jaspero/web-components/dist/chips.wc';
+  import '@jaspero/web-components/dist/review-stars.wc';
   import CardElement from './form-elements/CardElement.svelte';
   import ProductVariants from './form-elements/ProductVariants.svelte';
 

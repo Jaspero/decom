@@ -9,6 +9,8 @@
   import type { Sort } from '$lib/interfaces/sort.interface';
   import { getOptions } from '$lib/utils/get-options';
   import type { FilterOperators } from '$lib/interfaces/filter-operators.interface';
+  import Grid from "$lib/Grid.svelte";
+  import GridCol from "$lib/GridCol.svelte";
 
   const headers = [
     {
@@ -111,20 +113,24 @@
   }
 </script>
 
-<div class="pb-4">
-  <Button variant="filled" color="secondary" href="/dashboard/blog/articles/new"
-    >Add new article</Button
-  >
-</div>
+<Grid>
+  <GridCol span="12">
+    <Button variant="filled" color="secondary" href="/dashboard/blog/articles/new">
+      Add new article
+    </Button>
+  </GridCol>
 
-<DataTable
-  col="blog-articles"
-  {headers}
-  {initialSort}
-  {filterOptions}
-  {filterOperators}
-  baseLink="/dashboard/blog/articles/"
-/>
+  <GridCol span="12">
+    <DataTable
+            col="blog-articles"
+            {headers}
+            {initialSort}
+            {filterOptions}
+            {filterOperators}
+            baseLink="/dashboard/blog/articles/"
+    />
+  </GridCol>
+</Grid>
 
 <svelte:head>
   <title>Articles - Blog - Jaspero</title>

@@ -14,6 +14,7 @@
   import { unflatten } from '$lib/utils/unflatten';
   import { urlSegments } from '$lib/utils/url-segments';
   import { generateSlug } from '$lib/utils/generate-slug';
+  import {onMount} from "svelte";
 
   export let data: {
     col: string;
@@ -55,7 +56,17 @@
   }
 </script>
 
-<form class="relative" on:submit|preventDefault={submit}>
+<div class="sticky-menu">
+  <Button variant="ghost" href={back}>
+    Cancel
+  </Button>
+
+  <Button type="submit" form="form" loading={saveLoading}>
+    Save
+  </Button>
+</div>
+
+<form name="form" class="relative m-16" on:submit|preventDefault={submit}>
   <Grid>
     <GridCol span="12">
       <Card>
@@ -65,14 +76,12 @@
           <Breadcrumbs {segments} title={data.value.name} />
         </slot>
 
-        <div class="flex flex-col gap-6">
           <FormModule bind:this={formModule} items={data.items} bind:value={data.value} />
-        </div>
 
         <slot slot="footerAction">
           <div class="flex-1" />
-          <Button href={back} variant="outlined" color="secondary">Cancel</Button>
-          <Button type="submit" variant="filled" color="secondary" loading={saveLoading}
+          <Button variant="ghost" href={back}>Cancel</Button>
+          <Button type="submit" variant="filled" loading={saveLoading}
             >Save</Button
           >
         </slot>

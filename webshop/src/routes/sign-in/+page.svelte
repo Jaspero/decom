@@ -20,6 +20,7 @@
   import { onMount } from 'svelte';
   import { formatEmail } from '$lib/utils/format-emails';
 
+
   let email = '';
   let password = '';
   let loading = false;
@@ -198,20 +199,22 @@
   });
 </script>
 
-<div class="max-w-7xl mx-auto p-12">
+<div class="max-w-7xl mx-auto p-12 flex justify-center items-center">
   <div id="recaptcha-container-id" />
 
   {#if showCodeInput}
-    <Button href="/login" on:click={back}>Back to login</Button>
-    <p>
-      We have sent you a 6-digit verification code to: <!--<b>{resolver.hints[0].phoneNumber}</b>-->
-    </p>
+    <div>
+      <Button href="/login" on:click={back}>Back to login</Button>
+      <p>
+        We have sent you a 6-digit verification code to: <!--<b>{resolver.hints[0].phoneNumber}</b>-->
+      </p>
 
-    <Field required label="MFA Verification Code:" type="text" bind:value={codeInput} />
+      <Field required label="MFA Verification Code:" type="text" bind:value={codeInput} />
 
-    <Button loading={confirmLoader} on:click={confirm} label="Confirm and sign in" />
+      <Button loading={confirmLoader} on:click={confirm}>Confirm and sign in</Button>
+    </div>
   {:else}
-    <form on:submit|preventDefault={submit}>
+    <form on:submit|preventDefault={submit} class="shadow-xl p-8 rounded">
       <div class="flex flex-col gap-4">
         <Field label="Email" type="email" bind:value={email} autocomplete="email" required />
         <Field
@@ -221,32 +224,31 @@
           autocomplete="current-password"
           required
         />
-        <div>
-          <Button
-            type="button"
-            on:click={toggleVisible}
-            label={type === 'password' ? 'Show password' : 'Hide password'}
-          />
-        </div>
+          <Button variant="outlined" type="button" on:click={toggleVisible}>{type === 'password' ? 'Show password' : 'Hide password'}</Button>
       </div>
 
-      <Button id="login-password" type="submit" {loading} label="Sign in" />
-      <button type="button" on:click={loginGoogle} class="googleButton" name="Sign in with Google"
-        >Sign in with google</button
-      >
+      <div class="flex flex-wrap gap-4 mt-4">
+        <Button type="submit" {loading}>Sign in</Button>
+        <button type="button" on:click={loginGoogle} class="googleButton" name="Sign in with Google">
+          Sign in with google
+        </button>
+      </div>
 
-      <p>Forgot your password?</p>
-      <Button type="button" on:click={() => (rDialog = true)} label="Reset password" />
+      <p class="mt-8 mb-2">Forgot your password?</p>
+      <Button on:click={() => {rDialog = true;}}>Reset password</Button>
     </form>
   {/if}
 </div>
 
 <Dialog bind:showing={rDialog}>
-  <p>Forgotten your password?</p>
+  <h3 class="text-3xl mb-4">Forgotten your password?</h3>
 
   <form on:submit|preventDefault={resetPassword}>
     <Field label="Email" type="email" placeholder="your@email.com" bind:value={rEmail} required />
-    <Button type="submit" loading={rLoading}>Reset password</Button>
+
+    <div class="mt-4">
+      <Button type="submit" loading={rLoading}>Reset password</Button>
+    </div>
   </form>
 </Dialog>
 

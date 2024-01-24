@@ -61,4 +61,8 @@
   .active {
     color: red;
   }
+
+  aside {
+    height: fit-content;
+  }
 </style>

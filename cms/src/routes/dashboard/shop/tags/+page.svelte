@@ -3,6 +3,8 @@
   import { indexPipe } from '$lib/column-pipes/index.pipe';
   import Button from '$lib/Button.svelte';
   import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
+  import Grid from "$lib/Grid.svelte";
+  import GridCol from "$lib/GridCol.svelte";
 
   const headers = [
     {
@@ -21,11 +23,17 @@
   ];
 </script>
 
-<div class="pb-4">
-  <Button variant="filled" color="secondary" href="/dashboard/shop/tags/new">Add new tags</Button>
-</div>
+<Grid>
+  <GridCol span="12">
+    <Button variant="filled" color="secondary" href="/dashboard/shop/tags/new">
+      Add new tags
+    </Button>
+  </GridCol>
 
-<DataTable col="tags" {headers} baseLink="/dashboard/shop/tags/" />
+  <GridCol span="12">
+    <DataTable col="tags" {headers} baseLink="/dashboard/shop/tags/" />
+  </GridCol>
+</Grid>
 
 <svelte:head>
   <title>Tags - Shop - Jaspero</title>

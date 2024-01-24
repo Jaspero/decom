@@ -8,8 +8,6 @@
 </script>
 
 <section class="relative pt-12">
-  <img src="/images/intro-bg.png" alt="" class="-z-10 absolute top-0 w-full h-80" />
-
   <Grid>
     <GridCol span="12">
       <SectionTitle emojiColor="white">

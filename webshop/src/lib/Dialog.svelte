@@ -3,6 +3,7 @@
   import { clickOutside } from '$lib/utils/click-outside.ts';
   import { fade } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
+  import {browser} from "$app/environment";
 
   export let showing = false;
   export let showClose = true;
@@ -26,14 +27,10 @@
     }
   }
 
-  $: if (showing) {
-    try {
-      document.documentElement.classList.add('scroll-disabled');
-    } catch (e) {}
-  } else {
-    try {
-      document.documentElement.classList.remove('scroll-disabled');
-    } catch (e) {}
+  $: if (browser && showing) {
+    document.documentElement.classList.add('scroll-disabled');
+  } else if (browser) {
+    document.documentElement.classList.remove('scroll-disabled');
   }
 </script>
 
@@ -86,8 +83,8 @@
     transform: translate(-50%, -50%);
     display: flex;
     background-color: white;
-    border: 1px solid var(--primary-light);
     border-radius: 1rem;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16);
     overflow-y: auto;
   }
   .dialog-content {
@@ -134,9 +131,10 @@
     background-color: transparent;
     border-radius: 50%;
     cursor: pointer;
+    transition: .25s;
   }
   .dialog-close:hover {
-    background-color: red;
+    background-color: rgba(0,0,0,.16);
   }
 
   .contentfull {
