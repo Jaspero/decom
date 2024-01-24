@@ -10,6 +10,7 @@
   import { notification, notificationWrapper } from '$lib/notification/notification';
   import Button from '$lib/Button.svelte';
   import { formatEmail } from '$lib/utils/format-emails';
+  import Field from "$lib/Field.svelte";
 
   let email = '';
   let password = '';
@@ -23,7 +24,7 @@
   async function signUp() {
     email = formatEmail(email);
     if (password !== passwordConfirm) {
-      notification.set({ content: 'passwords do no match', type: 'error' });
+      notification.set({ content: 'passwords do not match', type: 'error' });
       password = '';
       passwordConfirm = '';
       return;
@@ -101,41 +102,16 @@
     <span class="footnote bg-[--white] px-3">or sign up through email</span>
    </div>
 
-  <form on:submit|preventDefault={signUp}>
-    <label>
-      <span>Name</span>
-      <input type="text" name="name" required />
-    </label>
-    <label>
-      <span>Email</span>
-      <input type="email" name="email" bind:value={email} required />
-    </label>
-    <label>
-      <span>Password</span>
-      <input
-        type="password"
-        name="password"
-        required
-        bind:value={password}
-        bind:this={passwordEl}
-      />
-    </label>
-    <label>
-      <span>Confirm password</span>
-      <input
-        type="password"
-        name="confirm-password"
-        required
-        bind:value={passwordConfirm}
-        bind:this={confirmEl}
-      />
-    </label>
+  <form on:submit|preventDefault={signUp} class="flex flex-col gap-4">
+    <Field label="Name" type="text" wfull={true} required />
+    <Field label="Email" type="email" bind:value={email} wfull={true} required />
+    <Field label="Password" type="password" bind:value={password} bind:this={passwordEl} wfull={true} required />
+    <Field label="Confirm password" type="password" bind:value={passwordConfirm} bind:this={confirmEl} wfull={true} required />
     <div class="show-password">
       <input type="checkbox" class="checkbox" on:change|preventDefault={togglePasswordType} />
       <p>Show/hide password</p>
     </div>
-    <Button type="submit" {loading} label="Submit" />
-    
+    <Button type="submit" {loading}>Submit</Button>
   </form>
   </div>
 </section>

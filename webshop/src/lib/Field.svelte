@@ -35,7 +35,7 @@
   export let alt = '';
 </script>
 
-<label class="field" class:has-hint={$$slots.hint} class:wfull>
+<label class="field" class:has-hint={$$slots.hint} class:w-full={wfull}>
   {#if label}
     <span class="label" class:move={value || placeholder}>{label}</span>
   {/if}
@@ -183,18 +183,23 @@
 
 <style lang="postcss">
   .field {
-    @apply relative flex border-b border-black/10 hover:border-black/30 transition-all;}
+    @apply relative flex transition-all border rounded-full;
+  }
 
-  .field:not(.wfull) {
+  .field:hover {
+    @apply border-black/30;
+  }
+
+  .field:not(.w-full) {
     @apply max-w-[350px];
   }
 
   .label {
-    @apply absolute top-4 left-0 transition-all duration-300 select-none cursor-pointer;
+    @apply absolute top-1/2 left-4 -translate-y-1/2 transition-all duration-300 select-none cursor-pointer bg-white;
   }
 
   .label.move {
-    @apply top-0 text-xs;
+    @apply top-0 text-xs left-2 px-1 rounded-full;
   }
 
   .placeholder {
@@ -202,6 +207,6 @@
   }
 
   input {
-    @apply block flex-1 px-0 pt-4 pb-1 outline-0;
+    @apply block flex-1 px-3 py-2 outline-0 rounded-full;
   }
 </style>
