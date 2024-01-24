@@ -1,101 +1,120 @@
 <script lang="ts">
-    import {onMount} from 'svelte';
-    import {collection, getDocs, query, where} from 'firebase/firestore';
-    import {db} from '$lib/utils/firebase';
-    import Product from "$lib/Product.svelte";
-    import {writable} from "svelte/store";
+  import { cartState } from '$lib/cart/cart-state';
+  import {onMount} from 'svelte';
+  import {collection, getDocs, query, where} from 'firebase/firestore';
+  import { db, user } from '$lib/utils/firebase';
+  import Product from "$lib/Product.svelte";
 
 
-    let products = [];
-    let lastProductDoc;
-    let loading = false;
-    let noProductsFound = false;
-    let currentFilters = {
-        category: null,
-        priceRange: { min: 0, max: 200 },
-        tags: [],
-    };
-    let categories = [];
-    let tags = [];
+  let products = [];
+  let lastProductDoc;
+  let loading = false;
+  let noProductsFound = false;
+  let currentFilters = {
+    category: null,
+    priceRange: { min: 0, max: 200 },
+    tags: [],
+  };
+  let categories = [];
+  let tags = [];
 
-    $: if (currentFilters) {
-        loadProducts().catch();
-        noProductsFound = false;
+  $: if (currentFilters) {
+    loadProducts().catch();
+    noProductsFound = false;
+  }
+
+
+  async function loadProducts() {
+    loading = true;
+
+    const discountsRef = collection(db, 'products');
+    let filters = buildFilters();
+
+    let queryRef = query(discountsRef, ...filters);
+
+    const snap = await getDocs(queryRef);
+
+    if (!snap.empty) {
+      lastProductDoc = snap.docs[snap.docs.length - 1];
+      products = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
+    } else {
+      products = [];
+      noProductsFound = true;
+    }
+
+    loading = false;
+  }
+
+  function buildFilters() {
+    let filters = [];
+
+    if (currentFilters.category !== null && currentFilters.category !== undefined) {
+      filters.push(where('category', '==', currentFilters.category));
     }
 
 
-    async function loadProducts() {
-        loading = true;
+    filters.push(where('price', '>=', currentFilters.priceRange.min));
+    filters.push(where('price', '<=', currentFilters.priceRange.max));
 
-        const discountsRef = collection(db, 'products');
-        let filters = buildFilters();
-
-        let queryRef = query(discountsRef, ...filters);
-
-        const snap = await getDocs(queryRef);
-
-        if (!snap.empty) {
-            lastProductDoc = snap.docs[snap.docs.length - 1];
-            products = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
-        } else {
-            products = [];
-            noProductsFound = true;
-        }
-
-        loading = false;
+    if (currentFilters.tags.length > 0) {
+      filters.push(where('tags', 'array-contains-any', currentFilters.tags));
     }
 
-    function buildFilters() {
-        let filters = [];
+    return filters;
+  }
 
-        if (currentFilters.category !== null && currentFilters.category !== undefined) {
-            filters.push(where('category', '==', currentFilters.category));
-        }
+  async function loadCategories() {
+    const categoriesRef = collection(db, 'categories');
+    const categoriesSnap = await getDocs(categoriesRef);
+    categories = categoriesSnap.docs.map(doc => ({id: doc.id, ...doc.data()}));
+  }
+  async function loadTags() {
+    const tagsRef = collection(db, 'tags');
+    const tagsSnap = await getDocs(tagsRef);
+    tags = tagsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  }
 
-
-            filters.push(where('price', '>=', currentFilters.priceRange.min));
-            filters.push(where('price', '<=', currentFilters.priceRange.max));
-
-        if (currentFilters.tags.length > 0) {
-            filters.push(where('tags', 'array-contains-any', currentFilters.tags));
-        }
-
-        return filters;
+  function toggleTag(tag) {
+    const index = currentFilters.tags.indexOf(tag);
+    if (index === -1) {
+      currentFilters.tags.push(tag);
+    } else {
+      currentFilters.tags.splice(index, 1);
     }
 
-    async function loadCategories() {
-        const categoriesRef = collection(db, 'categories');
-        const categoriesSnap = await getDocs(categoriesRef);
-        categories = categoriesSnap.docs.map(doc => ({id: doc.id, ...doc.data()}));
-    }
-    async function loadTags() {
-        const tagsRef = collection(db, 'tags');
-        const tagsSnap = await getDocs(tagsRef);
-        tags = tagsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const selectedTag = tags.find(t => t.id === tag);
+    if (selectedTag) {
+      selectedTag.active = !selectedTag.active;
+      tags = [...tags]; // Trigger reactivity
     }
 
-    function toggleTag(tag) {
-        const index = currentFilters.tags.indexOf(tag);
-        if (index === -1) {
-            currentFilters.tags.push(tag);
-        } else {
-            currentFilters.tags.splice(index, 1);
-        }
+    loadProducts().catch();
+  }
 
-        const selectedTag = tags.find(t => t.id === tag);
-        if (selectedTag) {
-            selectedTag.active = !selectedTag.active;
-            tags = [...tags]; // Trigger reactivity
-        }
 
-        loadProducts().catch();
+  onMount(async () => {
+    const userId: any = $user
+
+    let currentCartState;
+    const items = localStorage.getItem('cart');
+
+    if (items) {
+      currentCartState = JSON.parse(items);
     }
 
+    if (userId && userId.cart) {
+      if (currentCartState && currentCartState.created && currentCartState.created < userId.cart.created) {
+        currentCartState = userId.cart;
+      }
+    }
 
-    onMount(async () => {
-        await loadCategories();
-        await loadTags();
-    });
+    if (currentCartState) {
+      cartState.set(JSON.parse(items).cartItems);
+    }
+
+    await loadCategories();
+    await loadTags();
+  });
 </script>
 
 <div class="w-full">
@@ -124,7 +143,7 @@
                     {#each tags as tag (tag.id)}
                         <button type="button"
                                 class="{tag.active ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'} mr-2 mb-2 px-4 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                            on:click={() => toggleTag(tag.id)}>
+                                on:click={() => toggleTag(tag.id)}>
                             {tag.name}
                         </button>
                     {/each}
@@ -145,13 +164,13 @@
     </div>
 
 
-<!--        <div class="flex items-center p-4">-->
-<!--            <div>-->
-<!--                <jp-range value={currentFilters.priceRange.min} name="priceRange" id="priceRange" min="0" max="200" step="1" discrete="false">-->
-<!--                    <span>{currentFilters.priceRange.min}$ - {currentFilters.priceRange.max}$</span>-->
-<!--                </jp-range>-->
-<!--            </div>-->
-<!--        </div>-->
+    <!--        <div class="flex items-center p-4">-->
+    <!--            <div>-->
+    <!--                <jp-range value={currentFilters.priceRange.min} name="priceRange" id="priceRange" min="0" max="200" step="1" discrete="false">-->
+    <!--                    <span>{currentFilters.priceRange.min}$ - {currentFilters.priceRange.max}$</span>-->
+    <!--                </jp-range>-->
+    <!--            </div>-->
+    <!--        </div>-->
 
 
 
