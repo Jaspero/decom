@@ -20,10 +20,13 @@
   import type { FilterOperators } from './interfaces/filter-operators.interface';
   import { page } from '$app/stores';
   import { base64UrlEncode, base64UrlDecode } from '@jaspero/utils';
+  import {clientStorage} from './services/client-storage.service';
+  import type {Sort} from './interfaces/sort.interface';
 
   export let col: string;
   export let headers: any[];
   export let pageSize = 10;
+  export let pageSizes = [10, 25, 50, 100];
   export let baseLink: string;
   export let initialSort: {
     key: string;
@@ -42,7 +45,7 @@
   let filterItems: any[];
   let filterDialogOpen = false;
 
-  async function get(sort?: any) {
+  async function get(sort: null | Sort, size: number) {
     const queries: any[] = [
       collection(db, col),
       ...defaultFilters.map((filter) => where(filter.key, filter.operation, filter.value))
@@ -68,21 +71,21 @@
 
     const snap = await getDocs(
       // @ts-ignore
-      query(...queries, limit(pageSize + 1))
+      query(...queries, limit(size + 1))
     );
 
     ref = snap.docs[snap.docs.length - 1];
 
     return {
-      hasMore: snap.docs.length > pageSize,
-      rows: snap.docs.slice(0, pageSize).map((doc) => ({
+      hasMore: snap.docs.length > size,
+      rows: snap.docs.slice(0, size).map((doc) => ({
         id: doc.id,
         ...(doc.data() as any)
       }))
     };
   }
 
-  async function loadMore(sort?: any) {
+  async function loadMore(sort: null | Sort, size: number) {
     const queries: any[] = [collection(db, col)];
 
     if (sort) {
@@ -95,14 +98,14 @@
 
     const snap = await getDocs(
       // @ts-ignore
-      query(...queries, limit(pageSize + 1))
+      query(...queries, limit(size + 1))
     );
 
     ref = snap.docs[snap.docs.length - 1];
 
     return {
-      hasMore: snap.docs.length > pageSize,
-      rows: snap.docs.slice(0, pageSize).map((doc) => ({
+      hasMore: snap.docs.length > size,
+      rows: snap.docs.slice(0, size).map((doc) => ({
         id: doc.id,
         ...(doc.data() as any)
       }))
@@ -118,6 +121,14 @@
 
     filterDialogOpen = true;
     filtersLoading = false;
+  }
+
+  async function adjustPageSize(size: number) {
+    await clientStorage.updatePageSize(size);
+  }
+
+  async function adjustSort(sort: any) {
+    await clientStorage.updateSort(sort);
   }
 
   async function clearFilters() {
@@ -136,15 +147,30 @@
     await instance.getData();
   }
 
-  onMount(() => {
+  onMount(async () => {
+
+    const state = await clientStorage.getByUrl();
+
+    if (state) {
+      if (state.size) {
+        pageSize = state.size;
+      }
+
+      if (state.sort) {
+        initialSort = state.sort;
+      }
+    }
+
     if ($page.url.searchParams.has('filters')) {
       filtersValue = base64UrlDecode($page.url.searchParams.get('filters')!);
     }
 
     instance = document.createElement('jp-async-table') as any;
 
-    instance.service = { get, loadMore };
+    instance.service = { get, loadMore, adjustPageSize, adjustSort };
     instance.headers = headers;
+    instance.pageSizes = pageSizes;
+    instance.pageSize = pageSize;
 
     if (initialSort) {
       instance.sort = initialSort;

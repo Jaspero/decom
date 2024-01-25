@@ -13,12 +13,12 @@
   /* Button */
   export let disabled = false;
   export let loading = false;
-  export let form = '';
+  export let form: string | null = null;
   export let type: 'button' | 'submit' | 'reset' = 'button'
 
   /* Other */
-  let containerElement;
-  let bindingElement;
+  let containerElement: HTMLDivElement;
+  let bindingElement: HTMLButtonElement | HTMLAnchorElement;
   let ariaLabel: string | null = null;
 
   const rippleExpand = [
@@ -31,8 +31,8 @@
     iterations: 1,
   };
 
-  function ripple(event) {
-    const targetElement = event.target.closest('.button');
+  function ripple(event: MouseEvent) {
+    const targetElement = (event.target as HTMLElement).closest('.button');
     if (!targetElement) return;
 
     const rect = targetElement.getBoundingClientRect();
@@ -77,11 +77,11 @@
 
   function updateAriaLabel() {
     if (bindingElement) {
-      ariaLabel = bindingElement.textContent.trim();
+      ariaLabel = bindingElement.textContent!.trim();
     }
   }
 
-  function handleRippleEvent(event) {
+  function handleRippleEvent(event: MouseEvent) {
     // Check if the clicked element is a button or a link with ripple
     ripple(event);
   }
