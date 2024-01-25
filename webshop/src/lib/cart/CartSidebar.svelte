@@ -13,7 +13,6 @@
     use:clickOutside
     on:click_outside={() => (show = false)}
   >
-    SOME CART ITEMS
     {#each $cartState as product (product.id)}
       <Product {product} showAdd={false}/>
     {/each}

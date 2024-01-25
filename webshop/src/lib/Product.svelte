@@ -34,14 +34,17 @@
         type: 'error',
         content: `${product.name} has been removed from favorites.`
       });
-      const index = $user.favorites.findIndex(item => item === product.id);
-      $user.favorites.splice(index, 1)
+      const index = ($user.favorites || []).findIndex(item => item === product.id);
+      if (index !== -1) {
+          $user.favorites.splice(index, 1)
+      }
+
     } else {
       console.log('Adding product to user favorites in the database:', userId, product.id);
       await updateDoc(userRef, {
         favorites: arrayUnion(product.id)
       });
-      $user.favorites = [...$user.favorites, product.id];
+      $user.favorites = [...($user.favorites || []), product.id];
       notification.set({
         type: 'success',
         content: `${product.name} has been added to favorites.`

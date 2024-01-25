@@ -20,6 +20,8 @@
   import type { FilterOperators } from './interfaces/filter-operators.interface';
   import { page } from '$app/stores';
   import { base64UrlEncode, base64UrlDecode } from '@jaspero/utils';
+  import type { Sort } from '$lib/interfaces/sort.interface';
+
 
   export let col: string;
   export let headers: any[];
@@ -41,48 +43,47 @@
   let filtersLoading = false;
   let filterItems: any[];
   let filterDialogOpen = false;
+  export let pageSizes = [10, 20, 50, 100];
 
-  async function get(sort?: any) {
-    const queries: any[] = [
-      collection(db, col),
-      ...defaultFilters.map((filter) => where(filter.key, filter.operation, filter.value))
-    ];
 
-    if (Object.keys(filtersValue).length) {
-      queries.push(
-        ...Object.entries(filtersValue)
-          /**
-           * We consider undefined and '' as empty values
-           * while null and false are valid
-           */
-          .filter(([key, value]) => value !== '' && value !== undefined)
-          .map(([key, value]) =>
-            where(filterOperators[key]?.key || key, filterOperators[key]?.operator || '==', value)
-          )
-      );
-    }
+  async function get(sort?: any | Sort, size: number) {
+    const queries: any[] = [collection(db, col)];
 
     if (sort) {
       queries.push(orderBy(sort.key.replace('/', ''), sort.direction));
     }
 
+    if (Object.keys(filtersValue).length) {
+      queries.push(
+              ...Object.entries(filtersValue)
+                      /**
+                       * We consider undefined and '' as empty values
+                       * while null and false are valid
+                       */
+                      .filter(([key, value]) => value !== '' && value !== undefined)
+                      .map(([key, value]) =>
+                              where(filterOperators[key]?.key || key, filterOperators[key]?.operator || '==', value)
+                      )
+      );
+    }
+
     const snap = await getDocs(
-      // @ts-ignore
-      query(...queries, limit(pageSize + 1))
+            // @ts-ignore
+            query(...queries, limit(size + 1))
     );
 
     ref = snap.docs[snap.docs.length - 1];
 
     return {
-      hasMore: snap.docs.length > pageSize,
-      rows: snap.docs.slice(0, pageSize).map((doc) => ({
+      hasMore: snap.docs.length > size,
+      rows: snap.docs.slice(0, size).map((doc) => ({
         id: doc.id,
         ...(doc.data() as any)
       }))
     };
   }
 
-  async function loadMore(sort?: any) {
+  async function loadMore(sort?: any | Sort, size: number) {
     const queries: any[] = [collection(db, col)];
 
     if (sort) {
@@ -94,15 +95,15 @@
     }
 
     const snap = await getDocs(
-      // @ts-ignore
-      query(...queries, limit(pageSize + 1))
+            // @ts-ignore
+            query(...queries, limit(size + 1))
     );
 
     ref = snap.docs[snap.docs.length - 1];
 
     return {
-      hasMore: snap.docs.length > pageSize,
-      rows: snap.docs.slice(0, pageSize).map((doc) => ({
+      hasMore: snap.docs.length > size,
+      rows: snap.docs.slice(0, size).map((doc) => ({
         id: doc.id,
         ...(doc.data() as any)
       }))
@@ -145,6 +146,8 @@
 
     instance.service = { get, loadMore };
     instance.headers = headers;
+    instance.pageSize = pageSize;
+    instance.pageSizes = pageSizes;
 
     if (initialSort) {
       instance.sort = initialSort;
@@ -161,6 +164,8 @@
     instance.addEventListener('rowClick', rowClickHandler);
     el.appendChild(instance);
   });
+
+
 </script>
 
 {#if filterOptions}
@@ -181,6 +186,6 @@
     >Apply filters
     </Button
     >
-    <Button variant="outlined" color="warning" on:click={clearFilters}>Clear</Button>
+    <Button variant="outlined" color="warn" on:click={clearFilters}>Clear</Button>
   </slot>
 </Dialog>
