@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cartState } from '$lib/cart/cart-state';
   import {onMount} from 'svelte';
-  import {collection, getDocs, query, where} from 'firebase/firestore';
+  import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
   import { db, user } from '$lib/utils/firebase';
   import Product from "$lib/Product.svelte";
 
@@ -93,23 +93,38 @@
 
 
   onMount(async () => {
-    const userId: any = $user
-
-    let currentCartState;
+    const userDoc: any = $user
+      let currentCartState;
     const items = localStorage.getItem('cart');
 
     if (items) {
       currentCartState = JSON.parse(items);
     }
 
-    if (userId && userId.cart) {
-      if (currentCartState && currentCartState.created && currentCartState.created < userId.cart.created) {
-        currentCartState = userId.cart;
+    if (userDoc && userDoc.cart) {
+        if (currentCartState && currentCartState.cartUpdate && currentCartState.cartUpdate < userDoc.cartUpdate) {
+        currentCartState = {
+            cartItems: userDoc.cartUpdate
+        };
       }
     }
 
-    if (currentCartState) {
-      cartState.set(JSON.parse(items).cartItems);
+    if (currentCartState && currentCartState.cartItems) {
+        const cartItems = await Promise.all(currentCartState.cartItems.map(async (productId) => {
+            const productRef = doc(db, 'products', productId);
+            const productSnapshot = await getDoc(productRef);
+
+            if (productSnapshot.exists()) {
+                const productData = productSnapshot.data();
+                return {
+                    ...productData,
+                    id: productId,
+                };
+            }
+
+            return null;
+        }));
+        cartState.set(cartItems);
     }
 
     await loadCategories();

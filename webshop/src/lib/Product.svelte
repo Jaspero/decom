@@ -58,21 +58,25 @@
     if (findProduct) {
       return;
     }
-    const updatedValue = [...currentCart, product]
+    const updatedValue = [...currentCart, product];
     cartState.set(updatedValue);
     notification.set({
       type: 'success',
       content: `${product.name} has been added to cart.`
     });
-    updateDoc(userRef, {
-      cart: {cartItems: currentCart, created: Date.now()}
-    }).then();
-    localStorage.setItem('cart', JSON.stringify({cartItems: updatedValue, created: Date.now()}));
-
+       updateDoc(userRef, {
+           cartItems: arrayUnion(product.id),
+           cartUpdate: Date.now()
+      }).then();
+    localStorage.setItem('cart', JSON.stringify({
+            cartItems: updatedValue.map(x => x.id),
+            cartUpdate: Date.now()
+        }));
   }
 
   function removeFromCart() {
     const userRef = doc(db, 'customers', userId);
+      // @ts-ignore
     const currentCart: any[] = $cartState;
     const findProduct = currentCart.findIndex(x => x.id === product.id);
     if (findProduct === -1) {
@@ -80,10 +84,15 @@
     }
     currentCart.splice(findProduct, 1);
     cartState.set(currentCart);
-    updateDoc(userRef, {
-      cart: {cartItems: currentCart, created: Date.now()}
-    }).then();
-    localStorage.setItem('cart', JSON.stringify({cartItems: currentCart, created: Date.now()}));
+      updateDoc(userRef, {
+          cartItems: arrayRemove(product.id),
+          cartUpdate: Date.now()
+      }).then();
+
+      localStorage.setItem('cart', JSON.stringify({
+          cartItems: currentCart.map(x => x.id),
+          cartUpdate: Date.now()
+      }));
   }
 
 </script>
