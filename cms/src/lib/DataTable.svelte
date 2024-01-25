@@ -20,12 +20,13 @@
   import type { FilterOperators } from './interfaces/filter-operators.interface';
   import { page } from '$app/stores';
   import { base64UrlEncode, base64UrlDecode } from '@jaspero/utils';
-  import type { Sort } from '$lib/interfaces/sort.interface';
-
+  import {clientStorage} from './services/client-storage.service';
+  import type {Sort} from './interfaces/sort.interface';
 
   export let col: string;
   export let headers: any[];
   export let pageSize = 10;
+  export let pageSizes = [10, 25, 50, 100];
   export let baseLink: string;
   export let initialSort: {
     key: string;
@@ -46,12 +47,11 @@
   export let pageSizes = [10, 20, 50, 100];
 
 
-  async function get(sort?: any | Sort, size: number) {
-    const queries: any[] = [collection(db, col)];
-
-    if (sort) {
-      queries.push(orderBy(sort.key.replace('/', ''), sort.direction));
-    }
+  async function get(sort: null | Sort, size: number) {
+    const queries: any[] = [
+      collection(db, col),
+      ...defaultFilters.map((filter) => where(filter.key, filter.operation, filter.value))
+    ];
 
     if (Object.keys(filtersValue).length) {
       queries.push(
@@ -83,7 +83,7 @@
     };
   }
 
-  async function loadMore(sort?: any | Sort, size: number) {
+  async function loadMore(sort: null | Sort, size: number) {
     const queries: any[] = [collection(db, col)];
 
     if (sort) {
@@ -121,6 +121,14 @@
     filtersLoading = false;
   }
 
+  async function adjustPageSize(size: number) {
+    await clientStorage.updatePageSize(size);
+  }
+
+  async function adjustSort(sort: any) {
+    await clientStorage.updateSort(sort);
+  }
+
   async function clearFilters() {
     filterDialogOpen = false;
     filtersValue = {};
@@ -137,17 +145,30 @@
     await instance.getData();
   }
 
-  onMount(() => {
+  onMount(async () => {
+
+    const state = await clientStorage.getByUrl();
+
+    if (state) {
+      if (state.size) {
+        pageSize = state.size;
+      }
+
+      if (state.sort) {
+        initialSort = state.sort;
+      }
+    }
+
     if ($page.url.searchParams.has('filters')) {
       filtersValue = base64UrlDecode($page.url.searchParams.get('filters')!);
     }
 
     instance = document.createElement('jp-async-table') as any;
 
-    instance.service = { get, loadMore };
+    instance.service = { get, loadMore, adjustPageSize, adjustSort };
     instance.headers = headers;
-    instance.pageSize = pageSize;
     instance.pageSizes = pageSizes;
+    instance.pageSize = pageSize;
 
     if (initialSort) {
       instance.sort = initialSort;
