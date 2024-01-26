@@ -101,17 +101,24 @@
       currentCartState = JSON.parse(items);
     }
 
-    if (userDoc && userDoc.cart) {
-        if (currentCartState && currentCartState.cartUpdate && currentCartState.cartUpdate < userDoc.cartUpdate) {
+    if (userDoc && userDoc.cartItems) {
+      if (currentCartState && currentCartState.cartUpdate) {
+        if (currentCartState.cartUpdate < userDoc.cartUpdate) {
+          currentCartState = {
+            cartItems: userDoc.cartItems
+          };
+        }
+      } else {
         currentCartState = {
-            cartItems: userDoc.cartUpdate
+          cartItems: userDoc.cartItems
         };
       }
     }
 
     if (currentCartState && currentCartState.cartItems) {
         const cartItems = await Promise.all(currentCartState.cartItems.map(async (productId) => {
-            const productSnapshot = await getDoc(doc(db, 'products', productId));
+
+          const productSnapshot = await getDoc(doc(db, 'products', productId));
             if (productSnapshot.exists()) {
                 const productData = productSnapshot.data();
                 return {

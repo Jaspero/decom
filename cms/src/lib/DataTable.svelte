@@ -44,7 +44,6 @@
   let filtersLoading = false;
   let filterItems: any[];
   let filterDialogOpen = false;
-  export let pageSizes = [10, 20, 50, 100];
 
 
   async function get(sort: null | Sort, size: number) {

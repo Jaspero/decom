@@ -7,7 +7,6 @@
   let items = [];
   let usedFilter = null;
   let activeFilter = null;
-  let currentDate = new Date();
 
 
   onMount(async () => {
@@ -25,7 +24,6 @@
       const querySnapshot = await getDocs(query(collection(db, 'coupons'), ...filterConditions));
 
       items = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      console.log('Fetched Collection:', items);
     } catch (error) {
       console.error('Error fetching collection:', error);
     }
