@@ -17,6 +17,7 @@ export const authenticated = writable<null | false | User>(null);
 export const user = writable<null | DbUser>(null);
 
 onAuthStateChanged(auth, async (authUser) => {
+
   if (authUser) {
     try {
       const userRef = doc(db, 'customers', authUser.uid);
