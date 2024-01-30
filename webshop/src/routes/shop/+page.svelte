@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cartState } from '$lib/cart/cart-state';
   import {onMount} from 'svelte';
-  import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+  import {collection, doc, getDoc, getDocs, orderBy, query, where} from 'firebase/firestore';
   import { db, user } from '$lib/utils/firebase';
   import Product from "$lib/Product.svelte";
 
@@ -14,6 +14,7 @@
     category: null,
     priceRange: { min: 0, max: 200 },
     tags: [],
+    sortOption: 'price-asc',
   };
   let categories = [];
   let tags = [];
@@ -23,16 +24,22 @@
     noProductsFound = false;
   }
 
-
   async function loadProducts() {
     loading = true;
 
     const discountsRef = collection(db, 'products');
-    let filters = buildFilters();
+      let filters = buildFilters();
+      let [sortKey, sortDirection] = currentFilters.sortOption.split('-');
 
-    let queryRef = query(discountsRef, ...filters);
+      // TODO: Allow filtering by name ascending and descending
+      let queryRef = query(
+          discountsRef,
+          ...filters,
+          orderBy(sortKey, sortDirection)
+      );
 
-    const snap = await getDocs(queryRef);
+      const snap = await getDocs(queryRef);
+
 
     if (!snap.empty) {
       lastProductDoc = snap.docs[snap.docs.length - 1];
@@ -52,7 +59,6 @@
       filters.push(where('category', '==', currentFilters.category));
     }
 
-
     filters.push(where('price', '>=', currentFilters.priceRange.min));
     filters.push(where('price', '<=', currentFilters.priceRange.max));
 
@@ -60,7 +66,8 @@
       filters.push(where('tags', 'array-contains-any', currentFilters.tags));
     }
 
-    return filters;
+     return filters;
+
   }
 
   async function loadCategories() {
@@ -74,7 +81,7 @@
     tags = tagsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   }
 
-  function toggleTag(tag) {
+ async function toggleTag(tag) {
     const index = currentFilters.tags.indexOf(tag);
     if (index === -1) {
       currentFilters.tags.push(tag);
@@ -82,13 +89,28 @@
       currentFilters.tags.splice(index, 1);
     }
 
+      if (currentFilters.tags.length > 0) {
+          const filters = buildFilters();
+          const snap = await getDocs(query(collection(db, 'products'), ...filters));
+
+          if (!snap.empty) {
+              products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+              noProductsFound = false;
+          } else {
+              products = [];
+              noProductsFound = true;
+          }
+      } else {
+          await loadProducts();
+      }
+
     const selectedTag = tags.find(t => t.id === tag);
     if (selectedTag) {
       selectedTag.active = !selectedTag.active;
-      tags = [...tags]; // Trigger reactivity
+      tags = [...tags];
     }
 
-    loadProducts().catch();
+    await loadProducts().catch();
   }
 
 
@@ -134,6 +156,7 @@
 
     await loadCategories();
     await loadTags();
+
   });
 </script>
 
@@ -169,6 +192,12 @@
                     {/each}
                 </div>
             </div>
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" bind:value={currentFilters.sortOption} >
+                <option value="name-asc">Name A-Z</option>
+                <option value="name-desc">Name Z-A</option>
+                <option value="price-asc">Price Lowest to Highest</option>
+                <option value="price-desc">Price Highest to Lowest</option>
+            </select>
         </div>
         <div class="flex-1 p-4">
             {#if noProductsFound}
