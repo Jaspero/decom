@@ -1,17 +1,11 @@
 <script lang="ts">
-  import Menu from 'svelte-material-icons/Menu.svelte';
-  import Close from 'svelte-material-icons/Close.svelte';
-  import AccountCircle from 'svelte-material-icons/AccountCircle.svelte';
-  import Button from './Button.svelte';
-  import { clickOutside } from './utils/click-outside';
-  import { fly } from 'svelte/transition';
-  import { goto } from '$app/navigation';
-  import { auth, db } from '$lib/utils/firebase';
-  import { alertWrapper } from './utils/alert-wrapper';
+  import { page } from '$app/stores';
+  import { db } from '$lib/utils/firebase';
   import { doc, onSnapshot, setDoc } from 'firebase/firestore';
   import { onMount } from 'svelte';
+  import Button from './Button.svelte';
   import { lastPublishedOn } from './stores/last-published-on.store';
-  import { page } from '$app/stores';
+  import { alertWrapper } from './utils/alert-wrapper';
 
   export let label: string;
 

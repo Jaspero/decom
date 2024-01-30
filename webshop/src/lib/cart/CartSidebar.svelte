@@ -16,6 +16,7 @@
     {#each $cartState as product (product.id)}
       <Product {product} showAdd={false}/>
     {/each}
+    <a href="/checkout" on:click={() => show = false}>Checkout</a>
   </nav>
 {/if}
 

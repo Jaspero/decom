@@ -41,7 +41,7 @@
       products = [];
       noProductsFound = true;
     }
-
+    console.log(products);
     loading = false;
   }
 

@@ -1,19 +1,19 @@
 import {initializeApp} from 'firebase-admin/app';
+import { processCheckout } from './callable/process-checkout';
+import { actioncontroller } from './rest/action-controller';
+import { adminupdated } from './triggers/admin-updated';
+import { usercreated } from './triggers/user-created';
 
 initializeApp();
 
-/**
- * Rest
- */
-export {actioncontroller} from './rest/action-controller';
+export const cms = {
+  //Rest
+  actioncontroller,
+  //Callable
+  processCheckout,
 
-/**
- * Triggers
- */
-export {usercreated} from './triggers/user-created';
-export {adminupdated} from './triggers/admin-updated';
+  // Triggers
+  adminupdated,
+  usercreated
 
-/**
- * Callable
- */
-export {createadmin} from './callable/create-admin';
+};

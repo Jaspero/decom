@@ -1,16 +1,12 @@
 <script lang="ts">
-  import {
-    createUserWithEmailAndPassword,
-    GoogleAuthProvider,
-    signInWithPopup
-  } from 'firebase/auth';
-  import { auth } from '$lib/utils/firebase';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import { notification, notificationWrapper } from '$lib/notification/notification';
   import Button from '$lib/Button.svelte';
+  import Field from '$lib/Field.svelte';
+  import { notification, notificationWrapper } from '$lib/notification/notification';
+  import { auth } from '$lib/utils/firebase';
   import { formatEmail } from '$lib/utils/format-emails';
-  import Field from "$lib/Field.svelte";
+  import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
   let email = '';
   let password = '';
