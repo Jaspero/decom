@@ -1,5 +1,4 @@
 import { getThumb } from '$lib/utils/get-thumb';
-import type { ProductInfo } from '$lib/types/product/product-info.interface';
 import { firestore } from '$lib/utils/firebase-admin';
 
 let _data: { product: FirebaseFirestore.DocumentData } | null;

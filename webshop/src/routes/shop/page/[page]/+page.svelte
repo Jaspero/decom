@@ -16,9 +16,9 @@
 <div class="grid">
   <div class="col-8 col-s-10 col-xs-12">
     <Tabs>
-      <TabsItem href="/blog" active={true}>All posts</TabsItem>
+      <TabsItem href="/shop" active={true}>All posts</TabsItem>
       {#each data.categories as category}
-        <TabsItem href="/blog/{category.id}">{category.name}</TabsItem>
+        <TabsItem href="/shop/{category.id}">{category.name}</TabsItem>
       {/each}
     </Tabs>
 

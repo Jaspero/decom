@@ -23,7 +23,7 @@
   let recaptchaVerify: () => Promise<string>;
   let selectedReview: string | null;
   let rating = 0;
-  export let data: any;
+  export let data;
   export let averageRating: number;
   export let enableStarsInput: boolean;
   onMount(() => {

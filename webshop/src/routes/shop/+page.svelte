@@ -6,6 +6,7 @@
   import Product from "$lib/Product.svelte";
 
 
+
   let products = [];
   let lastProductDoc;
   let loading = false;
@@ -18,6 +19,10 @@
   };
   let categories = [];
   let tags = [];
+  let data = {};
+  let userId;
+  let price = data.price;
+  let showAdd = true;
 
   $: if (currentFilters) {
     loadProducts().catch();
@@ -31,7 +36,7 @@
       let filters = buildFilters();
       let [sortKey, sortDirection] = currentFilters.sortOption.split('-');
 
-      // TODO: Allow filtering by name ascending and descending
+      // TODO: Allow filtering by name ascending and descending, add search by text/name aswell
       let queryRef = query(
           discountsRef,
           ...filters,
@@ -51,7 +56,6 @@
     console.log(products);
     loading = false;
   }
-
   function buildFilters() {
     let filters = [];
 
@@ -204,9 +208,9 @@
                 <div>No products found within the specified price range.</div>
             {:else}
                 <div class="container grid grid-cols-4 gap-4">
-                    {#each products as product (product.id)}
-                        <Product {product}/>
-                    {/each}
+                        {#each products as product (product.id)}
+                            <Product {product}/>
+                        {/each}
                 </div>
             {/if}
         </div>
