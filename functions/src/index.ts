@@ -3,6 +3,7 @@ import { processCheckout } from './callable/process-checkout';
 import { actioncontroller } from './rest/action-controller';
 import { adminupdated } from './triggers/admin-updated';
 import { usercreated } from './triggers/user-created';
+import { productCreated } from './triggers/product-created';
 
 initializeApp();
 
@@ -14,6 +15,7 @@ export const cms = {
 
   // Triggers
   adminupdated,
-  usercreated
+  usercreated,
+  productCreated
 
 };

@@ -25,7 +25,7 @@
     const reqBody = {
       customerId: $user.id,
       email,
-      products: $cartState.map(x => ({id: x.id, selectedVariant: x.selectedVariant}))
+      products: $cartState.map(x => ({id: x.id, selectedVariant: x.selectedVariant, quantity: x.quantity}))
     }
     console.log('reqBody', reqBody);
     // await processCheckout(reqBody);
