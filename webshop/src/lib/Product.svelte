@@ -27,12 +27,12 @@
   }
 
   $: {
-    const found = product.variantCombinations.find(x => x.variant === Object.values(selectedVariant).join('-'))
+      const found = product.variantCombinations ? product.variantCombinations.find(x => x.variant === Object.values(selectedVariant).join('-')) : null
     price = found ? found.price : product.price;
   }
 
   onMount(() => {
-    if (product.variants) {
+      if (product.variants) {
       selectedVariant = product.variants.reduce((acc, cur) => {
         if (product.selectedVariant && product.selectedVariant[cur.name]) {
           acc[cur.name] = product.selectedVariant[cur.name];

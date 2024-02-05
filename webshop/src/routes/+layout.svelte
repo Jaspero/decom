@@ -38,7 +38,8 @@
     }
 
     if (currentCartState && currentCartState.cartItems) {
-      console.log('currentCartState', currentCartState);
+
+
       const cartItems = await Promise.all(currentCartState.cartItems.map(async (product) => {
 
         const productSnapshot = await getDoc(doc(db, 'products', product.id));
