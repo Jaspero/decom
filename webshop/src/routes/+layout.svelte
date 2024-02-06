@@ -41,7 +41,6 @@
 
 
       const cartItems = await Promise.all(currentCartState.cartItems.map(async (product) => {
-
         const productSnapshot = await getDoc(doc(db, 'products', product.id));
         if (productSnapshot.exists()) {
           const productData = productSnapshot.data();

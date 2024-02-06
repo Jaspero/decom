@@ -41,7 +41,7 @@
   "dependencies": {
     "@jaspero/modular": "1.19.0",
     "@jaspero/utils": "1.15.3",
-    "@jaspero/web-components": "1.83.0",
+    "@jaspero/web-components": "1.83.2",
     "deepcopy": "2.1.0",
     "dexie": "3.2.4",
     "firebase": "10.7.1",

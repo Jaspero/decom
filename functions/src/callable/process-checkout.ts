@@ -85,7 +85,8 @@ export const processCheckout = functions
         orderNumber,
         products,
         customer: data.customerId,
-        email: data.email
+        email: data.email,
+        paid: false
       };
 
       fs.collection(FirestoreCollections.Orders).add(processData).then();

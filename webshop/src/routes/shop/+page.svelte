@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { cartState } from '$lib/cart/cart-state';
-  import {onMount} from 'svelte';
-  import {collection, doc, getDoc, getDocs, orderBy, query, where} from 'firebase/firestore';
-  import { db, user } from '$lib/utils/firebase';
+  import {collection, getDocs, orderBy, query, where} from 'firebase/firestore';
+  import { db } from '$lib/utils/firebase';
   import Product from "$lib/Product.svelte";
 
 
@@ -20,23 +18,23 @@
   let categories = [];
   let tags = [];
   let data = {};
-  let userId;
   let price = data.price;
-  let showAdd = true;
 
   $: if (currentFilters) {
-    loadProducts().catch();
+      loadProducts().catch();
     noProductsFound = false;
   }
 
   async function loadProducts() {
-    loading = true;
+
+      loading = true;
 
     const discountsRef = collection(db, 'products');
       let filters = buildFilters();
       let [sortKey, sortDirection] = currentFilters.sortOption.split('-');
 
       // TODO: Allow filtering by name ascending and descending, add search by text/name aswell
+
       let queryRef = query(
           discountsRef,
           ...filters,
@@ -53,13 +51,11 @@
       products = [];
       noProductsFound = true;
     }
-    console.log(products);
     loading = false;
   }
   function buildFilters() {
     let filters = [];
-
-    if (currentFilters.category !== null && currentFilters.category !== undefined) {
+      if (currentFilters.category !== null && currentFilters.category !== undefined) {
       filters.push(where('category', '==', currentFilters.category));
     }
 
@@ -118,50 +114,6 @@
   }
 
 
-  onMount(async () => {
-    const userDoc: any = $user
-      let currentCartState;
-    const items = localStorage.getItem('cart');
-
-    if (items) {
-      currentCartState = JSON.parse(items);
-    }
-
-    if (userDoc && userDoc.cartItems) {
-      if (currentCartState && currentCartState.cartUpdate) {
-        if (currentCartState.cartUpdate < userDoc.cartUpdate) {
-          currentCartState = {
-            cartItems: userDoc.cartItems
-          };
-        }
-      } else {
-        currentCartState = {
-          cartItems: userDoc.cartItems
-        };
-      }
-    }
-
-    if (currentCartState && currentCartState.cartItems) {
-        const cartItems = await Promise.all(currentCartState.cartItems.map(async (productId) => {
-
-          const productSnapshot = await getDoc(doc(db, 'products', productId));
-            if (productSnapshot.exists()) {
-                const productData = productSnapshot.data();
-                return {
-                    ...productData,
-                    id: productId,
-                };
-            }
-
-            return null;
-        }));
-        cartState.set(cartItems);
-    }
-
-    await loadCategories();
-    await loadTags();
-
-  });
 </script>
 
 <div class="w-full">
