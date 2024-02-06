@@ -4,6 +4,7 @@ import {STATIC_CONFIG} from '../shared/consts/static-config.const';
 import {stripeInstance} from '../shared/consts/stripeInstance.const';
 import {FirestoreCollections} from '../shared/enums/firestore-collections.enum';
 import {toStripeFormat} from '../shared/utils/to-stripe-format';
+import { RANDOM } from '../shared/utils/random';
 
 export const processCheckout = functions
   .runWith({
@@ -87,8 +88,8 @@ export const processCheckout = functions
       email: data.email,
       paid: false,
     };
-
-    fs.collection(FirestoreCollections.Orders).add(processData).then();
+    const orderId = RANDOM.string(12);
+    fs.collection(FirestoreCollections.Orders).doc(orderId).create(processData).then();
 
     const session = await stripeInstance.checkout.sessions.create({
       line_items: products.map((x) => ({price: x.findPrice.id, quantity: x.quantity})),
@@ -98,7 +99,7 @@ export const processCheckout = functions
       cancel_url: 'https://some-url/checkout',
       subscription_data: {
         metadata: {
-          orderNumber,
+          orderId,
         },
       },
     });
