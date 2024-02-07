@@ -103,5 +103,8 @@ export const processCheckout = functions
         },
       },
     });
-    return session.url;
+
+    return {
+      url: session.url
+    };
   });

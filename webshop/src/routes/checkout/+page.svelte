@@ -27,8 +27,13 @@
       email,
       products: $cartState.map(x => ({id: x.id, selectedVariant: x.selectedVariant, quantity: x.quantity}))
     }
-    console.log('reqBody', reqBody);
-    // await processCheckout(reqBody);
+
+    const result = await processCheckout(reqBody);
+    if (result && result.data && result.data.url) {
+      window.location = result.data.url;
+    }
+
+    btnLoading = false;
   }
 
 </script>

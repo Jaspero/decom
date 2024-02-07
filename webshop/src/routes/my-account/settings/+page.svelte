@@ -122,6 +122,7 @@
 
   <button class="mt-[40px]" on:click={handleDeleteAccount}>Delete Account</button>
 </main>
+
 <Dialog bind:showing={isConfirmationVisible}>
   <div class="w-full text-center">
     <h1>Delete account</h1>
