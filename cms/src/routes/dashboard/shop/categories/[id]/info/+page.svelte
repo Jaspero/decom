@@ -11,7 +11,7 @@
 
   async function allCategories() {
     const doc = await getCountFromServer(
-      query(collection(db, 'products'), where('category', '==', [data.id]))
+      query(collection(db, 'products'), where('category', '==', data.id))
     );
 
     return doc.data().count;
@@ -21,7 +21,7 @@
     const doc = await getCountFromServer(
       query(
         collection(db, 'products'),
-        where('category', '==', [data.id]),
+        where('category', '==', data.id),
         where('createdOn', '>=', DateTime.now().minus({ days: 30 }).toISODate())
       )
     );
