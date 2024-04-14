@@ -69,8 +69,8 @@
       ]
     },
     {
-      "target": "webshop",
-      "public": "public/webshop",
+      "target": "web",
+      "public": "public/web",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "cleanUrls": true,
       "trailingSlash": false,

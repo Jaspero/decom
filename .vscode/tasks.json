@@ -9,10 +9,10 @@
       "problemMatcher": []
     },
     {
-      "label": "Run Webshop",
-      "detail": "Run the Webshop application.",
+      "label": "Run Web",
+      "detail": "Run the web application.",
       "type": "shell",
-      "command": "npm run start:dev --prefix webshop",
+      "command": "npm run start:dev --prefix web",
       "problemMatcher": []
     },
     {

@@ -2,7 +2,7 @@
   "targets": {
     "wonkawave": {
       "hosting": {
-        "webshop": [
+        "web": [
           "wonkawave"
         ],
         "cms": [

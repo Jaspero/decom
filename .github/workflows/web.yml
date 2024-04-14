@@ -1,15 +1,15 @@
-name: Prod | Deploy Webshop
+name: Prod | Deploy Web
 on:
   workflow_dispatch:
   push:
     branches:
       - main
     paths:
-      - 'webshop/**/*'
+      - 'web/**/*'
 env:
   PROJECT: wonkawave
   SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}
-  TARGET: webshop
+  TARGET: web
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -20,7 +20,7 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       - name: Build
-        run: npm ci --prefix webshop --legacy-peer-deps && npm run build --prefix webshop
+        run: npm ci --prefix web --legacy-peer-deps && npm run build --prefix web
       - name: Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -33,8 +33,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -f --all webshop/.svelte-kit
-          git add -f --all webshop/node_modules
+          git add -f --all web/.svelte-kit
+          git add -f --all web/node_modules
           git commit -m "BOT - Connected build branch"
       # Remove the build branch in case it already exists
       # this ensures clean code

@@ -7,7 +7,7 @@ on:
 env:
   PROJECT: wonkawave
   SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}
-  TARGET: webshop
+  TARGET: web
 jobs:
   deploy:
     name: Deploy
@@ -18,8 +18,8 @@ jobs:
       - name: Build
         if: contains(github.ref, 'build')
         run: |
-          echo $SV > webshop/key.json
-          npm run build --prefix webshop
+          echo $SV > web/key.json
+          npm run build --prefix web
         env:
           SV: ${{ env.SERVICE_ACCOUNT }}
       - name: Deploy
@@ -34,5 +34,5 @@ jobs:
       - name: Update Firestore
         if: contains(github.ref, 'build')
         run: |
-          cd webshop
+          cd web
           node update-release.cjs
