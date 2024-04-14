@@ -98,8 +98,6 @@
   }
 
   async function loginGoogle() {
-    loading = true;
-
     await alertWrapper(
       signInWithPopup(auth, new GoogleAuthProvider()),
       'Login successful',
@@ -122,8 +120,7 @@
               });
           }
         }
-      },
-      () => (loading = false)
+      }
     );
 
     setTimeout(() => {
@@ -201,15 +198,28 @@
             <form class="flex flex-col gap-4 border-b pb-8" on:submit={login}>
               <Field required label="Email" type="email" bind:value={email} />
               {#if showPassword}
-                <Field required label="Password" type="text" bind:value={password} />
+                <Field required label="Password" type="text" bind:value={password}>
+                  <button
+                    slot="hint"
+                    type="button"
+                    class="show-password"
+                    on:click={() => (showPassword = !showPassword)}
+                  >
+                    Hide password
+                  </button>
+                </Field>
               {:else}
-                <Field required label="Password" type="password" bind:value={password} />
+                <Field required label="Password" type="password" bind:value={password}>
+                  <button
+                    slot="hint"
+                    type="button"
+                    class="show-password"
+                    on:click={() => (showPassword = !showPassword)}
+                  >
+                    Show password
+                  </button>
+                </Field>
               {/if}
-              <div>
-                <Button color="secondary" on:click={() => (showPassword = !showPassword)}>
-                  {showPassword ? 'Hide' : 'Show'} password
-                </Button>
-              </div>
               <div class="flex items-center gap-4">
                 <Button variant="filled" color="secondary" type="submit" {loading}>Log in</Button>
                 <button class="gsi-material-button" type="button" on:click={loginGoogle}>
@@ -252,9 +262,12 @@
 
           <div class="mt-4">
             <p class="mb-2">Forgot your password?</p>
-            <Button color="secondary" on:click={() => (resetPasswordDialog = true)}
+            <button
+              type="button"
+              class="show-password"
+              on:click={() => (resetPasswordDialog = true)}
               >Reset password
-            </Button>
+            </button>
           </div>
         </GridCol>
       {/if}
@@ -386,5 +399,10 @@
   .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
     background-color: #303030;
     opacity: 8%;
+  }
+
+  .show-password {
+    font-weight: 300;
+    text-decoration: underline;
   }
 </style>

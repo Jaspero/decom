@@ -41,5 +41,5 @@ onAuthStateChanged(auth, async (authUser) => {
     user.set(null);
   }
 
-  authenticated.set(authUser ? authUser : null);
+  authenticated.set(authUser ? authUser : false);
 });
