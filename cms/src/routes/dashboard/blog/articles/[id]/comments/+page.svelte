@@ -5,6 +5,8 @@
   import { indexPipe } from '$lib/column-pipes/index.pipe';
   import type { FilterOperators } from '$lib/interfaces/filter-operators.interface';
   import type { Sort } from '$lib/interfaces/sort.interface';
+  import Grid from '$lib/Grid.svelte';
+  import GridCol from '$lib/GridCol.svelte';
 
   const headers = [
     {
@@ -62,11 +64,15 @@
   }
 </script>
 
-<DataTable
-  col="blog-articles/{$page.params.id}/blog-comments"
-  {headers}
-  {initialSort}
-  {filterOptions}
-  {filterOperators}
-  baseLink="/dashboard/blog/articles/{$page.params.id}/comments/"
-/>
+<Grid>
+  <GridCol span="12">
+    <DataTable
+      col="blog-articles/{$page.params.id}/blog-comments"
+      {headers}
+      {initialSort}
+      {filterOptions}
+      {filterOperators}
+      baseLink="/dashboard/blog/articles/{$page.params.id}/comments/"
+    />
+  </GridCol>
+</Grid>

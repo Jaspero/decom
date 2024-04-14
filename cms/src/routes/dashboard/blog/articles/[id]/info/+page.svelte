@@ -31,9 +31,16 @@
 
 <Grid>
   <GridCol span="12">
-    Article Title:
+    Article Info:
     <Card>
-      <slot slot="title">{data.title}</slot>
+      <slot slot="title">
+        <div class="">
+          <p class="title celine">{data.title}</p>
+          <p class="description dm-sans">{data.description}</p>
+          <img src={data.image} alt={data.name} />
+        </div>
+      </slot>
+      <slot>{@html data.content}</slot>
     </Card>
   </GridCol>
   <div class="counter">
@@ -65,5 +72,15 @@
 </Grid>
 
 <svelte:head>
-  <title>Article Information - Blog - Jaspero</title>
+  <title>Article Information - Blog - hati</title>
 </svelte:head>
+
+<style lang="postcss">
+  .title {
+    @apply text-[#5F765A] text-[78px] leading-[78px] lg:text-[68px] lg:leading-[65px] md:text-[48px] md:leading-[normal] sm:text-[38px] font-[400] lg:w-full;
+  }
+
+  .description {
+    @apply font-[400] text-[20px] my-[20px] leading-[28px] sm:text-[16px] sm:my-[10px] sm:leading-[26px] text-[#3C3C3C];
+  }
+</style>

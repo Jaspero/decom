@@ -9,13 +9,14 @@
   import type { Sort } from '$lib/interfaces/sort.interface';
   import { getOptions } from '$lib/utils/get-options';
   import type { FilterOperators } from '$lib/interfaces/filter-operators.interface';
-  import Grid from "$lib/Grid.svelte";
-  import GridCol from "$lib/GridCol.svelte";
+  import Grid from '$lib/Grid.svelte';
+  import GridCol from '$lib/GridCol.svelte';
+  import { yesNoPipe } from '$lib/column-pipes/yes-no.pipe';
 
   const headers = [
     {
       key: '/id',
-      label: 'Number',
+      label: '#',
       pipes: [indexPipe]
     },
     {
@@ -40,14 +41,17 @@
     {
       key: '/id',
       label: 'Active',
-      pipes: [checkboxPipe('blog-articles', 'active')]
+      pipes: [checkboxPipe('blog-articles', 'active')],
+      exportPipes: [yesNoPipe]
     },
     {
       key: '/lastUpdatedOn',
       label: 'Status',
-      pipes: [releaseStatusPipe()]
+      pipes: [releaseStatusPipe()],
+      exportPipes: [datePipe]
     }
   ];
+  let pageTitle = 'Articles';
   const initialSort: Sort = { key: 'publicationDate', direction: 'desc' };
   const filterOperators: FilterOperators = {
     publicationDateStart: {
@@ -113,25 +117,28 @@
   }
 </script>
 
+<p class="page-title sen">{pageTitle}</p>
 <Grid>
   <GridCol span="12">
-    <Button variant="filled" color="secondary" href="/dashboard/blog/articles/new">
-      Add new article
-    </Button>
-  </GridCol>
-
-  <GridCol span="12">
     <DataTable
-            col="blog-articles"
-            {headers}
-            {initialSort}
-            {filterOptions}
-            {filterOperators}
-            baseLink="/dashboard/blog/articles/"
-    />
+      col="blog-articles"
+      {headers}
+      {initialSort}
+      {filterOptions}
+      {filterOperators}
+      baseLink="/dashboard/blog/articles/"
+    >
+      <Button slot="header" href="/dashboard/blog/articles/new">Add new article</Button>
+    </DataTable>
   </GridCol>
 </Grid>
 
 <svelte:head>
-  <title>Articles - Blog - Jaspero</title>
+  <title>Articles - Blog - hati</title>
 </svelte:head>
+
+<style lang="postcss">
+  .page-title {
+    @apply text-[48px] text-[#5F765A] ml-[1.5rem] lg:text-[38px];
+  }
+</style>

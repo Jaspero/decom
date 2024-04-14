@@ -18,16 +18,20 @@ export async function load({ params, parent }) {
   imageService.prefix = col + '/';
   imageService.metadata = [
     {
-      height: 1000,
-      width: 1000,
-      filePrefix: 'thumb_m_',
-      folder: '../../generated'
+      folder: col + '/',
+      width: 1080
     },
     {
-      width: 500,
-      height: 500,
+      height: 857,
+      width: 438,
+      filePrefix: 'thumb_m_',
+      folder: '../../thumbs'
+    },
+    {
+      width: 455,
+      height: 374,
       filePrefix: 'thumb_s_',
-      folder: '../../generated'
+      folder: '../../thumbs'
     }
   ];
 
@@ -37,7 +41,8 @@ export async function load({ params, parent }) {
       field: '/title',
       options: {
         label: 'Title',
-        name: 'title'
+        name: 'title',
+        required: true
       }
     },
     {
@@ -83,6 +88,14 @@ export async function load({ params, parent }) {
         name: 'featuredImage',
         label: 'Featured image',
         service: imageService
+      }
+    },
+    {
+      component: 'jp-input',
+      field: '/imageAlt',
+      options: {
+        label: 'Featured Image Alternative Description',
+        name: 'imageAlt'
       }
     },
     {

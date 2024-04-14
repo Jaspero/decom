@@ -4,19 +4,21 @@
   import { indexPipe } from '$lib/column-pipes/index.pipe';
   import Button from '$lib/Button.svelte';
   import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
-  import Grid from "$lib/Grid.svelte";
-  import GridCol from "$lib/GridCol.svelte";
+  import Grid from '$lib/Grid.svelte';
+  import GridCol from '$lib/GridCol.svelte';
+  import { datePipe } from '$lib/column-pipes/date.pipe';
 
   const headers = [
     {
       key: '/id',
-      label: 'Number',
+      label: '#',
       pipes: [indexPipe]
     },
     {
       key: '/image',
       label: 'Image',
-      pipes: [imagePipe()]
+      pipes: [imagePipe()],
+      exportPipes: []
     },
     {
       key: '/name',
@@ -25,23 +27,29 @@
     {
       key: '/lastUpdatedOn',
       label: 'Status',
-      pipes: [releaseStatusPipe()]
+      pipes: [releaseStatusPipe()],
+      exportPipes: [datePipe]
     }
   ];
+
+  let pageTitle = 'Authors';
 </script>
 
+<p class="page-title sen">{pageTitle}</p>
 <Grid>
   <GridCol span="12">
-    <Button variant="filled" color="secondary" href="/dashboard/blog/authors/new">
-      Add new author
-    </Button>
-  </GridCol>
-
-  <GridCol span="12">
-    <DataTable col="blog-authors" {headers} baseLink="/dashboard/blog/authors/" />
+    <DataTable col="blog-authors" {headers} baseLink="/dashboard/blog/authors/">
+      <Button slot="header" href="/dashboard/blog/authors/new">Add new author</Button>
+    </DataTable>
   </GridCol>
 </Grid>
 
 <svelte:head>
-  <title>Authors - Blog - Jaspero</title>
+  <title>Authors - Blog - hati</title>
 </svelte:head>
+
+<style lang="postcss">
+  .page-title {
+    @apply text-[48px] text-[#5F765A] ml-[1.5rem] lg:text-[38px];
+  }
+</style>

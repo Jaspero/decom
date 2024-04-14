@@ -3,13 +3,14 @@
   import { indexPipe } from '$lib/column-pipes/index.pipe';
   import Button from '$lib/Button.svelte';
   import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
-  import Grid from "$lib/Grid.svelte";
-  import GridCol from "$lib/GridCol.svelte";
+  import Grid from '$lib/Grid.svelte';
+  import GridCol from '$lib/GridCol.svelte';
+  import { datePipe } from '../../../../lib/column-pipes/date.pipe';
 
   const headers = [
     {
       key: '/id',
-      label: 'Number',
+      label: '#',
       pipes: [indexPipe]
     },
     {
@@ -27,23 +28,29 @@
     {
       key: '/lastUpdatedOn',
       label: 'Status',
-      pipes: [releaseStatusPipe()]
+      pipes: [releaseStatusPipe()],
+      exportPipes: [datePipe]
     }
   ];
+
+  let pageTitle = 'Categories';
 </script>
 
+<p class="page-title sen">{pageTitle}</p>
 <Grid>
   <GridCol span="12">
-    <Button variant="filled" color="secondary" href="/dashboard/blog/categories/new">
-      Add new category
-    </Button>
-  </GridCol>
-
-  <GridCol span="12">
-    <DataTable col="blog-categories" {headers} baseLink="/dashboard/blog/categories/" />
+    <DataTable col="blog-categories" {headers} baseLink="/dashboard/blog/categories/">
+      <Button slot="header" href="/dashboard/blog/categories/new">Add new category</Button>
+    </DataTable>
   </GridCol>
 </Grid>
 
 <svelte:head>
-  <title>Categories - Blog - Jaspero</title>
+  <title>Categories - Blog - hati</title>
 </svelte:head>
+
+<style lang="postcss">
+  .page-title {
+    @apply text-[48px] text-[#5F765A] ml-[1.5rem] lg:text-[38px];
+  }
+</style>

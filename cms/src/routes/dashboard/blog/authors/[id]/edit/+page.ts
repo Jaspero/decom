@@ -16,10 +16,10 @@ export async function load({ params, parent }) {
   imageService.metadata = [
     {
       filePrefix: 'thumb_',
-      height: 100,
+      height: 200,
       webpVersion: true,
-      width: 100,
-      folder: '../../generated'
+      width: 200,
+      folder: '../../thumbs'
     }
   ];
 
@@ -29,7 +29,17 @@ export async function load({ params, parent }) {
       field: '/name',
       options: {
         label: 'Name',
-        name: 'name'
+        name: 'name',
+        required: true
+      }
+    },
+    {
+      component: 'jp-input',
+      field: '/id',
+      options: {
+        label: 'Url',
+        name: 'url',
+        readonly: true
       }
     },
     {

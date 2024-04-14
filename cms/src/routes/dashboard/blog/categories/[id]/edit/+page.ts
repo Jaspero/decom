@@ -13,6 +13,7 @@ export async function load({ params, parent }) {
       component: 'jp-input',
       field: '/name',
       options: {
+        required: true,
         label: 'Name',
         name: 'name'
       }

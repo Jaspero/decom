@@ -9,6 +9,7 @@ export async function load({ parent }) {
       component: 'jp-input',
       field: '/name',
       options: {
+        required: true,
         label: 'Name',
         name: 'name'
       }
@@ -19,7 +20,10 @@ export async function load({ parent }) {
       options: {
         label: 'Url',
         name: 'url',
-        hint: 'Generated from title if left empty.'
+        hint: 'Generated from title if left empty.',
+        pattern: '[a-zA-Z0-9\\-_]+',
+        minlength: 3,
+        patternValidationMessage: `Only letters, numbers, '-' and '_' are valid in the URL.`,
       }
     },
     {

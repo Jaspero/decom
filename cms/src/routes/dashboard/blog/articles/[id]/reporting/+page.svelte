@@ -1,5 +1,5 @@
 <script lang="ts"></script>
 
 <svelte:head>
-  <title>Article Reporting - Blog - Jaspero</title>
+  <title>Article Reporting - Blog - hati</title>
 </svelte:head>

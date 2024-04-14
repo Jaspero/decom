@@ -36,12 +36,12 @@
   async function submit() {
     saveLoading = true;
 
-    data.value = unflatten(data.value);
-    data.value.lastUpdatedOn = new Date().toISOString();
-
     const id = data.snap.id;
 
     await formModule.render.save(id);
+
+    data.value = unflatten(data.value);
+    data.value.lastUpdatedOn = new Date().toISOString();
 
     delete data.value.id;
 
@@ -70,7 +70,14 @@
   }
 </script>
 
-<form class="relative" on:submit|preventDefault={submit}>
+<div class="save-menu">
+  <Button type="button" color="warn" on:click={deleteItem}>Delete</Button>
+  <div class="flex-1" />
+  <Button variant="ghost" href={back}>Cancel</Button>
+  <Button form="form" type="submit" variant="filled" loading={saveLoading}>Save</Button>
+</div>
+
+<form id="form" class="relative pb-16" on:submit|preventDefault={submit}>
   <Grid>
     <GridCol span="12">
       <Card>
@@ -84,16 +91,6 @@
           <FormModule bind:this={formModule} items={data.items} bind:value={data.value} />
         </div>
 
-        <slot slot="footerAction">
-          <Button type="button" color="warn" on:click={deleteItem}>Delete</Button>
-
-          <div class="flex-1" />
-
-          <Button variant="ghost" href={back}>Cancel</Button>
-          <Button type="submit" variant="filled" loading={saveLoading}
-            >Save</Button
-          >
-        </slot>
       </Card>
     </GridCol>
   </Grid>

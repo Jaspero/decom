@@ -75,7 +75,7 @@
         <slot slot="title">Editing Comment</slot>
 
         <slot slot="subtitle">
-          <Breadcrumbs suffix="/comments" title="Comment" {segments} />
+          <Breadcrumbs title="Comment" {segments} />
         </slot>
 
         <div class="flex flex-col gap-6">
@@ -88,9 +88,7 @@
           <div class="flex-1" />
 
           <Button variant="ghost" href={back}>Cancel</Button>
-          <Button type="submit" variant="filled" loading={saveLoading}
-            >Save</Button
-          >
+          <Button type="submit" variant="filled" loading={saveLoading}>Save</Button>
         </slot>
       </Card>
     </GridCol>
@@ -98,5 +96,5 @@
 </form>
 
 <svelte:head>
-  <title>Edit Comment - Blog - Jaspero</title>
+  <title>Edit Comment - Blog - hati</title>
 </svelte:head>

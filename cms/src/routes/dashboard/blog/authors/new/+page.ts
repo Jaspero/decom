@@ -15,7 +15,7 @@ export async function load({ parent }) {
       height: 100,
       webpVersion: true,
       width: 100,
-      folder: '../../generated'
+      folder: '../../thumbs'
     }
   ];
 
@@ -25,7 +25,20 @@ export async function load({ parent }) {
       field: '/name',
       options: {
         label: 'Name',
-        name: 'name'
+        name: 'name',
+        required: true
+      }
+    },
+    {
+      component: 'jp-input',
+      field: '/id',
+      options: {
+        label: 'Url',
+        name: 'url',
+        hint: 'Generated from title if left empty.',
+        pattern: '[a-zA-Z0-9\\-_]+',
+        minlength: 3,
+        patternValidationMessage: `Only letters, numbers, '-' and '_' are valid in the URL.`,
       }
     },
     {
@@ -41,5 +54,9 @@ export async function load({ parent }) {
     ...META_FORM_FIELDS(col)
   ];
 
-  return { col, items, value: {} };
+  return {
+    col,
+    items,
+    value: {}
+  };
 }
