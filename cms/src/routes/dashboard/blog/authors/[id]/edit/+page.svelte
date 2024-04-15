@@ -10,7 +10,6 @@
   import { alertWrapper } from '$lib/utils/alert-wrapper';
   import { confirmation } from '$lib/utils/confirmation';
   import { db } from '$lib/utils/firebase';
-  import { unflatten } from '$lib/utils/unflatten';
   import { urlSegments } from '$lib/utils/url-segments';
   import { DocumentSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
@@ -39,7 +38,6 @@
 
     await formModule.render.save(id);
 
-    data.value = unflatten(data.value);
     data.value.lastUpdatedOn = new Date().toISOString();
 
     delete data.value.id;

@@ -11,7 +11,6 @@
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
   import { alertWrapper } from '$lib/utils/alert-wrapper';
-  import { unflatten } from '$lib/utils/unflatten';
   import { urlSegments } from '$lib/utils/url-segments';
   import { generateSlug } from '$lib/utils/generate-slug';
 
@@ -38,8 +37,7 @@
     const id = data.value.id || generateSlug(data.value.name);
 
     await formModule.render.save(id);
-
-    data.value = unflatten(data.value);
+    
     data.value.lastUpdatedOn = new Date().toISOString();
 
     const { id: dId, ...dt } = data.value;

@@ -12,7 +12,6 @@
   import GridCol from '$lib/GridCol.svelte';
   import { alertWrapper } from '$lib/utils/alert-wrapper';
   import { confirmation } from '$lib/utils/confirmation';
-  import { unflatten } from '$lib/utils/unflatten';
   import { urlSegments } from '$lib/utils/url-segments';
   import { httpsCallable } from 'firebase/functions';
 
@@ -36,8 +35,6 @@
 
   async function submit() {
     saveLoading = true;
-
-    data.value = unflatten(data.value);
 
     const id = data.snap?.id || data.value.id;
 
@@ -77,7 +74,16 @@
   }
 </script>
 
-<form class="relative" on:submit|preventDefault={submit}>
+<div class="save-menu">
+  {#if data.snap}
+    <Button type="button" color="warn" on:click={deleteItem}>Delete</Button>
+  {/if}
+  <div class="flex-1" />
+  <Button variant="ghost" href={back}>Cancel</Button>
+  <Button type="submit" form="form" variant="filled" loading={saveLoading}>Save</Button>
+</div>
+
+<form id="form" class="relative pb-16" on:submit|preventDefault={submit}>
   <Grid>
     <GridCol span="12">
       <Card>
@@ -90,18 +96,6 @@
         <div class="flex flex-col gap-6">
           <FormModule bind:this={formModule} items={data.items} bind:value={data.value} />
         </div>
-
-        <slot slot="footerAction">
-          {#if data.snap}
-            <Button type="button" color="warn" on:click={deleteItem}>Delete</Button>
-          {/if}
-          <div class="flex-1" />
-
-          <Button variant="ghost" href={back}>Cancel</Button>
-          <Button type="submit" variant="filled" loading={saveLoading}
-            >Save</Button
-          >
-        </slot>
       </Card>
     </GridCol>
   </Grid>
