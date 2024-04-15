@@ -1,6 +1,5 @@
 <script lang="ts">
   import Button from '$lib/Button.svelte';
-  import Card from '$lib/Card.svelte';
   import DataTable from '$lib/DataTable.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
@@ -29,13 +28,9 @@
 
 <Grid>
   <GridCol span="12">
-    <Button variant="filled" color="secondary" href="/dashboard/admins/new">Add Admin</Button>
-  </GridCol>
-  <GridCol span="12">
-    <Card table>
-      <svelte:fragment slot="title">Admins</svelte:fragment>
-      <DataTable col="admins" {headers} baseLink="/dashboard/admins/" />
-    </Card>
+    <DataTable col="admins" {headers} baseLink="/dashboard/admins/">
+      <Button slot="header" href="/dashboard/admins/new">Add new admin</Button>
+    </DataTable>
   </GridCol>
 </Grid>
 

@@ -31,11 +31,8 @@
       exportPipes: [datePipe]
     }
   ];
-
-  let pageTitle = 'Authors';
 </script>
 
-<p class="page-title sen">{pageTitle}</p>
 <Grid>
   <GridCol span="12">
     <DataTable col="blog-authors" {headers} baseLink="/dashboard/blog/authors/">
@@ -45,11 +42,5 @@
 </Grid>
 
 <svelte:head>
-  <title>Authors - Blog - hati</title>
+  <title>Authors - Blog - Shop CMS</title>
 </svelte:head>
-
-<style lang="postcss">
-  .page-title {
-    @apply text-[48px] text-[#5F765A] ml-[1.5rem] lg:text-[38px];
-  }
-</style>

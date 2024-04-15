@@ -51,7 +51,6 @@
       exportPipes: [datePipe]
     }
   ];
-  let pageTitle = 'Articles';
   const initialSort: Sort = { key: 'publicationDate', direction: 'desc' };
   const filterOperators: FilterOperators = {
     publicationDateStart: {
@@ -117,7 +116,6 @@
   }
 </script>
 
-<p class="page-title sen">{pageTitle}</p>
 <Grid>
   <GridCol span="12">
     <DataTable
@@ -134,11 +132,5 @@
 </Grid>
 
 <svelte:head>
-  <title>Articles - Blog - hati</title>
+  <title>Articles - Blog - Shop CMS</title>
 </svelte:head>
-
-<style lang="postcss">
-  .page-title {
-    @apply text-[48px] text-[#5F765A] ml-[1.5rem] lg:text-[38px];
-  }
-</style>
