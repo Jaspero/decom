@@ -4,8 +4,16 @@
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
   import { datePipe } from '$lib/column-pipes/date.pipe';
+  import { CONFIG } from '$lib/consts/config.const';
+  import { capitalize } from '@jaspero/utils';
+  import { indexPipe } from '$lib/column-pipes/index.pipe';
 
   const headers = [
+    {
+      key: '/id',
+      label: '#',
+      pipes: [indexPipe]
+    },
     {
       key: '/createdOn',
       label: 'Created On',
@@ -21,7 +29,15 @@
     },
     {
       key: '/role',
-      label: 'Role'
+      label: 'Role',
+      pipes: [capitalize]
+    },
+    {
+      key: 'id',
+      label: '',
+      pipes: [
+        (id: string) => `<column-actions id="${id}" collection="admins" prefix="admins" actions="edit,delete"></column-actions>`
+      ]
     }
   ];
 </script>
@@ -35,5 +51,5 @@
 </Grid>
 
 <svelte:head>
-  <title>Admins - Shop CMS</title>
+  <title>Admins - {CONFIG.title}</title>
 </svelte:head>

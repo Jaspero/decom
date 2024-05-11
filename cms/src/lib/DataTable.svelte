@@ -28,7 +28,7 @@
   export let filterOperators: FilterOperators = {};
   export let defaultFilters: Filter[] = [];
   export let filtersValue: any = {};
-  export let rawClick: boolean = true;
+  export let rawClick = false;
 
   let el: HTMLDivElement;
   let ref: QueryDocumentSnapshot<any> | null = null;
