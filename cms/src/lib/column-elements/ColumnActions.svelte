@@ -43,8 +43,6 @@
 
     const newId = id.split('-')[0] + '-' + random.string(24);
 
-    console.log('newId', newId);
-
     await alertWrapper(
       Promise.all([
         setDoc(doc(db, collection, newId), ref.data()),
