@@ -5,7 +5,7 @@ import {collections} from '../collections';
 
 collections.addCollection('admins', {
 	name: 'Admins',
-	singularName: 'Admin',
+	singularName: 'admin',
 	module: 'management',
 	tableHeaders: [
     {
@@ -16,15 +16,18 @@ collections.addCollection('admins', {
     {
       key: '/createdOn',
       label: 'Created On',
-      pipes: [datePipe]
+      pipes: [datePipe],
+      sortable: true
     },
     {
       key: '/name',
-      label: 'Name'
+      label: 'Name',
+      sortable: true
     },
     {
       key: '/email',
-      label: 'Email'
+      label: 'Email',
+      sortable: true
     },
     {
       key: '/role',
@@ -38,5 +41,6 @@ collections.addCollection('admins', {
         (id: string) => `<column-actions id="${id}" collection="admins" prefix="admins" actions="edit,delete"></column-actions>`
       ]
     }
-  ]
+  ],
+  initialSort: { key: 'createdOn', direction: 'desc' }
 });

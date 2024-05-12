@@ -4,22 +4,23 @@
   import DataTable from '$lib/DataTable.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
-  import type TableHeader from '$lib/TableHeader.svelte';
   import {CONFIG} from '$lib/consts/config.const';
+  import type {CommonDataTablePageData} from './common-data-table-page';
 
-  export let data: {
-    name: string;
-    singularName: string;
-    headers: TableHeader;
-    add: boolean;
-  };
+  export let data: CommonDataTablePageData;
 
 	$: baseLink = ['/dashboard', $page.params.module, $page.params.collection].filter(Boolean).join('/');
 </script>
 
 <Grid>
   <GridCol span="12">
-    <DataTable col={$page.params.collection} headers={data.headers} {baseLink}>
+    <DataTable
+      col={$page.params.collection}
+      headers={data.headers}
+      initialSort={data.initialSort}
+      filterOptions={data.filterOptions}
+      filterOperators={data.filterOperators}
+      {baseLink}>
 			<slot slot="header">
 				{#if data.add}
 					<Button  href="{baseLink}/new">Add new {data.singularName}</Button>

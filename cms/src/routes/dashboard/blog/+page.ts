@@ -2,5 +2,5 @@ import { redirect } from '@sveltejs/kit';
 
 export async function load({ parent }) {
   await parent();
-  throw redirect(301, '/dashboard/blog/articles');
+  throw redirect(301, '/dashboard/blog/blog-articles');
 }
