@@ -70,11 +70,11 @@ collections.addCollection('blog-articles', {
 							href: `blog-articles/${id}/comments`,
 							icon: 'forum'
 						},
-						// {
-						// 	label: 'Reporting',
-						// 	href: `${id}/reporting`,
-						// 	icon: 'monitoring'
-						// }
+						{
+							label: 'Reporting',
+							href: `blog-articles/${id}/reporting`,
+							icon: 'monitoring'
+						}
 					]
 				}))
       ]
@@ -143,7 +143,7 @@ collections.addCollection('blog-articles', {
 		return items;
 	},
 	editKey: 'title',
-	form: async id => {
+	form: async () => {
 		const authors: Array<{ label: string; value: string }> = [];
 		const categories: Array<{ label: string; value: string }> = [];
 		const col = 'blog-articles';
@@ -263,5 +263,5 @@ collections.addCollection('blog-articles', {
 		value.url = value.url || generateSlug(value.title);
 		value.publicationDate = value.publicationDate || new Date().toISOString();
 	},
-	idPrefix: 'ba'
-})
+	idPrefix: 'bar'
+});

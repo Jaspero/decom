@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {onMount, tick} from "svelte";
+  import { onMount, tick } from 'svelte';
 
   export let variant: 'filled' | 'outlined' | 'ghost' | 'underlined' | 'icon' = 'filled';
   export let color: 'primary' | 'secondary' | 'warn' | 'error' = 'primary';
@@ -14,7 +14,7 @@
   export let disabled = false;
   export let loading = false;
   export let form: string | null = null;
-  export let type: 'button' | 'submit' | 'reset' = 'button'
+  export let type: 'button' | 'submit' | 'reset' = 'button';
 
   /* Other */
   let containerElement: HTMLDivElement;
@@ -28,7 +28,7 @@
 
   const rippleTiming = {
     duration: 600,
-    iterations: 1,
+    iterations: 1
   };
 
   function ripple(event: MouseEvent) {
@@ -71,8 +71,8 @@
       color == 'warn' && 'color-warn',
       hfull && 'h-full'
     ]
-            .filter(Boolean)
-            .join(' ')
+      .filter(Boolean)
+      .join(' ')
   };
 
   function updateAriaLabel() {
@@ -89,33 +89,37 @@
   onMount(async () => {
     containerElement.addEventListener('click', handleRippleEvent);
 
-    await tick() // Wait for DOM to update
+    await tick(); // Wait for DOM to update
     updateAriaLabel();
-  })
+  });
 </script>
 
 <div class="h-10" bind:this={containerElement}>
   {#if href}
-    <a {...properties}
-       {...$$restProps.class}
-       {href}
-       {target}
-       {rel}
-       aria-label={ariaLabel}
-       on:click
-       bind:this={bindingElement}>
+    <a
+      {...properties}
+      {...$$restProps.class}
+      {href}
+      {target}
+      {rel}
+      aria-label={ariaLabel}
+      on:click
+      bind:this={bindingElement}
+    >
       <slot />
     </a>
   {:else}
-    <button {...properties}
-            {...$$restProps.class}
-            class:loading
-            {disabled}
-            {form}
-            {type}
-            aria-label={ariaLabel}
-            on:click
-            bind:this={bindingElement}>
+    <button
+      {...properties}
+      {...$$restProps.class}
+      class:loading
+      {disabled}
+      {form}
+      {type}
+      aria-label={ariaLabel}
+      on:click
+      bind:this={bindingElement}
+    >
       <slot />
     </button>
   {/if}
@@ -125,7 +129,7 @@
   .button {
     @apply relative transition-all overflow-hidden inline-block h-10;
     border-radius: var(--border-radius);
-    font-size: .875rem;
+    font-size: 0.875rem;
     font-weight: bold;
     line-height: 2.5rem;
   }
@@ -210,5 +214,12 @@
   }
   .button.variant-underlined.color-error {
     border-color: var(--error-color);
+  }
+
+  /* Button - Icon */
+  .button.variant-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

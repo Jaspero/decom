@@ -1,50 +1,58 @@
 <script lang="ts">
-    import { db, auth } from '$lib/utils/firebase';
-    import { slide } from 'svelte/transition';
-    import { doc, onSnapshot } from 'firebase/firestore';
-    import { onMount } from 'svelte';
-    import { lastPublishedOn } from './stores/last-published-on.store';
-    import { clickOutside } from './utils/click-outside';
-    import { goto } from '$app/navigation';
-    import { page } from '$app/stores';
-  
-    export let links: Array<{
+  import { db, auth } from '$lib/utils/firebase';
+  import { slide } from 'svelte/transition';
+  import { doc, onSnapshot } from 'firebase/firestore';
+  import { onMount } from 'svelte';
+  import { lastPublishedOn } from './stores/last-published-on.store';
+  import { clickOutside } from './utils/click-outside';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
+  import { sidebarStore } from './stores/sidebar.store';
+
+  export let links: Array<{
+    label: string;
+    icon: string;
+    href: string;
+    exactMatch?: boolean;
+    links?: Array<{
       label: string;
-      icon: string;
       href: string;
-      exactMatch?: boolean;
-      links?: Array<{
-        label: string;
-        href: string;
-      }>;
-      checked?: boolean;
     }>;
-  
-    let dropdown = false;
-  
-    $: pathname = $page.url.pathname;
-  
-    onMount(() => {
-      onSnapshot(doc(db, 'settings', 'status'), (doc) => {
-        const { lastPublished } = doc.data() || {};
-  
-        if (lastPublished) {
-          lastPublishedOn.set(lastPublished);
-        }
-      });
-  
-      links = links.map((link) => {
-        if (link.links) {
-          return {
-            ...link,
-            checked: pathname.startsWith(link.href)
-          };
-        }
-        return link;
-      });
+    checked?: boolean;
+  }>;
+
+  let dropdown = false;
+
+  $: pathname = $page.url.pathname;
+
+  function closeSidebar() {
+    if (typeof window !== undefined && window.innerWidth < 768) {
+      $sidebarStore = false;
+    }
+  }
+
+  onMount(() => {
+    onSnapshot(doc(db, 'settings', 'status'), (doc) => {
+      const { lastPublished } = doc.data() || {};
+
+      if (lastPublished) {
+        lastPublishedOn.set(lastPublished);
+      }
     });
-  </script>
-  
+
+    links = links.map((link) => {
+      if (link.links) {
+        return {
+          ...link,
+          checked: pathname.startsWith(link.href)
+        };
+      }
+      return link;
+    });
+  });
+</script>
+
+{#if $sidebarStore}
   <aside>
     {#if links}
       <nav>
@@ -71,7 +79,7 @@
                   alt={link.checked ? 'Expand less' : 'Expand more'}
                 />
               </button>
-  
+
               {#if link.checked}
                 <div class="flex flex-col px-4" transition:slide>
                   {#each link.links as inner}
@@ -79,6 +87,7 @@
                       class="dropdown-link flex gap-2 hover:underline py-2 hover:translate-x-2 transition-all"
                       href={inner.href}
                       class:active={pathname.startsWith(inner.href)}
+                      on:click={closeSidebar}
                     >
                       <span class="w-6 h-6" />
                       {inner.label}
@@ -93,6 +102,7 @@
                 class:active={link.exactMatch
                   ? pathname === link.href
                   : pathname.startsWith(link.href)}
+                on:click={closeSidebar}
               >
                 {#if link.icon}
                   <span class="material-symbols-outlined">{link.icon}</span>
@@ -104,7 +114,7 @@
         {/each}
       </nav>
     {/if}
-  
+
     <footer class="border-t border-t-black/10">
       <button
         class="flex gap-2 w-full px-4 py-3 font-bold hover:bg-black/5 transition-all"
@@ -116,7 +126,7 @@
         <span class="flex-1 text-left">Account</span>
         <span class="material-symbols-outlined">chevron_right</span>
       </button>
-  
+
       {#if dropdown}
         <div
           class="absolute bottom-full right-4 bg-white shadow flex flex-col whitespace-nowrap divide-y"
@@ -142,26 +152,55 @@
       {/if}
     </footer>
   </aside>
-  
-  <style lang="postcss">
+{/if}
+
+<style lang="postcss">
+  aside {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 256px;
+    height: 100%;
+    background-color: white;
+    overflow-y: auto;
+    border-right: 1px solid rgba(0, 0, 0, 0.16);
+  }
+
+  @media (max-width: 767px) {
     aside {
-      @apply fixed top-16 flex flex-col w-[256px] h-[calc(100%-4rem)] bg-white border-r border-r-[#D6D6D6];
+      z-index: 100;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
-    nav {
-      @apply flex-1 overflow-y-auto;
-    }
-    footer {
-      @apply sticky bottom-0;
-    }
-  
-    .sidebar-link.active,
-    .sidebar-dropdown.active {
-      background-color: var(--tertiary-color);
-      color: var(--tertiary-contrast-color);
-    }
-  
-    .dropdown-link.active {
-      @apply underline translate-x-2 transition-all;
-    }
-  </style>
-  
+  }
+
+  nav {
+    @apply flex-1 overflow-y-auto;
+  }
+  footer {
+    @apply sticky bottom-0;
+  }
+
+  .sidebar-link.active,
+  .sidebar-dropdown.active {
+    background-color: var(--tertiary-color);
+    color: var(--tertiary-contrast-color);
+  }
+
+  .dropdown-link.active {
+    @apply underline translate-x-2 transition-all;
+  }
+</style>

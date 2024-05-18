@@ -11,16 +11,14 @@
   const links = CONFIG.links;
 </script>
 
-<Nav label={CONFIG.label} />
+<div class="flex flex-col h-screen max-h-screen">
+  <Nav label={CONFIG.label} />
 
-<Sidebar {links} />
+  <main class="relative flex-1 flex overflow-hidden">
+    <Sidebar {links} />
 
-<main>
-  <slot />
-</main>
-
-<style lang="postcss">
-  main {
-    @apply pl-[256px] pt-16;
-  }
-</style>
+    <div class="flex-1 h-full p-2 sm:p-4 md:max-w-[calc(100vw-256px)] overflow-y-auto">
+      <slot />
+    </div>
+  </main>
+</div>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { QueryDocumentSnapshot } from 'firebase/firestore';
   import { collection, getDocs, query, orderBy, limit, startAt, where } from 'firebase/firestore';
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { db } from './utils/firebase';
   import '@jaspero/web-components/dist/async-table.wc';
   import { goto } from '$app/navigation';
@@ -36,6 +36,7 @@
   let filtersLoading = false;
   let filterItems: any[];
   let filterDialogOpen = false;
+  let pageSubscription: any;
 
   async function get(sort: null | Sort, size: number) {
     const queries: any[] = [
@@ -203,45 +204,66 @@
   }
 
   onMount(async () => {
-    const state = await clientStorage.getByUrl();
+    let lastPage = '';
+    let instance: any = null;
 
-    if (state) {
-      if (state.size) {
-        pageSize = state.size;
-      }
-
-      if (state.sort) {
-        initialSort = state.sort;
-      }
-    }
-
-    if ($page.url.searchParams.has('filters')) {
-      filtersValue = base64UrlDecode($page.url.searchParams.get('filters')!);
-    }
-
-    instance = document.createElement('jp-async-table') as any;
-
-    instance.service = { get, loadMore, adjustPageSize, adjustSort, export: exportData };
-    instance.headers = headers;
-    instance.pageSizes = pageSizes;
-    instance.pageSize = pageSize;
-    instance.showArrangingColumns = false;
-    instance.rowClickable = true;
-
-    if (initialSort) {
-      instance.sort = initialSort;
-    }
-
-    const rowClickHandler = (e: any) => {
-      if (!rawClick) {
+    pageSubscription = page.subscribe(async ({ url }) => {
+      if (lastPage === url.pathname) {
         return;
       }
-      const { row } = e.detail;
-      goto(baseLink + row.id);
-    };
 
-    instance.addEventListener('rowClick', rowClickHandler);
-    el.appendChild(instance);
+      lastPage = url.pathname;
+
+      const state = await clientStorage.getByUrl();
+
+      if (state) {
+        if (state.size) {
+          pageSize = state.size;
+        }
+
+        if (state.sort) {
+          initialSort = state.sort;
+        }
+      }
+
+      if ($page.url.searchParams.has('filters')) {
+        filtersValue = base64UrlDecode($page.url.searchParams.get('filters')!);
+      }
+
+      if (instance) {
+        instance.parentElement.removeChild(instance);
+      }
+
+      instance = document.createElement('jp-async-table') as any;
+
+      instance.service = { get, loadMore, adjustPageSize, adjustSort, export: exportData };
+      instance.headers = headers;
+      instance.pageSizes = pageSizes;
+      instance.pageSize = pageSize;
+      instance.showArrangingColumns = false;
+      instance.rowClickable = true;
+
+      if (initialSort) {
+        instance.sort = initialSort;
+      }
+
+      const rowClickHandler = (e: any) => {
+        if (!rawClick) {
+          return;
+        }
+        const { row } = e.detail;
+        goto(baseLink + row.id);
+      };
+
+      instance.addEventListener('rowClick', rowClickHandler);
+      el.appendChild(instance);
+    });
+  });
+
+  onDestroy(() => {
+    if (pageSubscription) {
+      pageSubscription();
+    }
   });
 </script>
 
