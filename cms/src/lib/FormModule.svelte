@@ -5,7 +5,7 @@
   import '@jaspero/web-components/dist/select.wc';
   import '@jaspero/web-components/dist/multiselect.wc';
   import '@jaspero/web-components/dist/datepicker.wc';
-  import '@jaspero/web-components/dist/quill.wc';
+  import '@jaspero/web-components/dist/ckeditor.wc';
   import '@jaspero/web-components/dist/textarea.wc';
   import '@jaspero/web-components/dist/checkbox.wc';
   import '@jaspero/web-components/dist/file-upload.wc';

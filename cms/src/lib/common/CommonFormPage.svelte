@@ -25,13 +25,13 @@
     await formModule.render.save(id);
 
     if (data.preSubmit) {
-      await data.preSubmit(id);
+      await data.preSubmit(id, data.value);
     }
 
     if (data instanceof CommonEditFormPageData) {
 
       if (data.preEdit) {
-        await data.preEdit(id);
+        await data.preEdit(id, data.value);
       }
 
       await alertWrapper(
@@ -43,7 +43,7 @@
     } else {
 
       if (data.preCreate) {
-        await data.preCreate(id);
+        await data.preCreate(id, data.value);
       }
 
       delete data.value.id;

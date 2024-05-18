@@ -9,12 +9,15 @@
   import { confirmation } from '../utils/confirmation';
   import { db } from '../utils/firebase';
   import { page } from '$app/stores';
+  import { onMount } from 'svelte';
 
   export let id: string;
   export let collection: string = $page.params.collection;
   export let prefix: string = $page.params.collection;
   export let actions = 'edit,duplicate,delete';
   export let duplicateSubCollections: string;
+  
+  let links: ColumnActionsConfigLink[];
 
   $: shownActions = actions.split(',');
   $: link = prefix ? [prefix, id].join('/') : id;
@@ -67,9 +70,24 @@
       `Item duplicated successfully`
     );
   }
+
+  onMount(() => {
+
+    if (window.columnActions?.[id]) {
+      links = window.columnActions[id].links || [];
+    }
+  })
 </script>
 
 <DropdownButton variant="icon">
+  {#each links as link}
+    <DropdownMenuButton href={link.href}>
+      <slot slot="icon">
+        <span class="material-symbols-outlined">{link.icon || 'link'}</span>
+      </slot>
+      {link.label}
+    </DropdownMenuButton>
+  {/each}
   {#each shownActions as action}
     {#if action === 'edit'}
       <DropdownMenuButton href={link}>

@@ -20,8 +20,8 @@ export class CommonNewFormPageData {
 		public form: any,
 		public idPrefix?: string,
 		public createId?: () => string,
-		public preSubmit?: (id: string) => Promise<void>,
-		public preCreate?: (id: string) => Promise<void>,
+		public preSubmit?: (id: string, value: any) => Promise<void>,
+		public preCreate?: (id: string, value: any) => Promise<void>,
 	) {}
 }
 
@@ -40,8 +40,8 @@ export class CommonEditFormPageData {
 		public value: any,
 		public snap: DocumentSnapshot,
 		public editKey: string,
-		public preSubmit?: (id: string) => Promise<void>,
-		public preEdit?: (id: string) => Promise<void>,
+		public preSubmit?: (id: string, value: any) => Promise<void>,
+		public preEdit?: (id: string, value: any) => Promise<void>,
 	) {}
 }
 
@@ -61,17 +61,19 @@ export async function commonFormPage({ params, parent }: any) {
 	}
 
   if (id === 'new') {
-    return new CommonNewFormPageData(
-			collection,
-			module, 
-			data.name,
-			data.singularName || data.name,
-			data.form,
-			data.idPrefix,
-			data.createId,
-			data.preSubmit,
-			data.preCreate
-		);
+    return {
+			data: new CommonNewFormPageData(
+				collection,
+				module, 
+				data.name,
+				data.singularName || data.name,
+				data.form ? await data.form(id) : {},
+				data.idPrefix,
+				data.createId,
+				data.preSubmit,
+				data.preCreate
+			)
+		};
   }
 
   const snap = await getDoc(doc(db, collection, id));
@@ -82,16 +84,18 @@ export async function commonFormPage({ params, parent }: any) {
 
   const value = { id: snap.id, ...(snap.data() as any) };
 
-  return new CommonEditFormPageData(
-		collection,
-		module,
-		data.name,
-		data.singularName || data.name,
-		data.form,
-		value,
-		snap,
-		data.editKey || 'id',
-		data.preSubmit,
-		data.preEdit
-	);
+  return {
+		data: new CommonEditFormPageData(
+			collection,
+			module,
+			data.name,
+			data.singularName || data.name,
+			data.form ? await data.form(id) : {},
+			value,
+			snap,
+			data.editKey || 'id',
+			data.preSubmit,
+			data.preEdit
+		)
+	};
 }

@@ -37,7 +37,7 @@
 
     if (!open) {
       setTimeout(() => {
-        bindingElement.focus();
+        bindingElement?.focus();
       }, 100);
     }
   }
@@ -46,7 +46,7 @@
     if (open) {
       if (event.key === 'Escape') {
         toggleMenu();
-        bindingElement.focus();
+        bindingElement?.focus();
         return;
       }
     }

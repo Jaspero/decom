@@ -16,7 +16,7 @@ export interface Collection {
 	initialSort?: Sort;
 	filterOperators?: FilterOperators;
 	filterOptions?: () => Promise<any[]>;
-	form?: any;
+	form?: (id: string) => any;
 	singularName?: string;
 	add?: boolean;
 	editKey?: string;
@@ -33,7 +33,7 @@ export interface Collection {
 	 * Invoked before the form is submitted use preCreate or preEdit for logic that
 	 * needs to invoke only before creates or edits.
 	 */
-	preSubmit?: (id: string) => Promise<void>;
-	preCreate?: (id: string) => Promise<void>;
-	preEdit?: (id: string) => Promise<void>;
+	preSubmit?: (id: string, value: any) => Promise<void>;
+	preCreate?: (id: string, value: any) => Promise<void>;
+	preEdit?: (id: string, value: any) => Promise<void>;
 }

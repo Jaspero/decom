@@ -34,9 +34,9 @@ export const CONFIG = {
       icon: 'edit_note',
       href: '/dashboard/blog',
       links: [
-        { label: 'Articles', href: '/dashboard/blog/articles' },
-        { label: 'Categories', href: '/dashboard/blog/categories' },
-        { label: 'Authors', href: '/dashboard/blog/authors' }
+        { label: 'Articles', href: '/dashboard/blog/blog-articles' },
+        { label: 'Categories', href: '/dashboard/blog/blog-categories' },
+        { label: 'Authors', href: '/dashboard/blog/blog-authors' }
       ]
     },
     {

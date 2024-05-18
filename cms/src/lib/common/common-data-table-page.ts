@@ -37,5 +37,5 @@ export async function commonDataTablePage({ params, parent }: any) {
 		filterOperators: data.filterOperators,
 		filterOptions: data.filterOptions,
 		initialSort: data.initialSort
-	}
+	};
 }
