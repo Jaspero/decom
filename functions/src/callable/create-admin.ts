@@ -1,7 +1,7 @@
 import {HttpsError, onCall} from 'firebase-functions/v2/https';
 import {hasRole} from '../shared/utils/authenticate';
 import {getAuth, UserRecord} from 'firebase-admin/auth';
-import {random, formatEmail} from '@jaspero/utils';
+import {random} from '@jaspero/utils';
 import {getFirestore} from 'firebase-admin/firestore';
 import {REGION} from '../shared/consts/region.const';
 
@@ -25,7 +25,7 @@ export const createadmin = onCall<RequestData>(
       throw new HttpsError('invalid-argument', 'Missing required fields');
     }
 
-    const email = formatEmail(request.data.email);
+    const email = request.data.email.replace(/ /g, '').toLowerCase();
 
     const adminsRef = await firestore
       .collection('admins')

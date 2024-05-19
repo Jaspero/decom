@@ -2,6 +2,7 @@ import {capitalize} from '@jaspero/utils';
 import {datePipe} from '../../column-pipes/date.pipe';
 import {indexPipe} from '../../column-pipes/index.pipe';
 import {collections} from '../collections';
+import {actionsPipe} from '../../column-pipes/actions.pipe';
 
 collections.addCollection('admins', {
 	name: 'Admins',
@@ -38,7 +39,10 @@ collections.addCollection('admins', {
       key: 'id',
       label: '',
       pipes: [
-        (id: string) => `<column-actions id="${id}" collection="admins" prefix="admins" actions="edit,delete"></column-actions>`
+        actionsPipe(() => ({
+					actions: ['edit', 'delete'],
+					links: []
+        }))
       ]
     }
   ],
