@@ -228,6 +228,8 @@
 
       if ($page.url.searchParams.has('filters')) {
         filtersValue = base64UrlDecode($page.url.searchParams.get('filters')!);
+      } else {
+        filtersValue = {};
       }
 
       if (instance) {

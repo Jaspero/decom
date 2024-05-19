@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { collection, getCountFromServer, query, where } from 'firebase/firestore';
+  import { CONFIG } from '$lib/consts/config.const';
   import { db } from '$lib/utils/firebase';
-  import { DateTime } from 'luxon';
   import { base64UrlEncode } from '@jaspero/utils';
+  import { collection, getCountFromServer, query, where } from 'firebase/firestore';
+  import { DateTime } from 'luxon';
 
   export let data: any;
 
@@ -36,7 +37,8 @@
       {count}
     {/await}
   </span>
-  <a href="/dashboard/blog/articles?filters={base64UrlEncode({ author: data.id })}">View Articles</a
+  <a href="/dashboard/blog/blog-articles?filters={base64UrlEncode({ author: data.id })}"
+    >View Articles</a
   >
 </div>
 
@@ -50,7 +52,7 @@
     {/await}
   </span>
   <a
-    href="/dashboard/blog/articles?filters={base64UrlEncode({
+    href="/dashboard/blog/blog-articles?filters={base64UrlEncode({
       author: data.id,
       publicationDateStart: DateTime.now().minus({ days: 30 }).toISODate()
     })}">View Articles</a
@@ -71,5 +73,5 @@
 </div>
 
 <svelte:head>
-  <title>Author Information - Blog - Jaspero</title>
+  <title>Author Information - Blog - {CONFIG.title}</title>
 </svelte:head>

@@ -11,22 +11,26 @@
   export let d: string;
 
   let background: string;
+  let title: string;
 
-  $: date = d ? new Date(parseInt(d, 10)).toLocaleDateString() : '';
+  $: date = d && d !== 'undefined' ? new Date(d).toLocaleDateString() : '';
   $: {
     if (!$lastPublishedOn || !date) {
       background = '#bcaaa4';
+      title = 'Not published';
       // @ts-ignore
     } else if ($lastPublishedOn > (date as Date).getTime()) {
       background = '#4caf50';
+      title = 'Published';
     } else {
       background = '#f44336';
+      title = 'Out of date';
     }
   }
 </script>
 
 <div>
-  <span class="status" style:background />
+  <span class="status" style:background {title} />
   {date}
 </div>
 

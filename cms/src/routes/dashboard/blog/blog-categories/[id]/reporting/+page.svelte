@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { collection, getCountFromServer, query, where } from 'firebase/firestore';
-  import { db } from '$lib/utils/firebase';
-  import { DateTime } from 'luxon';
-  import { base64UrlEncode } from '@jaspero/utils';
+  import Card from '$lib/Card.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
-  import Card from '$lib/Card.svelte';
+  import { CONFIG } from '$lib/consts/config.const';
+  import { db } from '$lib/utils/firebase';
+  import { base64UrlEncode } from '@jaspero/utils';
+  import { collection, getCountFromServer, query, where } from 'firebase/firestore';
+  import { DateTime } from 'luxon';
 
   export let data: any;
 
@@ -47,7 +48,7 @@
     </span>
     <span class="counter-text">All articles</span>
     <a
-      href="/dashboard/blog/articles?filters={base64UrlEncode({
+      href="/dashboard/blog/blog-articles?filters={base64UrlEncode({
         category: data.id
       })}">View Articles</a
     >
@@ -62,7 +63,7 @@
     </span>
     <span class="counter-text">Recent</span>
     <a
-      href="/dashboard/blog/articles?filters={base64UrlEncode({
+      href="/dashboard/blog/blog-articles?filters={base64UrlEncode({
         category: data.id,
         publicationDateStart: DateTime.now().minus({ days: 30 }).toISODate()
       })}">View Articles</a
@@ -71,7 +72,7 @@
 </Grid>
 
 <svelte:head>
-  <title>Category Information - Blog - Jaspero</title>
+  <title>Category Information - Blog - {CONFIG.title}</title>
 </svelte:head>
 
 <style lang="postcss">

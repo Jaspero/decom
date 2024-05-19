@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { collection, getCountFromServer, query, where } from 'firebase/firestore';
-  import { db } from '$lib/utils/firebase';
-  import { DateTime } from 'luxon';
-  import { base64UrlEncode } from '@jaspero/utils';
+  import Card from '$lib/Card.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
-  import Card from '$lib/Card.svelte';
+  import { CONFIG } from '$lib/consts/config.const';
+  import { db } from '$lib/utils/firebase';
+  import { base64UrlEncode } from '@jaspero/utils';
+  import { collection, getCountFromServer, query, where } from 'firebase/firestore';
+  import { DateTime } from 'luxon';
 
   export let data: any;
 
@@ -72,7 +73,7 @@
 </Grid>
 
 <svelte:head>
-  <title>Article Information - Blog - hati</title>
+  <title>Article Information - Blog - {CONFIG.title}</title>
 </svelte:head>
 
 <style lang="postcss">

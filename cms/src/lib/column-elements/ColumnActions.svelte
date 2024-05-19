@@ -15,7 +15,7 @@
   export let collection: string = $page.params.collection;
   export let prefix: string = $page.params.collection;
   export let actions = 'edit,duplicate,delete';
-  export let duplicateSubCollections: string;
+  export let duplicateSubCollections: string | null = null;
   
   let links: ColumnActionsConfigLink[];
 
