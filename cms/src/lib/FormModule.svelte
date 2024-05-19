@@ -13,11 +13,12 @@
   import '@jaspero/web-components/dist/toggle.wc';
   import '@jaspero/web-components/dist/chips.wc';
   import '@jaspero/web-components/dist/review-stars.wc';
-  import CardElement from './form-elements/CardElement.svelte';
-  import ProductVariants from './form-elements/ProductVariants.svelte';
 
   import { ModularSchema, ModularView } from '@jaspero/modular';
   import { onMount } from 'svelte';
+
+  // Needs to be imported so the components register
+  import './form-elements/form-elements.ts';
 
   export let items: any[] = [];
   export let value: any = {};

@@ -1,12 +1,10 @@
 <script lang="ts">
   import Nav from '$lib/Nav.svelte';
-
-  // Needs to be imported so the component is registered
-  import ColumnToggle from '$lib/column-elements/ColumnToggle.svelte';
-  import ColumnStatus from '$lib/column-elements/ColumnStatus.svelte';
-  import ColumnActions from '$lib/column-elements/ColumnActions.svelte';
   import Sidebar from "$lib/Sidebar.svelte";
   import {CONFIG} from '$lib/consts/config.const';
+
+  // Needs to be imported so the components register
+  import'$lib/column-elements/column-elements';
 
   const links = CONFIG.links;
 </script>
