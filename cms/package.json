@@ -39,13 +39,15 @@
   },
   "type": "module",
   "dependencies": {
-    "@jaspero/modular": "1.25.2",
+    "@jaspero/modular": "1.27.0",
     "@jaspero/utils": "1.15.3",
-    "@jaspero/web-components": "1.113.0",
+    "@jaspero/web-components": "1.115.0",
     "deepcopy": "2.1.0",
     "dexie": "4.0.4",
     "firebase": "10.11.0",
     "luxon": "3.4.4",
-    "svelte-material-icons": "3.0.5"
+    "svelte-material-icons": "3.0.5",
+    "grapesjs": "0.21.10",
+    "grapesjs-style-gradient": "3.0.3"
   }
 }

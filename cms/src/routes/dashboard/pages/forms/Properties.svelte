@@ -1,0 +1,62 @@
+<svelte:options
+  customElement={{
+    tag: 'landing-page-form-properties',
+    shadow: 'none'
+  }}
+/>
+
+<script lang="ts">
+  import Field from '$lib/Field.svelte';
+  import Button from '$lib/Button.svelte';
+
+  export let value: Array<{ key: string; label: string }> = [{
+		key: '',
+		label: ''
+	}];
+
+	export function getValue() {
+		return value;
+	}
+
+  function remove(index: number) {
+    value = value.filter((_, i) => i !== index);
+  }
+
+  function addProperty() {
+    value = [...value, { key: '', label: '' }];
+  }
+</script>
+
+<div class="properties-title">
+  <span>Properties</span>
+  <Button on:click={addProperty}>Add New Property</Button>
+</div>
+{#each value as property, index}
+  <div class="properties">
+    <Field required label="Key" bind:value={property.key} />
+    <Field required label="Label" bind:value={property.label} />
+    <div>
+      <Button color="warning" on:click={() => remove(index)}>
+        <span class="material-symbols-outlined"> cancel </span>
+      </Button>
+    </div>
+  </div>
+{/each}
+
+<style>
+  .properties-title {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .properties-title > span {
+    font-weight: bold;
+  }
+
+  .properties {
+    display: flex;
+    gap: 1rem;
+		margin-bottom: 1rem;
+		align-items: flex-end;
+  }
+</style>
