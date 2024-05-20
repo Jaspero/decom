@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { clickOutside } from '$lib/utils/clickOutside';
+  import { clickOutside } from '$lib/utils/click-outside';
   import Button from '$lib/Button.svelte';
 
   export let pages: Array<{ title: string; id: string }> = [];

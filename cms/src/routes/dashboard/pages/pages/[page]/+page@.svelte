@@ -153,7 +153,7 @@
    */
   async function newPage() {
     activeSidebar = '';
-    await goto('/dashboard/landing-pages/pages/new');
+    await goto('/dashboard/pages/pages/new');
     navigate = 'new';
   }
 
@@ -164,7 +164,7 @@
    */
   async function changePage(event: { detail: string }) {
     activeSidebar = '';
-    await goto('/dashboard/landing-pages/pages/' + event.detail);
+    await goto('/dashboard/pages/pages/' + event.detail);
     navigate = event.detail;
   }
 

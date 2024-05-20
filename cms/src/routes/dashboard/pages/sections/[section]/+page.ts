@@ -8,13 +8,13 @@ export async function load({ params, parent }) {
   await parent();
 
   const { section } = params;
-  const col = 'landing-page-sections';
+  const col = 'sections';
   
   const imageService = new BucketImageService();
   imageService.prefix = col + '/',
   imageService.metadata = [
     {
-			folder: 'landing-pages/',
+			folder: 'pages/',
 			width: 1080
 		}
   ];
@@ -50,9 +50,9 @@ export async function load({ params, parent }) {
   ];
 
   const [pagesSnap, popupsSnap, formsSnap] = await Promise.all([
-    getDocs(collection(db, 'landing-page-sections')),
-    getDocs(collection(db, 'landing-page-popups')),
-    getDocs(collection(db, 'landing-page-forms')),
+    getDocs(collection(db, 'sections')),
+    getDocs(collection(db, 'popups')),
+    getDocs(collection(db, 'forms')),
   ]);
 
   const popups = (
@@ -60,8 +60,8 @@ export async function load({ params, parent }) {
       popupsSnap.docs.map(async d => {
         const data = d.data();
 
-        const htmlSnap = await getDoc(doc(db, 'landing-page-popups', d.id, 'content', 'html'));
-        const styleSnap = await getDoc(doc(db, 'landing-page-popups', d.id, 'content', 'css'));
+        const htmlSnap = await getDoc(doc(db, 'popups', d.id, 'content', 'html'));
+        const styleSnap = await getDoc(doc(db, 'popups', d.id, 'content', 'css'));
 
         return {
           id: d.id,

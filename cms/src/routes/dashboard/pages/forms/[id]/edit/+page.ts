@@ -7,7 +7,7 @@ export async function load({params, parent}) {
   await parent();
 
   const {id} = params;
-  const col = 'landing-page-forms';
+  const col = 'forms';
   const items = FORM_FIELDS;
 
   const snap = await getDoc(doc(db, col, id));

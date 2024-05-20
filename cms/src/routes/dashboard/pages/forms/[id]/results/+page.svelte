@@ -29,11 +29,10 @@
 </script>
 
 <DataTable
-  col={'landing-page-forms/' + $page.params.id + '/landing-page-form-responses'}
+  col={'forms/' + $page.params.id + '/form-responses'}
   {headers}
   {initialSort}
   baseLink="/"
-  rowClick={false}
 />
 
 <svelte:head>

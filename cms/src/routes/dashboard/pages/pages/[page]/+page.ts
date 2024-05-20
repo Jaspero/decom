@@ -9,13 +9,13 @@ export async function load({params, parent}) {
   await parent();
 
   const {page} = params;
-  const col = 'landing-pages';
+  const col = 'pages';
 
   const imageService = new BucketImageService();
   imageService.prefix = col + '/',
     imageService.metadata = [
       {
-        folder: 'landing-pages/',
+        folder: 'pages/',
         width: 1080
       }
     ];
@@ -70,11 +70,11 @@ export async function load({params, parent}) {
   ];
 
   const [pagesSnap, sectionsSnap, templatesSnap, popupsSnap, formsSnap] = await Promise.all([
-    getDocs(collection(db, 'landing-pages')),
-    getDocs(collection(db, 'landing-page-sections')),
-    getDocs(collection(db, 'landing-page-templates')),
-    getDocs(collection(db, 'landing-page-popups')),
-    getDocs(collection(db, 'landing-page-forms')),
+    getDocs(collection(db, 'pages')),
+    getDocs(collection(db, 'sections')),
+    getDocs(collection(db, 'templates')),
+    getDocs(collection(db, 'popups')),
+    getDocs(collection(db, 'forms')),
   ]);
 
   const sections = (
@@ -82,7 +82,7 @@ export async function load({params, parent}) {
       sectionsSnap.docs.map(async d => {
         const data = d.data();
 
-        const jsonSnap = await getDoc(doc(db, 'landing-page-sections', d.id, 'content', 'json'));
+        const jsonSnap = await getDoc(doc(db, 'sections', d.id, 'content', 'json'));
 
         return {
           id: d.id,
@@ -116,7 +116,7 @@ export async function load({params, parent}) {
       templatesSnap.docs.map(async d => {
         const data = d.data();
 
-        const jsonSnap = await getDoc(doc(db, 'landing-page-templates', d.id, 'content', 'json'));
+        const jsonSnap = await getDoc(doc(db, 'templates', d.id, 'content', 'json'));
 
         return {
           id: d.id,
@@ -150,8 +150,8 @@ export async function load({params, parent}) {
       popupsSnap.docs.map(async d => {
         const data = d.data();
 
-        const htmlSnap = await getDoc(doc(db, 'landing-page-popups', d.id, 'content', 'html'));
-        const styleSnap = await getDoc(doc(db, 'landing-page-popups', d.id, 'content', 'css'));
+        const htmlSnap = await getDoc(doc(db, 'page-popups', d.id, 'content', 'html'));
+        const styleSnap = await getDoc(doc(db, 'page-popups', d.id, 'content', 'css'));
 
         return {
           id: d.id,

@@ -55,7 +55,7 @@
 
       await alertWrapper(deleteDoc(doc(db, data.col, data.value.id)), `Item deleted successfully`);
 
-      goto('/dashboard/landing-pages/forms');
+      goto('/dashboard/pages/forms');
     });
   }
 </script>

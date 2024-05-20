@@ -9,13 +9,13 @@ export async function load({ params, parent }) {
   await parent();
 
   const { popup } = params;
-  const col = 'landing-page-popups';
+  const col = 'popups';
   
   const imageService = new BucketImageService();
   imageService.prefix = col + '/',
   imageService.metadata = [
     {
-			folder: 'landing-pages/',
+			folder: 'pages/',
 			width: 1080
 		}
   ];
@@ -50,8 +50,8 @@ export async function load({ params, parent }) {
   ];
 
   const [pagesSnap, formSnaps] = await Promise.all([
-    getDocs(collection(db, 'landing-page-popups')),
-    getDocs(collection(db, 'landing-page-forms'))
+    getDocs(collection(db, 'popups')),
+    getDocs(collection(db, 'forms'))
   ]);
 
   const forms = formSnaps.docs.map(doc => ({

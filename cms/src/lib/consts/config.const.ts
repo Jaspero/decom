@@ -1,6 +1,7 @@
 export const CONFIG = {
 	title: 'Shop CMS',
 	label: 'Webshop Template',
+  webUrl: 'https://wonkawave.web.app',
 	links: [
     {
       label: 'Home',
@@ -27,6 +28,18 @@ export const CONFIG = {
       links: [
         { label: 'Orders', href: '/dashboard/sales/orders' },
         { label: 'Customers', href: '/dashboard/sales/customers' }
+      ]
+    },
+    {
+      label: 'Pages',
+      icon: 'description',
+      href: '/dashboard/pages',
+      links: [
+        { label: 'Pages', href: '/dashboard/pages/pages' },
+        { label: 'Popups', href: '/dashboard/pages/popups' },
+        { label: 'Sections', href: '/dashboard/pages/sections' },
+        { label: 'Templates', href: '/dashboard/pages/templates' },
+        { label: 'Forms', href: '/dashboard/pages/forms' }
       ]
     },
     {

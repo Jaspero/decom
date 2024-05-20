@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import ItemNav from '$lib/ItemNav.svelte';
 
-  const baseLink = `/dashboard/landing-pages/forms/${$page.params.id}/`;
+  const baseLink = `/dashboard/pages/forms/${$page.params.id}/`;
 
   const links = [
     { label: 'Results', link: baseLink + 'results' },

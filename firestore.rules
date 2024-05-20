@@ -113,6 +113,40 @@ service cloud.firestore {
       allow write: if admin();
     }
 
+    match /pages/{id=**} {
+      allow read: if true;
+      allow write: if admin();
+    }    
+
+    match /sections/{id=**} {
+      allow read: if true;
+      allow write: if admin();
+    }
+
+    match /templates/{id=**} {
+      allow read: if true;
+      allow write: if admin();
+    }
+
+    match /popups/{id=**} {
+      allow read: if true;
+      allow write: if admin();
+    }
+
+    match /layouts/{id=**} {
+      allow read: if true;
+      allow write: if admin();
+    }    
+
+    match /forms/{form} {
+      allow read, write: if admin();
+
+      match /form-responses/{id} {
+        allow read: if admin();
+        allow write: if true;
+      }
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
