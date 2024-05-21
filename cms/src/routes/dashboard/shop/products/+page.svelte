@@ -49,17 +49,17 @@
 </script>
 
 <Grid>
-    <GridCol span="12">
-        <Button variant="filled" color="secondary" href="/dashboard/shop/products/new">
-            Add new product
-        </Button>
-    </GridCol>
+  <GridCol span="12">
+    <Button variant="filled" color="secondary" href="/dashboard/shop/products/new">
+      Add new product
+    </Button>
+  </GridCol>
 
-    <GridCol span="12">
-        <DataTable col="products" {headers} baseLink="/dashboard/shop/products/"/>
-    </GridCol>
+  <GridCol span="12">
+    <DataTable col="products" {headers} baseLink="/dashboard/shop/products/" />
+  </GridCol>
 </Grid>
 
 <svelte:head>
-    <title>Products - Shop - Jaspero</title>
+  <title>Products - Shop - Jaspero</title>
 </svelte:head>

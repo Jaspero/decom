@@ -9,14 +9,16 @@
   import Field from '$lib/Field.svelte';
   import Button from '$lib/Button.svelte';
 
-  export let value: Array<{ key: string; label: string }> = [{
-		key: '',
-		label: ''
-	}];
+  export let value: Array<{ key: string; label: string }> = [
+    {
+      key: '',
+      label: ''
+    }
+  ];
 
-	export function getValue() {
-		return value;
-	}
+  export function getValue() {
+    return value;
+  }
 
   function remove(index: number) {
     value = value.filter((_, i) => i !== index);
@@ -36,7 +38,7 @@
     <Field required label="Key" bind:value={property.key} />
     <Field required label="Label" bind:value={property.label} />
     <div>
-      <Button color="warning" on:click={() => remove(index)}>
+      <Button color="warn" on:click={() => remove(index)}>
         <span class="material-symbols-outlined"> cancel </span>
       </Button>
     </div>
@@ -56,7 +58,7 @@
   .properties {
     display: flex;
     gap: 1rem;
-		margin-bottom: 1rem;
-		align-items: flex-end;
+    margin-bottom: 1rem;
+    align-items: flex-end;
   }
 </style>

@@ -3,7 +3,7 @@
   import { clickOutside } from '$lib/utils/click-outside.ts';
   import { fade } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
-  import {browser} from "$app/environment";
+  import { browser } from '$app/environment';
 
   export let showing = false;
   export let showClose = true;
@@ -84,7 +84,7 @@
     display: flex;
     background-color: white;
     border-radius: 1rem;
-    box-shadow: 0 3px 6px rgba(0,0,0,.16);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     overflow-y: auto;
   }
   .dialog-content {
@@ -131,10 +131,10 @@
     background-color: transparent;
     border-radius: 50%;
     cursor: pointer;
-    transition: .25s;
+    transition: 0.25s;
   }
   .dialog-close:hover {
-    background-color: rgba(0,0,0,.16);
+    background-color: rgba(0, 0, 0, 0.16);
   }
 
   .contentfull {

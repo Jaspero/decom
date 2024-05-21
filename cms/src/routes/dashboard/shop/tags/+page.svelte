@@ -3,8 +3,8 @@
   import { indexPipe } from '$lib/column-pipes/index.pipe';
   import Button from '$lib/Button.svelte';
   import { releaseStatusPipe } from '$lib/column-pipes/release-status.pipe';
-  import Grid from "$lib/Grid.svelte";
-  import GridCol from "$lib/GridCol.svelte";
+  import Grid from '$lib/Grid.svelte';
+  import GridCol from '$lib/GridCol.svelte';
 
   const headers = [
     {
@@ -25,9 +25,7 @@
 
 <Grid>
   <GridCol span="12">
-    <Button variant="filled" color="secondary" href="/dashboard/shop/tags/new">
-      Add new tags
-    </Button>
+    <Button variant="filled" color="secondary" href="/dashboard/shop/tags/new">Add new tags</Button>
   </GridCol>
 
   <GridCol span="12">

@@ -3,20 +3,21 @@
   import { page } from '$app/stores';
   import Button from '$lib/Button.svelte';
   import type FormModule from '$lib/FormModule.svelte';
+  import { CONFIG } from '$lib/consts/config.const';
   import PageBuilderHeader from '$lib/page-builder/PageBuilderHeader.svelte';
   import PageBuilderSidebar from '$lib/page-builder/PageBuilderSidebar.svelte';
+  import type { PageBuilderForm } from '$lib/page-builder/page-builder-form.interface';
+  import type { Popup } from '$lib/page-builder/popup.interface';
   import { renderGrapes } from '$lib/page-builder/render-grapes';
   import { alertWrapper } from '$lib/utils/alert-wrapper';
   import { confirmation } from '$lib/utils/confirmation';
   import { db } from '$lib/utils/firebase';
   import { urlSegments } from '$lib/utils/url-segments';
-  import type { ModularView, type ModuleRender } from '@jaspero/modular';
+  import type { ModularView, ModuleRender } from '@jaspero/modular';
   import { random } from '@jaspero/utils';
+  import { renderAlert } from '@jaspero/web-components/dist/render-alert.js';
   import { DocumentSnapshot, deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
   import { onMount } from 'svelte';
-  import { renderAlert } from '@jaspero/web-components/dist/render-alert.js';
-  import type { Popup } from '$lib/page-builder/popup.interface';
-  import type {PageBuilderForm} from '$lib/page-builder/page-builder-form.interface';
 
   export let data: {
     col: string;
@@ -92,7 +93,6 @@
     const toUpdate = [setDoc(doc(db, data.col, id, 'content', 'json'), json)];
 
     if (data.snap) {
-
       delete data.value.id;
 
       await alertWrapper(
@@ -130,7 +130,13 @@
   }
 
   function render() {
-    grapesInstance = renderGrapes(pageBuilderEl, grapesInstance, data.json, data.popups, data.forms);
+    grapesInstance = renderGrapes(
+      pageBuilderEl,
+      grapesInstance,
+      data.json,
+      data.popups,
+      data.forms
+    );
   }
 
   onMount(() => {
@@ -160,7 +166,7 @@
 <footer>
   <div>
     {#if data.snap}
-      <Button type="button" color="warning" on:click={deleteItem}>Delete</Button>
+      <Button type="button" color="warn" on:click={deleteItem}>Delete</Button>
     {/if}
     <div class="flex-1" />
     <Button href={back} variant="outlined" color="secondary">Cancel</Button>
@@ -177,7 +183,7 @@
 </footer>
 
 <svelte:head>
-  <title>Landing Page Section - GlycanAge</title>
+  <title>Section - {CONFIG.title}</title>
 </svelte:head>
 
 <style lang="postcss">

@@ -12,14 +12,15 @@
   import { generateSlug } from '$lib/utils/generate-slug';
   import { urlSegments } from '$lib/utils/url-segments';
   import { random } from '@jaspero/utils';
-  import { DocumentSnapshot, deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
+  import { DocumentSnapshot, deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
   import { onMount } from 'svelte';
   import type { Template } from '$lib/page-builder/template.interface';
   import PageSelect from '../../_shared/PageSelect.svelte';
   import type { ModularView, ModuleRender } from '@jaspero/modular';
   import { renderAlert } from '@jaspero/web-components/dist/render-alert.js';
-  import type {Popup} from '$lib/page-builder/popup.interface';
+  import type { Popup } from '$lib/page-builder/popup.interface';
   import type { PageBuilderForm } from '$lib/page-builder/page-builder-form.interface';
+  import { CONFIG } from '$lib/consts/config.const';
 
   export let data: {
     col: string;
@@ -47,6 +48,10 @@
       render: ModuleRender;
     };
   } = {};
+  let showingLayout = false;
+  let header: { id: string; content: string } | null;
+  let footer: { id: string; content: string } | null;
+  let layoutLoading = false;
 
   $: segments = urlSegments($page.url.pathname);
   $: back =
@@ -63,6 +68,54 @@
       render: formModule.render!,
       view: formModule.view!
     };
+  }
+
+  async function toggleLayout() {
+    layoutLoading = false;
+
+    async function loadItem(id: string) {
+      const [htmlSnap, cssSnap] = await Promise.all([
+        getDoc(doc(db, 'layouts', id, 'content', 'html')),
+        getDoc(doc(db, 'layouts', id, 'content', 'css'))
+      ]);
+
+      return `${htmlSnap.data()?.content || ''}`;
+    }
+
+    if (!showingLayout) {
+      const toLoad: Array<() => Promise<any>> = [];
+
+      if (!data.value.header) {
+        header = null;
+      } else if (header?.id !== data.value.header) {
+        toLoad.push(async () => {
+          header = {
+            id: data.value.header,
+            content: await loadItem(data.value.header)
+          };
+        });
+      }
+
+      if (!data.value.footer) {
+        footer = null;
+      } else if (footer?.id !== data.value.footer) {
+        toLoad.push(async () => {
+          footer = {
+            id: data.value.footer,
+            content: await loadItem(data.value.footer)
+          };
+        });
+      }
+
+      if (toLoad.length) {
+        await Promise.all(toLoad.map((it) => it()));
+      }
+    }
+
+    showingLayout = !showingLayout;
+    layoutLoading = false;
+
+    console.log({ header, footer });
   }
 
   async function submit() {
@@ -109,7 +162,6 @@
     ];
 
     if (data.snap) {
-
       delete data.value.id;
 
       await alertWrapper(
@@ -169,7 +221,13 @@
   }
 
   function render() {
-    grapesInstance = renderGrapes(pageBuilderEl, grapesInstance, data.json, data.popups, data.forms);
+    grapesInstance = renderGrapes(
+      pageBuilderEl,
+      grapesInstance,
+      data.json,
+      data.popups,
+      data.forms
+    );
   }
 
   onMount(() => {
@@ -185,6 +243,11 @@
     on:new={newPage}
     on:select={changePage}
   />
+  <Button
+    variant={showingLayout ? 'filled' : 'ghost'}
+    loading={layoutLoading}
+    on:click={toggleLayout}>Toggle Layout</Button
+  >
 </PageBuilderHeader>
 
 <section>
@@ -201,14 +264,20 @@
     bind:formModule
   />
   <main>
+    {#if showingLayout && header}
+      {@html header.content}
+    {/if}
     <div bind:this={pageBuilderEl} />
+    {#if showingLayout && footer}
+      {@html footer.content}
+    {/if}
   </main>
 </section>
 
 <footer>
   <div>
     {#if data.snap}
-      <Button type="button" color="warning" on:click={deleteItem}>Delete</Button>
+      <Button type="button" color="warn" on:click={deleteItem}>Delete</Button>
     {/if}
     <div class="flex-1" />
     <Button href={back} variant="outlined" color="secondary">Cancel</Button>
@@ -225,7 +294,7 @@
 </footer>
 
 <svelte:head>
-  <title>Landing Page - GlycanAge</title>
+  <title>Page - {CONFIG.title}</title>
 </svelte:head>
 
 <style lang="postcss">
@@ -242,6 +311,8 @@
   main {
     width: 100%;
     padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
   }
 
   :global(.gjs-cv-canvas) {

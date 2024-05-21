@@ -1,7 +1,7 @@
-import type {TemplateSection} from './template.interface';
+import type { TemplateSection } from './template.interface';
 
 export interface Popup extends TemplateSection {
-	description: string;
-	style: string;
-	html: string;
+  description: string;
+  style: string;
+  html: string;
 }

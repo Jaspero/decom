@@ -1,10 +1,9 @@
 <script lang="ts">
-  import {onMount, tick} from "svelte";
+  import { onMount, tick } from 'svelte';
 
   export let variant: 'filled' | 'outlined' | 'ghost' | 'underlined' | 'icon' = 'filled';
   export let color: 'primary' | 'blackish' | 'gray' | 'secondary' | 'warn' | 'error' = 'primary';
   export let size: '' | 'xl' = '';
- 
 
   /* Anchor */
   export let href = '';
@@ -15,7 +14,7 @@
   export let disabled = false;
   export let loading = false;
   export let form = '';
-  export let type: 'button' | 'submit' | 'reset' = 'button'
+  export let type: 'button' | 'submit' | 'reset' = 'button';
 
   /* Other */
   let containerElement;
@@ -29,7 +28,7 @@
 
   const rippleTiming = {
     duration: 600,
-    iterations: 1,
+    iterations: 1
   };
 
   function ripple(event) {
@@ -72,10 +71,10 @@
       color == 'warn' && 'color-warn',
       color == 'blackish' && 'color-blackish',
       color == 'gray' && 'color-gray',
-      size && 'xl',
+      size && 'xl'
     ]
-            .filter(Boolean)
-            .join(' ')
+      .filter(Boolean)
+      .join(' ')
   };
 
   function updateAriaLabel() {
@@ -92,31 +91,35 @@
   onMount(async () => {
     containerElement.addEventListener('click', handleRippleEvent);
 
-    await tick() // Wait for DOM to update
+    await tick(); // Wait for DOM to update
     updateAriaLabel();
-  })
+  });
 </script>
 
 <div bind:this={containerElement}>
   {#if href}
-    <a {...properties}
-       {href}
-       {target}
-       {rel}
-       aria-label={ariaLabel}
-       on:click
-       bind:this={bindingElement}>
+    <a
+      {...properties}
+      {href}
+      {target}
+      {rel}
+      aria-label={ariaLabel}
+      on:click
+      bind:this={bindingElement}
+    >
       <slot />
     </a>
   {:else}
-    <button {...properties}
-            class:loading
-            {disabled}
-            {form}
-            {type}
-            aria-label={ariaLabel}
-            on:click
-            bind:this={bindingElement}>
+    <button
+      {...properties}
+      class:loading
+      {disabled}
+      {form}
+      {type}
+      aria-label={ariaLabel}
+      on:click
+      bind:this={bindingElement}
+    >
       <slot />
     </button>
   {/if}
@@ -126,10 +129,9 @@
   .button {
     @apply relative transition-all overflow-hidden;
     border-radius: var(--border-radius);
-    font-size: .875rem;
+    font-size: 0.875rem;
   }
 
- 
   .button:not(.variant-icon) {
     @apply px-[.875rem] py-[.375rem];
   }
@@ -138,7 +140,6 @@
     @apply w-96 py-3 text-lg font-semibold tracking-tight;
     border-radius: var(--border-radius-xl);
   }
-
 
   .button:not(.variant-filled, .variant-outlined, .variant-ghost, .variant-underlined) {
     @apply w-10 h-10;
@@ -230,5 +231,4 @@
   .button.variant-underlined.color-error {
     border-color: var(--error);
   }
-
 </style>

@@ -1,10 +1,10 @@
-import {actionsPipe} from '../../../column-pipes/actions.pipe';
-import {datePipe} from '../../../column-pipes/date.pipe';
-import {indexPipe} from '../../../column-pipes/index.pipe';
-import {releaseStatusPipe} from '../../../column-pipes/release-status.pipe';
-import {META_FORM_FIELDS} from '../../../consts/meta.form-fields';
-import {generateSlug} from '../../../utils/generate-slug';
-import {collections} from '../../collections';
+import { actionsPipe } from '../../../column-pipes/actions.pipe';
+import { datePipe } from '../../../column-pipes/date.pipe';
+import { indexPipe } from '../../../column-pipes/index.pipe';
+import { releaseStatusPipe } from '../../../column-pipes/release-status.pipe';
+import { META_FORM_FIELDS } from '../../../consts/meta.form-fields';
+import { generateSlug } from '../../../utils/generate-slug';
+import { collections } from '../../collections';
 
 collections.addCollection('blog-categories', {
   name: 'Categories',
@@ -39,7 +39,7 @@ collections.addCollection('blog-categories', {
       key: 'id',
       label: '',
       pipes: [
-        actionsPipe(id => ({
+        actionsPipe((id) => ({
           actions: ['duplicate', 'delete'],
           links: [
             {
@@ -57,9 +57,9 @@ collections.addCollection('blog-categories', {
       ]
     }
   ],
-  initialSort: {key: 'name', direction: 'asc'},
+  initialSort: { key: 'name', direction: 'asc' },
   editKey: 'name',
-  form: async () => ([
+  form: async () => [
     {
       component: 'jp-input',
       field: '/name',
@@ -78,7 +78,7 @@ collections.addCollection('blog-categories', {
         hint: 'Generated from name if left empty.',
         pattern: '[a-zA-Z0-9\\-_]+',
         minlength: 3,
-        patternValidationMessage: `Only letters, numbers, '-' and '_' are valid in the URL.`,
+        patternValidationMessage: `Only letters, numbers, '-' and '_' are valid in the URL.`
       }
     },
     {
@@ -90,7 +90,7 @@ collections.addCollection('blog-categories', {
       }
     },
     ...META_FORM_FIELDS('blog-categories')
-  ]),
+  ],
 
   preSubmit: async (id, value) => {
     value.lastUpdatedOn = new Date().toISOString();

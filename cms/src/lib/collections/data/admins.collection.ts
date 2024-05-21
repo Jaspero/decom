@@ -1,14 +1,14 @@
-import {capitalize} from '@jaspero/utils';
-import {datePipe} from '../../column-pipes/date.pipe';
-import {indexPipe} from '../../column-pipes/index.pipe';
-import {collections} from '../collections';
-import {actionsPipe} from '../../column-pipes/actions.pipe';
+import { capitalize } from '@jaspero/utils';
+import { datePipe } from '../../column-pipes/date.pipe';
+import { indexPipe } from '../../column-pipes/index.pipe';
+import { collections } from '../collections';
+import { actionsPipe } from '../../column-pipes/actions.pipe';
 
 collections.addCollection('admins', {
-	name: 'Admins',
-	singularName: 'admin',
-	module: 'management',
-	tableHeaders: [
+  name: 'Admins',
+  singularName: 'admin',
+  module: 'management',
+  tableHeaders: [
     {
       key: '/id',
       label: '#',
@@ -40,8 +40,8 @@ collections.addCollection('admins', {
       label: '',
       pipes: [
         actionsPipe(() => ({
-					actions: ['edit', 'delete'],
-					links: []
+          actions: ['edit', 'delete'],
+          links: []
         }))
       ]
     }

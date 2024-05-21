@@ -1,12 +1,12 @@
-import {actionsPipe} from '../../../column-pipes/actions.pipe';
-import {datePipe} from '../../../column-pipes/date.pipe';
-import {imagePipe} from '../../../column-pipes/image.pipe';
-import {indexPipe} from '../../../column-pipes/index.pipe';
-import {releaseStatusPipe} from '../../../column-pipes/release-status.pipe';
-import {META_FORM_FIELDS} from '../../../consts/meta.form-fields';
-import {quillFiled} from '../../../form-fields/quill.field';
-import {BucketImageService} from '../../../services/image.service';
-import {collections} from '../../collections';
+import { actionsPipe } from '../../../column-pipes/actions.pipe';
+import { datePipe } from '../../../column-pipes/date.pipe';
+import { imagePipe } from '../../../column-pipes/image.pipe';
+import { indexPipe } from '../../../column-pipes/index.pipe';
+import { releaseStatusPipe } from '../../../column-pipes/release-status.pipe';
+import { META_FORM_FIELDS } from '../../../consts/meta.form-fields';
+import { quillFiled } from '../../../form-fields/quill.field';
+import { BucketImageService } from '../../../services/image.service';
+import { collections } from '../../collections';
 
 collections.addCollection('blog-authors', {
   name: 'Authors',
@@ -38,7 +38,7 @@ collections.addCollection('blog-authors', {
       key: 'id',
       label: '',
       pipes: [
-        actionsPipe(id => ({
+        actionsPipe((id) => ({
           actions: ['duplicate', 'delete'],
           links: [
             {
@@ -47,16 +47,16 @@ collections.addCollection('blog-authors', {
               icon: 'edit'
             },
             {
-            	label: 'Reporting',
-            	href: `blog-authors/${id}/reporting`,
-            	icon: 'monitoring'
+              label: 'Reporting',
+              href: `blog-authors/${id}/reporting`,
+              icon: 'monitoring'
             }
           ]
         }))
       ]
     }
   ],
-  initialSort: {key: 'name', direction: 'asc'},
+  initialSort: { key: 'name', direction: 'asc' },
   editKey: 'name',
   form: async () => {
     const col = 'blog-authors';
@@ -92,7 +92,7 @@ collections.addCollection('blog-authors', {
           hint: 'Generated from title if left empty.',
           pattern: '[a-zA-Z0-9\\-_]+',
           minlength: 3,
-          patternValidationMessage: `Only letters, numbers, '-' and '_' are valid in the URL.`,
+          patternValidationMessage: `Only letters, numbers, '-' and '_' are valid in the URL.`
         }
       },
       {
@@ -109,7 +109,7 @@ collections.addCollection('blog-authors', {
     ];
   },
   preSubmit: async (id, value) => {
-		value.lastUpdatedOn = new Date().toISOString();
-	},
+    value.lastUpdatedOn = new Date().toISOString();
+  },
   idPrefix: 'bau'
 });

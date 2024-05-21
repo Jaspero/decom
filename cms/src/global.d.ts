@@ -1,7 +1,7 @@
 declare interface ColumnActionsConfigLink {
   label: string;
   href: string;
-  icon?: string
+  icon?: string;
 }
 
 declare interface ColumnActionsConfig {
@@ -11,6 +11,6 @@ declare interface ColumnActionsConfig {
 
 declare interface Window {
   columnActions?: {
-    [key: string]: ColumnActionsConfig
-  }
+    [key: string]: ColumnActionsConfig;
+  };
 }

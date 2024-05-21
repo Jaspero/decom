@@ -1,4 +1,4 @@
-import {FORM_FIELDS} from '../form-fields.const.js';
+import { FORM_FIELDS } from '../form-fields.const.js';
 
 export async function load({ parent }) {
   await parent();

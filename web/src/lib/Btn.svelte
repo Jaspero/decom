@@ -40,7 +40,8 @@
     ripple.style.width = `${width}px`;
     ripple.style.height = `${width}px`;
     ripple.style.transform = `translate(-50%, -50%) scale(0)`;
-        ripple.style.opacity = `1`;ripple.style.background = 'var(--ripple-color)';
+    ripple.style.opacity = `1`;
+    ripple.style.background = 'var(--ripple-color)';
     ripple.style.borderRadius = '50%';
 
     this.appendChild(ripple);

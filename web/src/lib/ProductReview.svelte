@@ -6,12 +6,7 @@
   import Button from '$lib/Button.svelte';
   import Recaptcha from '$lib/Recaptcha.svelte';
   import type { User } from 'firebase/auth';
-  import {
-    addDoc,
-    collection,
-    doc,
-    updateDoc
-  } from 'firebase/firestore';
+  import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
   import type { ProductInfo } from '$lib/types/product/product-info.interface';
   import type { ProductReviews } from '$lib/types/product/product-reviews.interface';
   let instance: any;
@@ -39,7 +34,7 @@
       }
     });
     el.appendChild(instance);
-  })
+  });
 
   function openModal() {
     selectedReview = null;
@@ -67,8 +62,14 @@
       recaptchaVerify().then(
         () =>
           (selectedReview
-            ? updateDoc(doc(db, 'products', data.productInfo.product.id, 'reviews', selectedReview), reviewData)
-            : addDoc(collection(db, 'products', data.productInfo.product.id, 'reviews'), reviewData)) as any
+            ? updateDoc(
+                doc(db, 'products', data.productInfo.product.id, 'reviews', selectedReview),
+                reviewData
+              )
+            : addDoc(
+                collection(db, 'products', data.productInfo.product.id, 'reviews'),
+                reviewData
+              )) as any
       ),
       'Review saved',
       '',
@@ -82,61 +83,60 @@
   }
 </script>
 
-<div bind:this={el}></div>
-
-<style>
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-    }
-
-    .modal-content {
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-        width: 300px;
-        text-align: center;
-    }
-
-    h2 {
-        margin-bottom: 10px;
-        color: #333333;
-        font-size: 1.5rem;
-    }
-
-    textarea {
-        width: 100%;
-        margin-bottom: 15px;
-        padding: 10px;
-        box-sizing: border-box;
-        border: 1px solid #cccccc;
-        border-radius: 5px;
-        resize: vertical;
-        font-size: 1rem;
-    }
-
-</style>
+<div bind:this={el} />
 
 {#if isModalOpen}
   <div class="modal-overlay">
     <div class="modal-content">
       <h2>Enter your comment</h2>
-      <textarea bind:value={comment} rows="4" placeholder="Optional comment"></textarea>
+      <textarea bind:value={comment} rows="4" placeholder="Optional comment" />
       <div class="flex justify-center">
-      <Button on:click={saveReview} loading={loading}>Save</Button>
-      <Button on:click={closeModal} color="secondary">Cancel</Button>
+        <Button on:click={saveReview} {loading}>Save</Button>
+        <Button on:click={closeModal} color="secondary">Cancel</Button>
       </div>
     </div>
   </div>
 {/if}
 
 <Recaptcha bind:verify={recaptchaVerify} />
+
+<style>
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+    color: #333333;
+    font-size: 1.5rem;
+  }
+
+  textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    resize: vertical;
+    font-size: 1rem;
+  }
+</style>

@@ -248,10 +248,18 @@
       {#each optionSets as os, index}
         <div class="flex items-center gap-2">
           <div class="w-32">
-            <jp-input label="Name" value={os.label} on:value={(event) => (os.label = event.detail.value)}/>
+            <jp-input
+              label="Name"
+              value={os.label}
+              on:value={(event) => (os.label = event.detail.value)}
+            />
           </div>
           <div class="flex-1">
-            <jp-chips label="Options" value={os.options.join(',')} on:value={(event) => (os.options = event.detail)}/>
+            <jp-chips
+              label="Options"
+              value={os.options.join(',')}
+              on:value={(event) => (os.options = event.detail)}
+            />
           </div>
           <Button type="button" on:click={() => removeOptionSet(index)}>Remove</Button>
         </div>
@@ -260,7 +268,9 @@
   {/if}
 
   <div class="mt-4">
-    <Button variant="ghost" type="button" on:click={addOptionSet}>+ Add options like size or color</Button>
+    <Button variant="ghost" type="button" on:click={addOptionSet}
+      >+ Add options like size or color</Button
+    >
   </div>
 </div>
 
@@ -274,49 +284,55 @@
       <th class="px-2 text-left">Available Quantity</th>
       <th class="px-2 text-left">SKU</th>
       <th class="px-2 text-left">Barcode</th>
-      <th></th>
+      <th />
     </tr>
     {#each variants as variant}
-    <tr>
-      <td class="p-2 break-words">{variant.label}</td>
-      <td class="p-2">
-        <div>
-          <jp-input
-                  placeholder="Price"
-                  value={variant.price}
-                  type="number"
-                  on:value={(event) => (variant.price = event.detail.value)} />
-        </div>
-      </td>
-      <td class="p-2">
-        <div>
-          <jp-input
-                  placeholder="Quantity"
-                  value={variant.quantity}
-                  type="number"
-                  on:value={(event) => (variant.quantity = event.detail.value)} />
-        </div>
-      </td>
-      <td class="p-2">
-        <div>
-          <jp-input
-                  placeholder="SKU"
-                  value={variant.sku}
-                  on:value={(event) => (variant.sku = event.detail.value)} />
-        </div>
-      </td>
-      <td class="p-2">
-        <div>
-          <jp-input
-                  placeholder="Barcode"
-                  value={variant.barcode}
-                  on:value={(event) => (variant.sku = event.detail.value)} />
-        </div>
-      </td>
-      <td class="p-2">
-        <Button variant="outlined" type="button" on:click={() => openVariantDialog(variant)}>Edit</Button>
-      </td>
-    </tr>
+      <tr>
+        <td class="p-2 break-words">{variant.label}</td>
+        <td class="p-2">
+          <div>
+            <jp-input
+              placeholder="Price"
+              value={variant.price}
+              type="number"
+              on:value={(event) => (variant.price = event.detail.value)}
+            />
+          </div>
+        </td>
+        <td class="p-2">
+          <div>
+            <jp-input
+              placeholder="Quantity"
+              value={variant.quantity}
+              type="number"
+              on:value={(event) => (variant.quantity = event.detail.value)}
+            />
+          </div>
+        </td>
+        <td class="p-2">
+          <div>
+            <jp-input
+              placeholder="SKU"
+              value={variant.sku}
+              on:value={(event) => (variant.sku = event.detail.value)}
+            />
+          </div>
+        </td>
+        <td class="p-2">
+          <div>
+            <jp-input
+              placeholder="Barcode"
+              value={variant.barcode}
+              on:value={(event) => (variant.sku = event.detail.value)}
+            />
+          </div>
+        </td>
+        <td class="p-2">
+          <Button variant="outlined" type="button" on:click={() => openVariantDialog(variant)}
+            >Edit</Button
+          >
+        </td>
+      </tr>
     {/each}
   </table>
 </div>

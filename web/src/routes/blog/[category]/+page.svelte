@@ -7,7 +7,7 @@
   import type { BlogAuthor } from '$lib/types/blog/blog-author.interface';
   import type { BlogCategory } from '$lib/types/blog/blog-category.interface';
   import { meta } from '$lib/meta/meta.store';
-  import Button from "$lib/Button.svelte";
+  import Button from '$lib/Button.svelte';
 
   export let data: { categories: BlogCategory[]; page: BlogAuthor[]; pageSize: number };
 
@@ -38,7 +38,7 @@
 {/if}
 
 <Pagination
-        pages={data.pageSize}
-        prefix={'/blog/' + $page.params.category + '/page/'}
-        current={1}
+  pages={data.pageSize}
+  prefix={'/blog/' + $page.params.category + '/page/'}
+  current={1}
 />

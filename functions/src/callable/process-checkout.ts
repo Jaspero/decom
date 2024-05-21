@@ -4,7 +4,7 @@ import {STATIC_CONFIG} from '../shared/consts/static-config.const';
 import {stripeInstance} from '../shared/consts/stripeInstance.const';
 import {FirestoreCollections} from '../shared/enums/firestore-collections.enum';
 import {toStripeFormat} from '../shared/utils/to-stripe-format';
-import { RANDOM } from '../shared/utils/random';
+import {random} from '@jaspero/utils';
 
 export const processCheckout = functions
   .runWith({
@@ -12,20 +12,21 @@ export const processCheckout = functions
     timeoutSeconds: 540,
   })
   .region(STATIC_CONFIG.cloudRegion)
-  .https.onCall(async (data, context) => {
+  .https.onCall(async (data) => {
     const fs = admin.firestore();
 
     const lastPack = await fs.collection(FirestoreCollections.Orders).count().get();
     const orderNumber = String(lastPack.data().count + 1001).padStart(4, '0');
 
-    const settings: any = (await fs.collection(FirestoreCollections.Settings).doc('status').get()).data();
+    const settings: any = (
+      await fs.collection(FirestoreCollections.Settings).doc('status').get()
+    ).data();
     const currency: string = data.currency || settings.primaryCurrency;
 
     const products = [];
     for (let i = 0; i < data.products; i++) {
       const product = data.products[i];
-      const productsRefs = await fs.collection(FirestoreCollections.Products)
-        .doc(product.id).get();
+      const productsRefs = await fs.collection(FirestoreCollections.Products).doc(product.id).get();
 
       if (productsRefs) {
         const prodData: any = productsRefs.data();
@@ -46,7 +47,7 @@ export const processCheckout = functions
           expand: ['data.product'],
         });
 
-        let findPrice = prices.data.find((x) => (x.unit_amount === stripePriceFormat));
+        let findPrice = prices.data.find((x) => x.unit_amount === stripePriceFormat);
 
         if (!findPrice) {
           findPrice = await stripeInstance.prices.create({
@@ -69,7 +70,10 @@ export const processCheckout = functions
     }
 
     try {
-      const customerRefs = await fs.collection(FirestoreCollections.Customers).doc(data.customerId).get();
+      const customerRefs = await fs
+        .collection(FirestoreCollections.Customers)
+        .doc(data.customerId)
+        .get();
       const customerData = customerRefs.data();
       if (customerData) {
         fs.collection(FirestoreCollections.Customers).doc(data.customerId).set({
@@ -88,7 +92,7 @@ export const processCheckout = functions
       email: data.email,
       paid: false,
     };
-    const orderId = RANDOM.string(12);
+    const orderId = random.string(12);
     fs.collection(FirestoreCollections.Orders).doc(orderId).create(processData).then();
 
     const session = await stripeInstance.checkout.sessions.create({
@@ -105,6 +109,6 @@ export const processCheckout = functions
     });
 
     return {
-      url: session.url
+      url: session.url,
     };
   });

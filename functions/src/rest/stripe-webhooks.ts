@@ -1,13 +1,12 @@
 import express from 'express';
-import { firestore } from 'firebase-admin';
+import {firestore} from 'firebase-admin';
 import * as functions from 'firebase-functions';
-import { logger } from 'firebase-functions';
-import { constants } from 'http2';
-import { ENV_CONFIG } from '../shared/consts/env-config.const';
-import { stripeInstance } from '../shared/consts/stripeInstance.const';
-import { FirestoreCollections } from '../shared/enums/firestore-collections.enum';
-import { CORS } from '../shared/consts/cors-whitelist.const';
-
+import {logger} from 'firebase-functions';
+import {constants} from 'http2';
+import {ENV_CONFIG} from '../shared/consts/env-config.const';
+import {stripeInstance} from '../shared/consts/stripeInstance.const';
+import {FirestoreCollections} from '../shared/enums/firestore-collections.enum';
+import {CORS} from '../shared/consts/cors-whitelist.const';
 
 const app = express();
 app.use(CORS);
@@ -27,36 +26,37 @@ app.post('/webhook', (req, res) => {
     } catch (err) {
       // invalid signature
 
-      logger.error('Error: ', err)
+      logger.error('Error: ', err);
       res.status(constants.HTTP_STATUS_BAD_REQUEST).end();
       return;
     }
 
     const {object} = event.data;
 
-      const orderRefs = await fs.collection(FirestoreCollections.Orders).doc(object.subscription_details.metadata.id).get();
-      const orderData = orderRefs.data();
+    const orderRefs = await fs
+      .collection(FirestoreCollections.Orders)
+      .doc(object.subscription_details.metadata.id)
+      .get();
+    const orderData = orderRefs.data();
 
-      console.log('Payment for: ', object.subscription_details.metadata.id);
+    console.log('Payment for: ', object.subscription_details.metadata.id);
     switch (event.type) {
-      case 'invoice.paid':
-
-        break;
-      case 'invoice.voided':
-      case 'invoice.payment_failed':
-
-        break;
+    case 'invoice.paid':
+      break;
+    case 'invoice.voided':
+    case 'invoice.payment_failed':
+      break;
     }
   }
 
   exec()
     .then(() => res.sendStatus(constants.HTTP_STATUS_OK))
-    .catch(() => res.sendStatus(constants.HTTP_STATUS_OK))
+    .catch(() => res.sendStatus(constants.HTTP_STATUS_OK));
 });
 
 export const stripeIntegration = functions
   .runWith({
     memory: '512MB',
-    timeoutSeconds: 540
+    timeoutSeconds: 540,
   })
   .https.onRequest(app);

@@ -4,7 +4,6 @@
   import { authenticated } from './utils/firebase';
 
   $: pathname = $page.url.pathname;
-
 </script>
 
 <header>
@@ -24,7 +23,7 @@
         <a href="/sign-in" class:active={pathname === '/sign-in'}>Sign In</a>
         <a href="/sign-up" class:active={pathname === '/sign-up'}>Sign Up</a>
       {:else if $authenticated === null}
-        <div></div>
+        <div />
       {/if}
 
       <CartTrigger />

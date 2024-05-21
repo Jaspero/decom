@@ -1,5 +1,5 @@
-import {doc, getDoc} from 'firebase/firestore';
-import {db} from '$lib/utils/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '$lib/utils/firebase';
 
 export async function load({ parent, params }) {
   await parent();

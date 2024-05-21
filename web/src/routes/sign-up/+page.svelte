@@ -6,7 +6,11 @@
   import { notification, notificationWrapper } from '$lib/notification/notification';
   import { auth } from '$lib/utils/firebase';
   import { formatEmail } from '$lib/utils/format-emails';
-  import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+  import {
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup
+  } from 'firebase/auth';
 
   let email = '';
   let password = '';
@@ -77,38 +81,56 @@
     <h3 class="text-center pt-4">Sign up for Jaspero Webshop</h3>
     <div class="py-4">
       <span class="footnote">
-        By signing up, I agree to Jaspero's <a href="" target="_blank" class="notelink">Terms and Privacy Policy.</a>
+        By signing up, I agree to Jaspero's <a href="" target="_blank" class="notelink"
+          >Terms and Privacy Policy.</a
+        >
       </span>
     </div>
     <div class="text-center pt-4 pb-8 flex flex-col gap-2">
-      <Button variant="outlined" color="gray" size="xl"  name="Sign up with Google">
+      <Button variant="outlined" color="gray" size="xl" name="Sign up with Google">
         <div class="flex justify-center items-center">
-          <span><img src="images/google-icon.svg" alt="google icon"class="social-icon"/></span>
+          <span><img src="images/google-icon.svg" alt="google icon" class="social-icon" /></span>
           <span>Sign up with Google</span>
-        </div>  
+        </div>
       </Button>
       <Button variant="outlined" color="gray" size="xl">
         <div class="flex justify-center items-center">
-          <span><img src="images/apple.svg" alt="google icon"class="social-icon"/></span>
+          <span><img src="images/apple.svg" alt="google icon" class="social-icon" /></span>
           <span>Sign up with Facebook</span>
-        </div>  
+        </div>
       </Button>
     </div>
-   <div class="flex my-8 w-[95%] m-auto h-0 justify-center items-center border-b-[2px] border-[--gray]">
-    <span class="footnote bg-[--white] px-3">or sign up through email</span>
-   </div>
-
-  <form on:submit|preventDefault={signUp} class="flex flex-col gap-4">
-    <Field label="Name" type="text" wfull={true} required />
-    <Field label="Email" type="email" bind:value={email} wfull={true} required />
-    <Field label="Password" type="password" bind:value={password} bind:this={passwordEl} wfull={true} required />
-    <Field label="Confirm password" type="password" bind:value={passwordConfirm} bind:this={confirmEl} wfull={true} required />
-    <div class="show-password">
-      <input type="checkbox" class="checkbox" on:change|preventDefault={togglePasswordType} />
-      <p>Show/hide password</p>
+    <div
+      class="flex my-8 w-[95%] m-auto h-0 justify-center items-center border-b-[2px] border-[--gray]"
+    >
+      <span class="footnote bg-[--white] px-3">or sign up through email</span>
     </div>
-    <Button type="submit" {loading}>Submit</Button>
-  </form>
+
+    <form on:submit|preventDefault={signUp} class="flex flex-col gap-4">
+      <Field label="Name" type="text" wfull={true} required />
+      <Field label="Email" type="email" bind:value={email} wfull={true} required />
+      <Field
+        label="Password"
+        type="password"
+        bind:value={password}
+        bind:this={passwordEl}
+        wfull={true}
+        required
+      />
+      <Field
+        label="Confirm password"
+        type="password"
+        bind:value={passwordConfirm}
+        bind:this={confirmEl}
+        wfull={true}
+        required
+      />
+      <div class="show-password">
+        <input type="checkbox" class="checkbox" on:change|preventDefault={togglePasswordType} />
+        <p>Show/hide password</p>
+      </div>
+      <Button type="submit" {loading}>Submit</Button>
+    </form>
   </div>
 </section>
 
@@ -140,7 +162,6 @@
     align-items: center;
   }
 
-
   .show-password {
     width: 100%;
     justify-content: flex-start;
@@ -156,7 +177,6 @@
     height: 20px;
     cursor: pointer;
   }
-
 
   .social-icon {
     height: 24px;

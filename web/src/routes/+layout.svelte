@@ -14,8 +14,7 @@
   import { onMount } from 'svelte';
 
   onMount(async () => {
-
-    const userDoc: any = $user
+    const userDoc: any = $user;
     let currentCartState;
     const items = localStorage.getItem('cart');
 
@@ -38,21 +37,21 @@
     }
 
     if (currentCartState && currentCartState.cartItems) {
+      const cartItems = await Promise.all(
+        currentCartState.cartItems.map(async (product) => {
+          const productSnapshot = await getDoc(doc(db, 'products', product.id));
+          if (productSnapshot.exists()) {
+            const productData = productSnapshot.data();
+            return {
+              ...productData,
+              id: product.id,
+              selectedVariant: product.selectedVariant
+            };
+          }
 
-
-      const cartItems = await Promise.all(currentCartState.cartItems.map(async (product) => {
-        const productSnapshot = await getDoc(doc(db, 'products', product.id));
-        if (productSnapshot.exists()) {
-          const productData = productSnapshot.data();
-          return {
-            ...productData,
-            id: product.id,
-            selectedVariant: product.selectedVariant
-          };
-        }
-
-        return null;
-      }));
+          return null;
+        })
+      );
       cartState.set(cartItems);
     }
   });

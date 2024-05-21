@@ -1,4 +1,8 @@
-import type {Asset, AssetManagerService, Folder} from '@jaspero/web-components/dist/Types/asset-manager.service';
+import type {
+  Asset,
+  AssetManagerService,
+  Folder
+} from '@jaspero/web-components/dist/Types/asset-manager.service';
 import {
   deleteObject,
   getDownloadURL,
@@ -8,8 +12,8 @@ import {
   uploadBytesResumable,
   type StorageReference
 } from 'firebase/storage';
-import {writable} from 'svelte/store';
-import {storage} from '../utils/firebase';
+import { writable } from 'svelte/store';
+import { storage } from '../utils/firebase';
 
 export class AMService implements AssetManagerService {
   async getDownloadUrl(r: StorageReference) {

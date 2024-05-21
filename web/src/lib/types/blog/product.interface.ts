@@ -5,22 +5,22 @@ export interface BlogArticle {
   id: string;
   compareToPrice: number;
   continueSellingWhenOutOfStock: boolean;
-  created: number
-  description: string
-  individualVariantQuantity: boolean
-  name: string
-  physicalProduct: boolean
-  price: number
-  quantity: number
-  shortDescription: string
-  trackQuantity: boolean
+  created: number;
+  description: string;
+  individualVariantQuantity: boolean;
+  name: string;
+  physicalProduct: boolean;
+  price: number;
+  quantity: number;
+  shortDescription: string;
+  trackQuantity: boolean;
   variantCombinations: {
-    price?: number,
-    quantity?: number,
-    variant: string,
-  }[],
+    price?: number;
+    quantity?: number;
+    variant: string;
+  }[];
   variants: {
-    name?: string,
-    options?: string[]
-  }[],
+    name?: string;
+    options?: string[];
+  }[];
 }

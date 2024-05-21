@@ -1,121 +1,122 @@
-import type {PageBuilderForm} from './page-builder-form.interface';
+import type { PageBuilderForm } from './page-builder-form.interface';
 
-const createOption = (value: string, content: string) => ({type: 'option', content, attributes: {value}});
+const createOption = (value: string, content: string) => ({
+  type: 'option',
+  content,
+  attributes: { value }
+});
 
-const nameTrait = {name: 'name'};
-const placeholderTrait = {name: 'placeholder'};
-const requiredTrait = {type: 'checkbox', name: 'required'};
-const idTrait = {name: 'id'};
-const valueTrait = {name: 'value'};
-const checkedTrait = {type: 'checkbox', name: 'checked'};
-const minLengthTrait = {name: 'minlength', label: 'Min Length', type: 'number'};
-const maxLengthTrait = {name: 'maxlength', label: 'Max Length', type: 'number'};
-const patternTrait = {name: 'pattern', label: 'Pattern', type: 'text'};
+const nameTrait = { name: 'name' };
+const placeholderTrait = { name: 'placeholder' };
+const requiredTrait = { type: 'checkbox', name: 'required' };
+const idTrait = { name: 'id' };
+const valueTrait = { name: 'value' };
+const checkedTrait = { type: 'checkbox', name: 'checked' };
+const minLengthTrait = { name: 'minlength', label: 'Min Length', type: 'number' };
+const maxLengthTrait = { name: 'maxlength', label: 'Max Length', type: 'number' };
+const patternTrait = { name: 'pattern', label: 'Pattern', type: 'text' };
 
-export const TYPES = (
-	forms: PageBuilderForm[]
-) => [
-
-	/**
-	 * Grid
-	 */
-	{
-		id: 'column',
-		extend: 'div',
-		isComponent: (el: HTMLInputElement) => el.tagName == 'DIV' && el.dataset.type == 'column',
-		model: {
-			defaults: {
-				tagName: 'column',
-				draggable: true,
-				attributes: {
-					class: 'gc-6',
-					dataset: {
-						type: 'column'
-					}
-				},
-				traits: [
-					{
-						type: 'select',
-						name: 'column-span-desktop',
-						label: 'Column span - Desktop',
-						changeProp: 1,
-						options: [
-							{value: 'gc-1', name: '1 Column'},
-							{value: 'gc-2', name: '2 Columns'},
-							{value: 'gc-3', name: '3 Columns'},
-							{value: 'gc-4', name: '4 Columns'},
-							{value: 'gc-5', name: '5 Columns'},
-							{value: 'gc-6', name: '6 Columns'},
-							{value: 'gc-7', name: '7 Columns'},
-							{value: 'gc-8', name: '8 Columns'},
-							{value: 'gc-9', name: '9 Columns'},
-							{value: 'gc-10', name: '10 Columns'},
-							{value: 'gc-11', name: '11 Columns'},
-							{value: 'gc-12', name: '12 Columns'},
-						],
-					},
-					{
-						type: 'select',
-						name: 'column-span-tablet',
-						label: 'Column span - Tablet',
-						changeProp: 1,
-						options: [
-							{value: '', name: 'None'},
-							{value: 'gc-sm-1', name: '1 Column'},
-							{value: 'gc-sm-2', name: '2 Columns'},
-							{value: 'gc-sm-3', name: '3 Columns'},
-							{value: 'gc-sm-4', name: '4 Columns'},
-							{value: 'gc-sm-5', name: '5 Columns'},
-							{value: 'gc-sm-6', name: '6 Columns'},
-							{value: 'gc-sm-7', name: '7 Columns'},
-							{value: 'gc-sm-8', name: '8 Columns'},
-							{value: 'gc-sm-9', name: '9 Columns'},
-							{value: 'gc-sm-10', name: '10 Columns'},
-							{value: 'gc-sm-11', name: '11 Columns'},
-							{value: 'gc-sm-12', name: '12 Columns'},
-						],
-					},
-					{
-						type: 'select',
-						name: 'column-span-mobile',
-						label: 'Column span - Mobile',
-						changeProp: 1,
-						options: [
-							{value: '', name: 'None'},
-							{value: 'gc-xs-1', name: '1 Column'},
-							{value: 'gc-xs-2', name: '2 Columns'},
-							{value: 'gc-xs-3', name: '3 Columns'},
-							{value: 'gc-xs-4', name: '4 Columns'},
-							{value: 'gc-xs-5', name: '5 Columns'},
-							{value: 'gc-xs-6', name: '6 Columns'},
-							{value: 'gc-xs-7', name: '7 Columns'},
-							{value: 'gc-xs-8', name: '8 Columns'},
-							{value: 'gc-xs-9', name: '9 Columns'},
-							{value: 'gc-xs-10', name: '10 Columns'},
-							{value: 'gc-xs-11', name: '11 Columns'},
-							{value: 'gc-xs-12', name: '12 Columns'},
-						],
-					},
-					{
+export const TYPES = (forms: PageBuilderForm[]) => [
+  /**
+   * Grid
+   */
+  {
+    id: 'column',
+    extend: 'div',
+    isComponent: (el: HTMLInputElement) => el.tagName == 'DIV' && el.dataset.type == 'column',
+    model: {
+      defaults: {
+        tagName: 'column',
+        draggable: true,
+        attributes: {
+          class: 'gc-6',
+          dataset: {
+            type: 'column'
+          }
+        },
+        traits: [
+          {
+            type: 'select',
+            name: 'column-span-desktop',
+            label: 'Column span - Desktop',
+            changeProp: 1,
+            options: [
+              { value: 'gc-1', name: '1 Column' },
+              { value: 'gc-2', name: '2 Columns' },
+              { value: 'gc-3', name: '3 Columns' },
+              { value: 'gc-4', name: '4 Columns' },
+              { value: 'gc-5', name: '5 Columns' },
+              { value: 'gc-6', name: '6 Columns' },
+              { value: 'gc-7', name: '7 Columns' },
+              { value: 'gc-8', name: '8 Columns' },
+              { value: 'gc-9', name: '9 Columns' },
+              { value: 'gc-10', name: '10 Columns' },
+              { value: 'gc-11', name: '11 Columns' },
+              { value: 'gc-12', name: '12 Columns' }
+            ]
+          },
+          {
+            type: 'select',
+            name: 'column-span-tablet',
+            label: 'Column span - Tablet',
+            changeProp: 1,
+            options: [
+              { value: '', name: 'None' },
+              { value: 'gc-sm-1', name: '1 Column' },
+              { value: 'gc-sm-2', name: '2 Columns' },
+              { value: 'gc-sm-3', name: '3 Columns' },
+              { value: 'gc-sm-4', name: '4 Columns' },
+              { value: 'gc-sm-5', name: '5 Columns' },
+              { value: 'gc-sm-6', name: '6 Columns' },
+              { value: 'gc-sm-7', name: '7 Columns' },
+              { value: 'gc-sm-8', name: '8 Columns' },
+              { value: 'gc-sm-9', name: '9 Columns' },
+              { value: 'gc-sm-10', name: '10 Columns' },
+              { value: 'gc-sm-11', name: '11 Columns' },
+              { value: 'gc-sm-12', name: '12 Columns' }
+            ]
+          },
+          {
+            type: 'select',
+            name: 'column-span-mobile',
+            label: 'Column span - Mobile',
+            changeProp: 1,
+            options: [
+              { value: '', name: 'None' },
+              { value: 'gc-xs-1', name: '1 Column' },
+              { value: 'gc-xs-2', name: '2 Columns' },
+              { value: 'gc-xs-3', name: '3 Columns' },
+              { value: 'gc-xs-4', name: '4 Columns' },
+              { value: 'gc-xs-5', name: '5 Columns' },
+              { value: 'gc-xs-6', name: '6 Columns' },
+              { value: 'gc-xs-7', name: '7 Columns' },
+              { value: 'gc-xs-8', name: '8 Columns' },
+              { value: 'gc-xs-9', name: '9 Columns' },
+              { value: 'gc-xs-10', name: '10 Columns' },
+              { value: 'gc-xs-11', name: '11 Columns' },
+              { value: 'gc-xs-12', name: '12 Columns' }
+            ]
+          },
+          {
             type: 'select',
             name: 'column-start-desktop',
             label: 'Column start - Desktop',
             changeProp: 1,
             options: [
-              {value: '', name: 'None'},
-              {value: 'gcs-1', name: 'Column 1'},
-              {value: 'gcs-2', name: 'Column 2'},
-              {value: 'gcs-3', name: 'Column 3'},
-              {value: 'gcs-4', name: 'Column 4'},
-              {value: 'gcs-5', name: 'Column 5'},
-              {value: 'gcs-6', name: 'Column 6'},
-              {value: 'gcs-7', name: 'Column 7'},
-              {value: 'gcs-8', name: 'Column 8'},
-              {value: 'gcs-9', name: 'Column 9'},
-              {value: 'gcs-10', name: 'Column 10'},
-              {value: 'gcs-11', name: 'Column 11'},
-              {value: 'gcs-12', name: 'Column 12'},
-            ],
+              { value: '', name: 'None' },
+              { value: 'gcs-1', name: 'Column 1' },
+              { value: 'gcs-2', name: 'Column 2' },
+              { value: 'gcs-3', name: 'Column 3' },
+              { value: 'gcs-4', name: 'Column 4' },
+              { value: 'gcs-5', name: 'Column 5' },
+              { value: 'gcs-6', name: 'Column 6' },
+              { value: 'gcs-7', name: 'Column 7' },
+              { value: 'gcs-8', name: 'Column 8' },
+              { value: 'gcs-9', name: 'Column 9' },
+              { value: 'gcs-10', name: 'Column 10' },
+              { value: 'gcs-11', name: 'Column 11' },
+              { value: 'gcs-12', name: 'Column 12' }
+            ]
           },
           {
             type: 'select',
@@ -123,20 +124,20 @@ export const TYPES = (
             label: 'Column start - Tablet',
             changeProp: 1,
             options: [
-              {value: '', name: 'None'},
-              {value: 'gcs-sm-1', name: 'Column 1'},
-              {value: 'gcs-sm-2', name: 'Column 2'},
-              {value: 'gcs-sm-3', name: 'Column 3'},
-              {value: 'gcs-sm-4', name: 'Column 4'},
-              {value: 'gcs-sm-5', name: 'Column 5'},
-              {value: 'gcs-sm-6', name: 'Column 6'},
-              {value: 'gcs-sm-7', name: 'Column 7'},
-              {value: 'gcs-sm-8', name: 'Column 8'},
-              {value: 'gcs-sm-9', name: 'Column 9'},
-              {value: 'gcs-sm-10', name: 'Column 10'},
-              {value: 'gcs-sm-11', name: 'Column 11'},
-              {value: 'gcs-sm-12', name: 'Column 12'},
-            ],
+              { value: '', name: 'None' },
+              { value: 'gcs-sm-1', name: 'Column 1' },
+              { value: 'gcs-sm-2', name: 'Column 2' },
+              { value: 'gcs-sm-3', name: 'Column 3' },
+              { value: 'gcs-sm-4', name: 'Column 4' },
+              { value: 'gcs-sm-5', name: 'Column 5' },
+              { value: 'gcs-sm-6', name: 'Column 6' },
+              { value: 'gcs-sm-7', name: 'Column 7' },
+              { value: 'gcs-sm-8', name: 'Column 8' },
+              { value: 'gcs-sm-9', name: 'Column 9' },
+              { value: 'gcs-sm-10', name: 'Column 10' },
+              { value: 'gcs-sm-11', name: 'Column 11' },
+              { value: 'gcs-sm-12', name: 'Column 12' }
+            ]
           },
           {
             type: 'select',
@@ -144,337 +145,335 @@ export const TYPES = (
             label: 'Column start - Mobile',
             changeProp: 1,
             options: [
-              {value: '', name: 'None'},
-              {value: 'gcs-xs-1', name: 'Column 1'},
-              {value: 'gcs-xs-2', name: 'Column 2'},
-              {value: 'gcs-xs-3', name: 'Column 3'},
-              {value: 'gcs-xs-4', name: 'Column 4'},
-              {value: 'gcs-xs-5', name: 'Column 5'},
-              {value: 'gcs-xs-6', name: 'Column 6'},
-              {value: 'gcs-xs-7', name: 'Column 7'},
-              {value: 'gcs-xs-8', name: 'Column 8'},
-              {value: 'gcs-xs-9', name: 'Column 9'},
-              {value: 'gcs-xs-10', name: 'Column 10'},
-              {value: 'gcs-xs-11', name: 'Column 11'},
-              {value: 'gcs-xs-12', name: 'Column 12'},
-            ],
+              { value: '', name: 'None' },
+              { value: 'gcs-xs-1', name: 'Column 1' },
+              { value: 'gcs-xs-2', name: 'Column 2' },
+              { value: 'gcs-xs-3', name: 'Column 3' },
+              { value: 'gcs-xs-4', name: 'Column 4' },
+              { value: 'gcs-xs-5', name: 'Column 5' },
+              { value: 'gcs-xs-6', name: 'Column 6' },
+              { value: 'gcs-xs-7', name: 'Column 7' },
+              { value: 'gcs-xs-8', name: 'Column 8' },
+              { value: 'gcs-xs-9', name: 'Column 9' },
+              { value: 'gcs-xs-10', name: 'Column 10' },
+              { value: 'gcs-xs-11', name: 'Column 11' },
+              { value: 'gcs-xs-12', name: 'Column 12' }
+            ]
           }
-				]
-			},
-		},
-	},
+        ]
+      }
+    }
+  },
 
-	/**
-	 * Forms
-	 */
-	{
-		id: 'label',
-		isComponent: (el: HTMLElement) => el.tagName === 'LABEL',
-		extend: 'text',
-		model: {
-			defaults: {
-				tagName: 'label',
-				components: 'Label',
-				draggable: 'form, form *',
-				droppable: (_: any, target: any) => !target.view.$el['0'].children.length,
-				content: 'Label',
-				style: {
-					'display': 'flex',
-					'flex-direction': 'column-reverse'
-				}
-			}
-		}
-	},
-	{
-		id: 'input',
-		isComponent: (el: HTMLInputElement) => el.tagName === 'INPUT' && ['email', 'text', 'password'].includes(el.type),
-		model: {
-			defaults: {
-				tagName: 'input',
-				draggable: 'label, label *',
-				droppable: false,
-				highlightable: false,
-				style: {
-					'width': '100%',
-					'height': '3rem',
-					'border': '1px solid #c4d8ce',
-					'border-radius': '4px',
-					'padding': '0 16px',
-					'margin-top': '4px',
-					'font-size': '16px'
-				},
-				attributes: {
-					type: 'text'
-				},
-				traits: [
-					nameTrait,
-					placeholderTrait,
-					requiredTrait,
-					{
-						type: 'select',
-						name: 'type',
-						label: 'Type',
-						options: [
-							{id: 'text', label: 'Text'},
-							{id: 'email', label: 'Email'},
-							{id: 'password', label: 'Password'},
-							{id: 'url', label: 'URL'},
-							{id: 'tel', label: 'Tel'}
-						]
-					},
-					minLengthTrait,
-					maxLengthTrait,
-					patternTrait
-				],
-			}
-		}
-	},
-	{
-		id: 'number-input',
-		isComponent: (el: HTMLInputElement) => el.tagName === 'INPUT' && el.type === 'number',
-		model: {
-			defaults: {
-				tagName: 'input',
-				draggable: 'label, label *',
-				droppable: false,
-				highlightable: false,
-				style: {
-					'width': '100%',
-					'height': '3rem',
-					'border': '1px solid #c4d8ce',
-					'border-radius': '4px',
-					'padding': '0 16px',
-					'margin-top': '4px',
-					'font-size': '16px'
-				},
-				attributes: {
-					type: 'number'
-				},
-				traits: [
-					nameTrait,
-					placeholderTrait,
-					requiredTrait,
-					{
-						label: 'Min',
-						name: 'min',
-						type: 'number'
-					},
-					{
-						label: 'Max',
-						name: 'max',
-						type: 'number'
-					},
-					{
-						label: 'Step',
-						name: 'step',
-						type: 'number'
-					}
-				],
-			}
-		}
-	},
-	{
-		id: 'textarea',
-		isComponent: (el: HTMLElement) => el.tagName === 'TEXTAREA',
-		model: {
-			defaults: {
-				tagName: 'textarea',
-				draggable: 'label, label *',
-				droppable: false,
-				highlightable: false,
-				style: {
-					'width': '100%',
-					'height': '3rem',
-					'border': '1px solid #c4d8ce',
-					'border-radius': '4px',
-					'padding': '0 16px',
-					'margin-top': '4px',
-					'font-size': '16px'
-				},
-				attributes: {
-					rows: 10
-				},
-				traits: [
-					nameTrait,
-					placeholderTrait,
-					requiredTrait,
-					{
-						type: 'number',
-						name: 'rows',
-						label: 'Rows'
-					},
-					minLengthTrait,
-					maxLengthTrait,
-					patternTrait
-				],
-			}
-		}
-	},
-	{
-		id: 'option',
-		isComponent: (el: HTMLElement) => el.tagName === 'OPTION',
-		model: {
-			defaults: {
-				tagName: 'option',
-				draggable: 'label, label *',
-				droppable: false,
-				layerable: false,
-				highlightable: false
-			}
-		}
-	},
-	{
-		id: 'select',
-		isComponent: (el: HTMLElement) => el.tagName == 'SELECT',
-		model: {
-			defaults: {
-				tagName: 'select',
-				draggable: 'label, label *',
-				droppable: false,
-				highlightable: false,
-				components: [
-					createOption('opt1', 'Option 1'),
-					createOption('opt2', 'Option 2'),
-				],
-				traits: [
-					nameTrait,
-					{
-						name: 'options',
-						type: 'select-options'
-					},
-					requiredTrait
-				],
-			}
-		}
-	},
-	{
-		id: 'checkbox',
-		extend: 'input',
-		isComponent: (el: HTMLInputElement) => el.tagName == 'INPUT' && el.type == 'checkbox',
-		model: {
-			defaults: {
-				tagName: 'input',
-				draggable: 'form, form *',
-				copyable: false,
-				attributes: {type: 'checkbox'},
-				traits: [
-					idTrait,
-					nameTrait,
-					valueTrait,
-					requiredTrait,
-					checkedTrait
-				],
-			},
-		},
-	},
-	{
-		id: 'radio',
-		extend: 'checkbox',
-		isComponent: (el: HTMLInputElement) => el.tagName == 'INPUT' && el.type == 'radio',
-		model: {
-			defaults: {
-				tagName: 'input',
-				draggable: 'form, form *',
-				attributes: {type: 'radio'}
-			},
-		},
-	},
+  /**
+   * Forms
+   */
+  {
+    id: 'label',
+    isComponent: (el: HTMLElement) => el.tagName === 'LABEL',
+    extend: 'text',
+    model: {
+      defaults: {
+        tagName: 'label',
+        components: 'Label',
+        draggable: 'form, form *',
+        droppable: (_: any, target: any) => !target.view.$el['0'].children.length,
+        content: 'Label',
+        style: {
+          display: 'flex',
+          'flex-direction': 'column-reverse'
+        }
+      }
+    }
+  },
+  {
+    id: 'input',
+    isComponent: (el: HTMLInputElement) =>
+      el.tagName === 'INPUT' && ['email', 'text', 'password'].includes(el.type),
+    model: {
+      defaults: {
+        tagName: 'input',
+        draggable: 'label, label *',
+        droppable: false,
+        highlightable: false,
+        style: {
+          width: '100%',
+          height: '3rem',
+          border: '1px solid #c4d8ce',
+          'border-radius': '4px',
+          padding: '0 16px',
+          'margin-top': '4px',
+          'font-size': '16px'
+        },
+        attributes: {
+          type: 'text'
+        },
+        traits: [
+          nameTrait,
+          placeholderTrait,
+          requiredTrait,
+          {
+            type: 'select',
+            name: 'type',
+            label: 'Type',
+            options: [
+              { id: 'text', label: 'Text' },
+              { id: 'email', label: 'Email' },
+              { id: 'password', label: 'Password' },
+              { id: 'url', label: 'URL' },
+              { id: 'tel', label: 'Tel' }
+            ]
+          },
+          minLengthTrait,
+          maxLengthTrait,
+          patternTrait
+        ]
+      }
+    }
+  },
+  {
+    id: 'number-input',
+    isComponent: (el: HTMLInputElement) => el.tagName === 'INPUT' && el.type === 'number',
+    model: {
+      defaults: {
+        tagName: 'input',
+        draggable: 'label, label *',
+        droppable: false,
+        highlightable: false,
+        style: {
+          width: '100%',
+          height: '3rem',
+          border: '1px solid #c4d8ce',
+          'border-radius': '4px',
+          padding: '0 16px',
+          'margin-top': '4px',
+          'font-size': '16px'
+        },
+        attributes: {
+          type: 'number'
+        },
+        traits: [
+          nameTrait,
+          placeholderTrait,
+          requiredTrait,
+          {
+            label: 'Min',
+            name: 'min',
+            type: 'number'
+          },
+          {
+            label: 'Max',
+            name: 'max',
+            type: 'number'
+          },
+          {
+            label: 'Step',
+            name: 'step',
+            type: 'number'
+          }
+        ]
+      }
+    }
+  },
+  {
+    id: 'textarea',
+    isComponent: (el: HTMLElement) => el.tagName === 'TEXTAREA',
+    model: {
+      defaults: {
+        tagName: 'textarea',
+        draggable: 'label, label *',
+        droppable: false,
+        highlightable: false,
+        style: {
+          width: '100%',
+          height: '3rem',
+          border: '1px solid #c4d8ce',
+          'border-radius': '4px',
+          padding: '0 16px',
+          'margin-top': '4px',
+          'font-size': '16px'
+        },
+        attributes: {
+          rows: 10
+        },
+        traits: [
+          nameTrait,
+          placeholderTrait,
+          requiredTrait,
+          {
+            type: 'number',
+            name: 'rows',
+            label: 'Rows'
+          },
+          minLengthTrait,
+          maxLengthTrait,
+          patternTrait
+        ]
+      }
+    }
+  },
+  {
+    id: 'option',
+    isComponent: (el: HTMLElement) => el.tagName === 'OPTION',
+    model: {
+      defaults: {
+        tagName: 'option',
+        draggable: 'label, label *',
+        droppable: false,
+        layerable: false,
+        highlightable: false
+      }
+    }
+  },
+  {
+    id: 'select',
+    isComponent: (el: HTMLElement) => el.tagName == 'SELECT',
+    model: {
+      defaults: {
+        tagName: 'select',
+        draggable: 'label, label *',
+        droppable: false,
+        highlightable: false,
+        components: [createOption('opt1', 'Option 1'), createOption('opt2', 'Option 2')],
+        traits: [
+          nameTrait,
+          {
+            name: 'options',
+            type: 'select-options'
+          },
+          requiredTrait
+        ]
+      }
+    }
+  },
+  {
+    id: 'checkbox',
+    extend: 'input',
+    isComponent: (el: HTMLInputElement) => el.tagName == 'INPUT' && el.type == 'checkbox',
+    model: {
+      defaults: {
+        tagName: 'input',
+        draggable: 'form, form *',
+        copyable: false,
+        attributes: { type: 'checkbox' },
+        traits: [idTrait, nameTrait, valueTrait, requiredTrait, checkedTrait]
+      }
+    }
+  },
+  {
+    id: 'radio',
+    extend: 'checkbox',
+    isComponent: (el: HTMLInputElement) => el.tagName == 'INPUT' && el.type == 'radio',
+    model: {
+      defaults: {
+        tagName: 'input',
+        draggable: 'form, form *',
+        attributes: { type: 'radio' }
+      }
+    }
+  },
 
+  /**
+   * Custom Components
+   */
+  {
+    id: 'pb-submit',
+    isComponent: (el: HTMLElement) => el.tagName === 'PB-SUBMIT',
+    model: {
+      defaults: {
+        tagName: 'pb-submit',
+        draggable: 'form',
+        droppable: false,
+        traits: [
+          {
+            type: 'text',
+            label: 'Label',
+            name: 'label'
+          },
+          {
+            type: 'select',
+            label: 'Form Name',
+            name: 'form',
+            options: forms.map((form) => ({
+              id: form.id,
+              label: form.name
+            }))
+          },
+          {
+            type: 'text',
+            label: 'Redirect',
+            name: 'redirect'
+          },
+          {
+            type: 'text',
+            label: 'Success Notification',
+            name: 'success'
+          },
+          {
+            type: 'text',
+            label: 'Error Notification',
+            name: 'error'
+          }
+        ],
+        attributes: {
+          label: 'Submit',
+          success: `Form submitted successfully!`,
+          error: `There was an error submitting the form. Please try again later.`
+        }
+      }
+    }
+  },
 
-	/**
-	 * Custom Components
-	 */
-	{
-		id: 'pb-submit',
-		isComponent: (el: HTMLElement) => el.tagName === 'PB-SUBMIT',
-		model: {
-			defaults: {
-				tagName: 'pb-submit',
-				draggable: 'form',
-				droppable: false,
-				traits: [
-					{
-						type: 'text',
-						label: 'Label',
-						name: 'label'
-					},
-					{
-						type: 'select',
-						label: 'Form Name',
-						name: 'form',
-						options: forms.map(form => ({
-							id: form.id,
-							label: form.name
-						}))
-					},
-					{
-						type: 'text',
-						label: 'Redirect',
-						name: 'redirect'
-					},
-					{
-						type: 'text',
-						label: 'Success Notification',
-						name: 'success'
-					},
-					{
-						type: 'text',
-						label: 'Error Notification',
-						name: 'error'
-					}
-				],
-				attributes: {
-					label: 'Submit',
-					success: `Form submitted successfully!`,
-					error: `There was an error submitting the form. Please try again later.`
-				}
-			}
-		}
-	},
+  /**
+   * Stepper
+   */
+  {
+    id: 'stepper-container',
+    extend: 'div',
+    isComponent: (el: HTMLInputElement) => el.tagName == 'STEPPER-CONTAINER',
+    model: {
+      defaults: {
+        tagName: 'stepper-container',
+        script: function () {
+          const stepperButtonEls = this.querySelectorAll('stepper-buttons');
+          const scrollerEl = this.querySelector('stepper-scroller');
+          const scrollerFirstChildEl = scrollerEl?.children[0];
 
-	/**
-	 * Stepper
-	 */
-	{
-		id: 'stepper-container',
-		extend: 'div',
-		isComponent: (el: HTMLInputElement) => el.tagName == 'STEPPER-CONTAINER',
-		model: {
-			defaults: {
-				tagName: 'stepper-container',
-				script: function () {
-					const stepperButtonEls = this.querySelectorAll('stepper-buttons');
-					const scrollerEl = this.querySelector('stepper-scroller');
-					const scrollerFirstChildEl = scrollerEl?.children[0];
+          let index = 0;
 
-					let index = 0;
+          for (const el of stepperButtonEls) {
+            const [leftButtonEl, rightButtonEl] = el.querySelectorAll('button');
 
-					for (const el of stepperButtonEls) {
-						const [leftButtonEl, rightButtonEl] = el.querySelectorAll('button');
-						
-						if (scrollerFirstChildEl) {
-							leftButtonEl.addEventListener('click', () => {
-								index = index > 0 ? index - 1 : 0;
-								scrollerEl.style.transform = `translateX(-${index * scrollerFirstChildEl.getBoundingClientRect().width}px)`;
-							});
+            if (scrollerFirstChildEl) {
+              leftButtonEl.addEventListener('click', () => {
+                index = index > 0 ? index - 1 : 0;
+                scrollerEl.style.transform = `translateX(-${
+                  index * scrollerFirstChildEl.getBoundingClientRect().width
+                }px)`;
+              });
 
-							rightButtonEl.addEventListener('click', () => {
-								index = index < scrollerEl.children.length - 1 ? index + 1 : scrollerEl.children.length - 1;
-								scrollerEl.style.transform = `translateX(-${index * scrollerFirstChildEl.getBoundingClientRect().width}px)`;
-							});
-						}
-					}
-				},
-				style: {
-					'display': 'grid',
-					'max-width': '1400px',
-					'margin': '0 auto',
-					'grid-template-columns': 'repeat(12, minmax(0, 1fr))',
-					'align-items': 'center',
-					'padding': '16px',
-					'grid-gap': '12px'
-				}
-			}
-		}
-	}
+              rightButtonEl.addEventListener('click', () => {
+                index =
+                  index < scrollerEl.children.length - 1
+                    ? index + 1
+                    : scrollerEl.children.length - 1;
+                scrollerEl.style.transform = `translateX(-${
+                  index * scrollerFirstChildEl.getBoundingClientRect().width
+                }px)`;
+              });
+            }
+          }
+        },
+        style: {
+          display: 'grid',
+          'max-width': '1400px',
+          margin: '0 auto',
+          'grid-template-columns': 'repeat(12, minmax(0, 1fr))',
+          'align-items': 'center',
+          padding: '16px',
+          'grid-gap': '12px'
+        }
+      }
+    }
+  }
 ];

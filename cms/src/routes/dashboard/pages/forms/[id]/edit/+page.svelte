@@ -1,17 +1,15 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import FormModule from '$lib/FormModule.svelte';
-  import { DocumentSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
-  import { db } from '$lib/utils/firebase';
   import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import Button from '$lib/Button.svelte';
-  import Grid from '$lib/Grid.svelte';
-  import GridCol from '$lib/GridCol.svelte';
   import Card from '$lib/Card.svelte';
-  import Breadcrumbs from '$lib/Breadcrumbs.svelte';
+  import FormModule from '$lib/FormModule.svelte';
   import { alertWrapper } from '$lib/utils/alert-wrapper';
-  import { urlSegments } from '$lib/utils/url-segments';
   import { confirmation } from '$lib/utils/confirmation';
+  import { db } from '$lib/utils/firebase';
+  import { urlSegments } from '$lib/utils/url-segments';
+  import { DocumentSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+  import { CONFIG } from '$lib/consts/config.const';
 
   export let data: {
     col: string;
@@ -61,7 +59,7 @@
 </script>
 
 <div class="save-menu">
-  <Button type="button" color="warning" on:click={deleteItem}>Delete</Button>
+  <Button type="button" color="warn" on:click={deleteItem}>Delete</Button>
   <div class="flex-1" />
   <Button href={back} variant="outlined" color="secondary">Cancel</Button>
   <Button type="submit" form="form" variant="filled" color="secondary" loading={saveLoading}
@@ -76,5 +74,5 @@
 </form>
 
 <svelte:head>
-  <title>Form Edit - GlycanAge</title>
+  <title>Form Edit - {CONFIG.title}</title>
 </svelte:head>

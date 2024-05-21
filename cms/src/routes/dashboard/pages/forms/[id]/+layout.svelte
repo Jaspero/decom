@@ -14,5 +14,5 @@
 <ItemNav {links} />
 
 <div class="pt-4">
-	<slot />
+  <slot />
 </div>

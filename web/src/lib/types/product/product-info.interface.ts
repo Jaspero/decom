@@ -1,4 +1,7 @@
-import type { ProductVariantCombinations, ProductVariants } from '$lib/types/product/product-variants.interface';
+import type {
+  ProductVariantCombinations,
+  ProductVariants
+} from '$lib/types/product/product-variants.interface';
 
 export interface ProductInfo {
   id: string;
@@ -17,5 +20,4 @@ export interface ProductInfo {
   trackQuantity: boolean;
   variantCombinations: ProductVariantCombinations[];
   variants: ProductVariants[];
-
 }

@@ -16,7 +16,7 @@
   export let prefix: string = $page.params.collection;
   export let actions = 'edit,duplicate,delete';
   export let duplicateSubCollections: string | null = null;
-  
+
   let links: ColumnActionsConfigLink[];
 
   $: shownActions = actions.split(',');
@@ -52,7 +52,7 @@
 
     if (contentRefs.length) {
       contentRefs.forEach((ref, index) =>
-        ref.docs.forEach(d =>
+        ref.docs.forEach((d) =>
           toExec.push(setDoc(doc(db, collection, newId, subCollections[index], d.id), d.data()))
         )
       );
@@ -72,11 +72,10 @@
   }
 
   onMount(() => {
-
     if (window.columnActions?.[id]) {
       links = window.columnActions[id].links || [];
     }
-  })
+  });
 </script>
 
 <DropdownButton variant="icon">

@@ -1,23 +1,23 @@
-import {db} from '$lib/utils/firebase';
-import {redirect} from '@sveltejs/kit';
-import {collection, doc, getDoc, getDocs} from 'firebase/firestore';
-import {BucketImageService} from '$lib/services/image.service.js';
-import type {PageBuilderForm} from '$lib/page-builder/page-builder-form.interface';
+import { db } from '$lib/utils/firebase';
+import { redirect } from '@sveltejs/kit';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { BucketImageService } from '$lib/services/image.service.js';
+import type { PageBuilderForm } from '$lib/page-builder/page-builder-form.interface';
 
-export async function load({params, parent}) {
+export async function load({ params, parent }) {
   await parent();
 
-  const {template} = params;
+  const { template } = params;
   const col = 'templates';
 
   const imageService = new BucketImageService();
-  imageService.prefix = col + '/',
-    imageService.metadata = [
+  (imageService.prefix = col + '/'),
+    (imageService.metadata = [
       {
         folder: 'pages/',
         width: 1080
       }
-    ];
+    ]);
 
   const items = [
     {
@@ -53,32 +53,30 @@ export async function load({params, parent}) {
     getDocs(collection(db, 'pages')),
     getDocs(collection(db, 'sections')),
     getDocs(collection(db, 'popups')),
-    getDocs(collection(db, 'forms')),
+    getDocs(collection(db, 'forms'))
   ]);
 
-  const popups = (
-    await Promise.all(
-      popupsSnap.docs.map(async d => {
-        const data = d.data();
+  const popups = await Promise.all(
+    popupsSnap.docs.map(async (d) => {
+      const data = d.data();
 
-        const htmlSnap = await getDoc(doc(db, 'page-popups', d.id, 'content', 'html'));
-        const styleSnap = await getDoc(doc(db, 'popups', d.id, 'content', 'css'));
+      const htmlSnap = await getDoc(doc(db, 'page-popups', d.id, 'content', 'html'));
+      const styleSnap = await getDoc(doc(db, 'popups', d.id, 'content', 'css'));
 
-        return {
-          id: d.id,
-          title: data.title,
-          html: htmlSnap?.data(),
-          style: styleSnap?.data(),
-          description: data.description,
-          image: data.image
-        }
-      })
-    )
+      return {
+        id: d.id,
+        title: data.title,
+        html: htmlSnap?.data(),
+        style: styleSnap?.data(),
+        description: data.description,
+        image: data.image
+      };
+    })
   );
 
   const sections = (
     await Promise.all(
-      sectionsSnap.docs.map(async d => {
+      sectionsSnap.docs.map(async (d) => {
         const data = d.data();
 
         const jsonSnap = await getDoc(doc(db, 'sections', d.id, 'content', 'json'));
@@ -89,41 +87,39 @@ export async function load({params, parent}) {
           json: jsonSnap?.data(),
           category: data.category,
           image: data.image
-        }
+        };
       })
     )
-  )
-    .reduce((acc: any[], cur) => {
+  ).reduce((acc: any[], cur) => {
+    const { category, ...data } = cur;
+    const idx = acc.findIndex((it) => it.category === category);
 
-      const {category, ...data} = cur;
-      const idx = acc.findIndex(it => it.category === category);
+    if (idx === -1) {
+      acc.push({
+        category,
+        sections: [data]
+      });
+    } else {
+      acc[idx].sections.push(data);
+    }
 
-      if (idx === -1) {
-        acc.push({
-          category,
-          sections: [data]
-        });
-      } else {
-        acc[idx].sections.push(data);
-      }
+    return acc;
+  }, []);
 
-      return acc;
-    }, []);
-
-  const forms = formsSnap.docs.map(doc => ({
+  const forms = formsSnap.docs.map((doc) => ({
     id: doc.id,
     ...doc.data()
   })) as PageBuilderForm[];
 
   let pages = pagesSnap.docs
-    .map(it => {
+    .map((it) => {
       const dt = it.data();
 
       return {
         id: it.id,
         title: dt.title,
         active: dt.active
-      }
+      };
     })
     .sort((a, b) => a.title.localeCompare(b.title));
 
@@ -139,7 +135,7 @@ export async function load({params, parent}) {
     };
   }
 
-  pages = pages.filter(p => p.id !== template);
+  pages = pages.filter((p) => p.id !== template);
 
   const [snap, jsonSnap] = await Promise.all([
     getDoc(doc(db, col, template)),
@@ -150,7 +146,7 @@ export async function load({params, parent}) {
     throw redirect(303, '/404');
   }
 
-  const value = {id: snap.id, ...snap.data() as any};
+  const value = { id: snap.id, ...(snap.data() as any) };
 
   return {
     snap,

@@ -1,12 +1,12 @@
-import {actionsPipe} from '../../../column-pipes/actions.pipe';
-import {indexPipe} from '../../../column-pipes/index.pipe';
-import {collections} from '../../collections';
+import { actionsPipe } from '../../../column-pipes/actions.pipe';
+import { indexPipe } from '../../../column-pipes/index.pipe';
+import { collections } from '../../collections';
 
 collections.addCollection('templates', {
-	name: 'Templates',
-	singularName: 'Template',
-	module: 'pages',
-	tableHeaders: [
+  name: 'Templates',
+  singularName: 'template',
+  module: 'pages',
+  tableHeaders: [
     {
       key: '/id',
       label: 'Number',
@@ -15,17 +15,17 @@ collections.addCollection('templates', {
     {
       key: '/title',
       label: 'Title',
-			sortable: true
+      sortable: true
     },
     {
       key: '/category',
       label: 'Category'
     },
-		{
-			key: '/id',
-			label: '',
-			pipes: [actionsPipe()]
-		}
+    {
+      key: '/id',
+      label: '',
+      pipes: [actionsPipe()]
+    }
   ],
-	initialSort: { key: 'title', direction: 'asc' }
+  initialSort: { key: 'title', direction: 'asc' }
 });

@@ -14,6 +14,7 @@
   import { confirmation } from '$lib/utils/confirmation';
   import { urlSegments } from '$lib/utils/url-segments';
   import { random } from '@jaspero/utils';
+  import { CONFIG } from '$lib/consts/config.const';
 
   export let data: {
     col: string;
@@ -69,9 +70,7 @@
   <Grid>
     <GridCol span="12">
       <Card>
-        <slot slot="title">
-          New Form
-        </slot>
+        <slot slot="title">New Form</slot>
 
         <slot slot="subtitle">
           <Breadcrumbs {segments} title={data.value.name} />
@@ -94,5 +93,5 @@
 </form>
 
 <svelte:head>
-  <title>New Landing Page Form - GlycanAge</title>
+  <title>Form - {CONFIG.title}</title>
 </svelte:head>

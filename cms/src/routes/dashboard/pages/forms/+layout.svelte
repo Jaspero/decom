@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Properties from './Properties.svelte';
+  import Properties from './Properties.svelte';
 </script>
 
 <slot />

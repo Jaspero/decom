@@ -19,7 +19,7 @@
   import Dialog from '$lib/Dialog.svelte';
   import { onMount } from 'svelte';
   import { formatEmail } from '$lib/utils/format-emails';
-
+  import { CONFIG } from '../../lib/consts/config.const';
 
   let email = '';
   let password = '';
@@ -224,18 +224,29 @@
           autocomplete="current-password"
           required
         />
-          <Button variant="outlined" type="button" on:click={toggleVisible}>{type === 'password' ? 'Show password' : 'Hide password'}</Button>
+        <Button variant="outlined" type="button" on:click={toggleVisible}
+          >{type === 'password' ? 'Show password' : 'Hide password'}</Button
+        >
       </div>
 
       <div class="flex flex-wrap gap-4 mt-4">
         <Button type="submit" {loading}>Sign in</Button>
-        <button type="button" on:click={loginGoogle} class="googleButton" name="Sign in with Google">
+        <button
+          type="button"
+          on:click={loginGoogle}
+          class="googleButton"
+          name="Sign in with Google"
+        >
           Sign in with google
         </button>
       </div>
 
       <p class="mt-8 mb-2">Forgot your password?</p>
-      <Button on:click={() => {rDialog = true;}}>Reset password</Button>
+      <Button
+        on:click={() => {
+          rDialog = true;
+        }}>Reset password</Button
+      >
     </form>
   {/if}
 </div>
@@ -255,6 +266,6 @@
 <Recaptcha bind:verify={recaptchaVerify} />
 
 <svelte:head>
-  <title>Sign In - Jaspero</title>
+  <title>Sign In - {CONFIG.title}</title>
   <meta name="description" content="Enter your credentials to sign in." />
 </svelte:head>

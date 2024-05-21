@@ -1,8 +1,8 @@
 <script>
   import { fly } from 'svelte/transition';
   import { clickOutside } from '$lib/utils/click-outside';
-  import {cartState} from "./cart-state.ts";
-  import Product from "$lib/Product.svelte";
+  import { cartState } from './cart-state.ts';
+  import Product from '$lib/Product.svelte';
 
   export let show = false;
 </script>
@@ -14,9 +14,9 @@
     on:click_outside={() => (show = false)}
   >
     {#each $cartState as product (product.id)}
-      <Product {product} showAdd={false}/>
+      <Product {product} showAdd={false} />
     {/each}
-    <a href="/checkout" on:click={() => show = false}>Checkout</a>
+    <a href="/checkout" on:click={() => (show = false)}>Checkout</a>
   </nav>
 {/if}
 

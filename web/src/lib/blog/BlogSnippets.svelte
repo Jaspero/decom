@@ -10,14 +10,14 @@
 <div class="snippets">
   {#each articles as article}
     <BlogSnippet
-            author={article.author}
-            authorLink="{baseAuthorLink}/{cleanSlug(article.author?.name)}"
-            category={article.category}
-            description={article.description}
-            image={article.image}
-            imageAlt={article.imageAlt || 'Blog image'}
-            link="{baseLink}{article.categoryId ? '/' + article.categoryId : ''}/{article.id}"
-            title={article.title}
+      author={article.author}
+      authorLink="{baseAuthorLink}/{cleanSlug(article.author?.name)}"
+      category={article.category}
+      description={article.description}
+      image={article.image}
+      imageAlt={article.imageAlt || 'Blog image'}
+      link="{baseLink}{article.categoryId ? '/' + article.categoryId : ''}/{article.id}"
+      title={article.title}
     />
   {/each}
 </div>

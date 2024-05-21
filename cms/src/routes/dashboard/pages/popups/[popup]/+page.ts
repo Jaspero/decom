@@ -10,15 +10,15 @@ export async function load({ params, parent }) {
 
   const { popup } = params;
   const col = 'popups';
-  
+
   const imageService = new BucketImageService();
-  imageService.prefix = col + '/',
-  imageService.metadata = [
-    {
-			folder: 'pages/',
-			width: 1080
-		}
-  ];
+  (imageService.prefix = col + '/'),
+    (imageService.metadata = [
+      {
+        folder: 'pages/',
+        width: 1080
+      }
+    ]);
 
   const items = [
     {
@@ -54,20 +54,20 @@ export async function load({ params, parent }) {
     getDocs(collection(db, 'forms'))
   ]);
 
-  const forms = formSnaps.docs.map(doc => ({
+  const forms = formSnaps.docs.map((doc) => ({
     id: doc.id,
     ...doc.data()
   })) as PageBuilderForm[];
 
   let pages = pagesSnap.docs
-    .map(it => {
+    .map((it) => {
       const dt = it.data();
 
       return {
         id: it.id,
         title: dt.title,
         active: dt.active
-      }
+      };
     })
     .sort((a, b) => a.title.localeCompare(b.title));
 
@@ -82,18 +82,18 @@ export async function load({ params, parent }) {
     };
   }
 
-  pages = pages.filter(p => p.id !== popup);
+  pages = pages.filter((p) => p.id !== popup);
 
   const [snap, jsonSnap] = await Promise.all([
     getDoc(doc(db, col, popup)),
-    getDoc(doc(db, col, popup, 'content', 'json')),
+    getDoc(doc(db, col, popup, 'content', 'json'))
   ]);
 
   if (!snap.exists) {
     throw redirect(303, '/404');
   }
 
-  const value = {id: snap.id, ...snap.data() as any};
+  const value = { id: snap.id, ...(snap.data() as any) };
 
   return {
     snap,

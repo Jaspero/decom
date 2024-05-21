@@ -1,12 +1,12 @@
-import {db} from '$lib/utils/firebase';
-import {redirect} from '@sveltejs/kit';
-import {doc, getDoc} from 'firebase/firestore';
-import {FORM_FIELDS} from '../../form-fields.const.js';
+import { db } from '$lib/utils/firebase';
+import { redirect } from '@sveltejs/kit';
+import { doc, getDoc } from 'firebase/firestore';
+import { FORM_FIELDS } from '../../form-fields.const.js';
 
-export async function load({params, parent}) {
+export async function load({ params, parent }) {
   await parent();
 
-  const {id} = params;
+  const { id } = params;
   const col = 'forms';
   const items = FORM_FIELDS;
 
@@ -16,7 +16,7 @@ export async function load({params, parent}) {
     throw redirect(303, '/404');
   }
 
-  const value = {id: snap.id, ...snap.data() as any};
+  const value = { id: snap.id, ...(snap.data() as any) };
 
-  return {snap, col, items, value};
+  return { snap, col, items, value };
 }

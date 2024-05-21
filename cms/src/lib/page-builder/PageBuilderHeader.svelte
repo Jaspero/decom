@@ -33,7 +33,7 @@
 </script>
 
 <header>
-  <div class="flex justify-between items-center">
+  <div>
     <slot />
   </div>
   <div />

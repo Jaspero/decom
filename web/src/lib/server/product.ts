@@ -32,7 +32,6 @@ async function product(productId: string) {
   return null;
 }
 
-
 export async function productData(id: string) {
   if (_data) {
     return _data;

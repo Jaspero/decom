@@ -29,7 +29,6 @@
     }
 
     if (data instanceof CommonEditFormPageData) {
-
       if (data.preEdit) {
         await data.preEdit(id, data.value);
       }
@@ -41,7 +40,6 @@
         () => (saveLoading = false)
       );
     } else {
-
       if (data.preCreate) {
         await data.preCreate(id, data.value);
       }
@@ -104,7 +102,12 @@
         >
 
         <slot slot="subtitle">
-          <Breadcrumbs {segments} title={data instanceof CommonEditFormPageData ? data.value[data.editKey] : `New ${data.singularName}`} />
+          <Breadcrumbs
+            {segments}
+            title={data instanceof CommonEditFormPageData
+              ? data.value[data.editKey]
+              : `New ${data.singularName}`}
+          />
         </slot>
 
         <div class="flex flex-col gap-6">

@@ -9,6 +9,4 @@
   export let currency: 'usd' | 'eur' | 'gbp';
 </script>
 
-<Button variant={variant} color={color}>
-  Buy for €289
-</Button>
+<Button {variant} {color}>Buy for €289</Button>

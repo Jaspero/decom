@@ -18,3 +18,4 @@ import './data/pages/forms.collection.ts';
 import './data/pages/popups.collection.ts';
 import './data/pages/sections.collection.ts';
 import './data/pages/templates.collection.ts';
+import './data/pages/layouts.collection.ts';

@@ -3,10 +3,10 @@
   import FormModule from '../FormModule.svelte';
   import { BLOCKS } from './blocks.conts';
   import type { Template, TemplateSection } from './template.interface';
-  import {random} from '@jaspero/utils';
+  import { random } from '@jaspero/utils';
   import { slide } from 'svelte/transition';
   import type { Popup } from './popup.interface';
-  import type {PageBuilderForm} from './page-builder-form.interface';
+  import type { PageBuilderForm } from './page-builder-form.interface';
 
   export let templates: Template[] | undefined;
   export let sections: Template[] | undefined;
@@ -68,11 +68,10 @@
 
   function adjustIds(components: any[], styles: any[]) {
     for (const component of components) {
-
       if (component.attributes?.id) {
         const newId = random.string(16);
 
-        const s = styles.find(style => style.selectors.includes('#' + component.attributes.id));
+        const s = styles.find((style) => style.selectors.includes('#' + component.attributes.id));
 
         if (s) {
           s.selectors = s.selectors.map((selector: string) => {
@@ -107,9 +106,7 @@
 
     json.styles.push(...section.json.styles);
 
-    lastFrame.component.components.push(
-      ...lastSectionFrame.component.components
-    );
+    lastFrame.component.components.push(...lastSectionFrame.component.components);
 
     grapesInstance.loadProjectData(json);
   }
@@ -125,10 +122,10 @@
 
   function toggleCategory(category: string) {
     if (activeCategory === category) {
-      activeCategory = ''
+      activeCategory = '';
       return;
     }
-    activeCategory = category
+    activeCategory = category;
   }
 
   onMount(() => {
@@ -145,21 +142,21 @@
       },
       ...(sections
         ? [
-          {
-            id: 'sections',
-            title: 'Sections',
-            icon: 'library_add'
-          }
-        ]
+            {
+              id: 'sections',
+              title: 'Sections',
+              icon: 'library_add'
+            }
+          ]
         : []),
       ...(templates
         ? [
-          {
-            id: 'templates',
-            title: 'Templates',
-            icon: 'note_add'
-          }
-        ]
+            {
+              id: 'templates',
+              title: 'Templates',
+              icon: 'note_add'
+            }
+          ]
         : []),
       {
         id: 'layers',
@@ -178,12 +175,12 @@
       },
       ...(metaItems
         ? [
-          {
-            id: 'seo',
-            title: 'SEO',
-            icon: 'edit_note'
-          }
-        ]
+            {
+              id: 'seo',
+              title: 'SEO',
+              icon: 'edit_note'
+            }
+          ]
         : [])
     ];
   });
@@ -196,7 +193,7 @@
       class="material-symbols-outlined"
       class:active={activeSidebar === element.id}
       on:click={() => (activeSidebar = activeSidebar === element.id ? '' : element.id)}
-    >{element.icon}</button
+      >{element.icon}</button
     >
   {/each}
 </aside>
@@ -213,15 +210,25 @@
       <p class="p-4 border-b">Sections</p>
       <div class="divide-y">
         {#each sections as category}
-          <button class="flex justify-between items-center w-full px-4 py-2 hover:bg-black/10 transition" on:click={toggleCategory(category.category)} >
+          <button
+            class="flex justify-between items-center w-full px-4 py-2 hover:bg-black/10 transition"
+            on:click={toggleCategory(category.category)}
+          >
             <p>{category.category}</p>
-            <i class="fa fa-caret-down transition duration-300" class:-rotate-180={activeCategory === category.category}></i>
+            <i
+              class="fa fa-caret-down transition duration-300"
+              class:-rotate-180={activeCategory === category.category}
+            />
           </button>
 
           {#if activeCategory === category.category}
             <div class="flex flex-col divide-y" transition:slide={{ duration: 250 }}>
               {#each category.sections as section}
-                <button class="w-full text-left px-4 py-2 hover:bg-black/10 transition" type="button" on:click={() => addSection(section)}>
+                <button
+                  class="w-full text-left px-4 py-2 hover:bg-black/10 transition"
+                  type="button"
+                  on:click={() => addSection(section)}
+                >
                   {#if section.image}
                     <img src={section.image} alt={section.title} />
                   {/if}
@@ -238,14 +245,24 @@
       <p class="p-4 border-b">Templates</p>
       <div>
         {#each templates as category}
-          <button class="flex justify-between items-center w-full px-4 py-2 hover:bg-black/10 transition" on:click={toggleCategory(category.category)} >
+          <button
+            class="flex justify-between items-center w-full px-4 py-2 hover:bg-black/10 transition"
+            on:click={toggleCategory(category.category)}
+          >
             <p>{category.category}</p>
-            <i class="fa fa-caret-down transition duration-300" class:-rotate-180={activeCategory === category.category}></i>
+            <i
+              class="fa fa-caret-down transition duration-300"
+              class:-rotate-180={activeCategory === category.category}
+            />
           </button>
 
           {#if activeCategory === category.category}
             {#each category.sections as section}
-              <button class="w-full text-left px-4 py-2 hover:bg-black/10 transition" type="button" on:click={() => addTemplate(section)}>
+              <button
+                class="w-full text-left px-4 py-2 hover:bg-black/10 transition"
+                type="button"
+                on:click={() => addTemplate(section)}
+              >
                 {#if section.image}
                   <img src={section.image} alt={section.title} />
                 {/if}
@@ -272,30 +289,30 @@
 </section>
 
 <style lang="postcss">
-    aside {
-        @apply bg-white border-r;
-        height: 100%;
-        width: 55px;
-        display: flex;
-        flex-direction: column;
-    }
+  aside {
+    @apply bg-white border-r;
+    height: 100%;
+    width: 55px;
+    display: flex;
+    flex-direction: column;
+  }
 
-    section.active {
-        width: 300px;
-    }
+  section.active {
+    width: 300px;
+  }
 
-    section {
-        @apply bg-white border-r duration-200;
-        width: 0;
-        height: 100%;
-        overflow-y: auto;
-    }
+  section {
+    @apply bg-white border-r duration-200;
+    width: 0;
+    height: 100%;
+    overflow-y: auto;
+  }
 
-    .material-symbols-outlined {
-        padding: 0.5rem 0.2rem;
-    }
+  .material-symbols-outlined {
+    padding: 0.5rem 0.2rem;
+  }
 
-    .material-symbols-outlined.active {
-        @apply bg-primary/[8%] text-secondary;
-    }
+  .material-symbols-outlined.active {
+    @apply bg-primary/[8%] text-secondary;
+  }
 </style>

@@ -1,4 +1,4 @@
-import {writable} from 'svelte/store';
+import { writable } from 'svelte/store';
 
 const initialValue = typeof window !== 'undefined' && window.innerWidth > 767;
 

@@ -3,6 +3,7 @@
   import DataTable from '$lib/DataTable.svelte';
   import { datePipe } from '$lib/column-pipes/date.pipe';
   import { indexPipe } from '$lib/column-pipes/index.pipe';
+  import { CONFIG } from '$lib/consts/config.const';
   import type { Sort } from '$lib/interfaces/sort.interface';
 
   export let data: {
@@ -36,5 +37,5 @@
 />
 
 <svelte:head>
-  <title>Form Results - GlycanAge</title>
+  <title>Form Results - {CONFIG.title}</title>
 </svelte:head>

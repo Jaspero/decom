@@ -14,7 +14,7 @@
     {#if image}
       <img class="article-image" src={image} alt={imageAlt} />
     {:else}
-      <img class="article-image" src="/images/dummy-img.jpg" alt="Couldn't load or is missing">
+      <img class="article-image" src="/images/dummy-img.jpg" alt="Couldn't load or is missing" />
     {/if}
     {#if category}
       <span class="article-category">{category}</span>
