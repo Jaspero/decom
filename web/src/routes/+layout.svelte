@@ -1,7 +1,5 @@
 <script lang="ts">
   import { cartState } from '$lib/cart/cart-state';
-  import Footer from '$lib/Footer.svelte';
-  import Header from '$lib/Header.svelte';
   import Meta from '$lib/meta/Meta.svelte';
   import Notification from '$lib/notification/Notification.svelte';
   import '../app.pcss';
@@ -57,12 +55,7 @@
   });
 </script>
 
-<Header />
-
-<main class="pt-20">
-  <slot />
-</main>
+<slot />
 
 <Meta />
 <Notification />
-<Footer />

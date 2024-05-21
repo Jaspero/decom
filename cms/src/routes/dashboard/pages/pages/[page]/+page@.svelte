@@ -114,8 +114,6 @@
 
     showingLayout = !showingLayout;
     layoutLoading = false;
-
-    console.log({ header, footer });
   }
 
   async function submit() {
@@ -140,12 +138,14 @@
       await renderedFormModules[key].render.getValue();
     }
 
+    const lastUpdatedOn = new Date().toISOString();
+
     data.value.url = data.value.url || generateSlug(data.value.title);
-    data.value.lastUpdatedOn = Date.now();
+    data.value.lastUpdatedOn = lastUpdatedOn;
 
     if (!id) {
       id = `lp-${random.string(24)}`;
-      data.value.publicationDate = data.value.publicationDate || Date.now();
+      data.value.publicationDate = data.value.publicationDate || lastUpdatedOn;
     }
 
     const json = grapesInstance.getProjectData();
@@ -156,9 +156,9 @@
       setDoc(doc(db, data.col, id, 'content', 'json'), json),
       setDoc(doc(db, data.col, id, 'content', 'html'), {
         content: html,
-        lastUpdatedOn: Date.now()
+        lastUpdatedOn
       }),
-      setDoc(doc(db, data.col, id, 'content', 'css'), { content: css, lastUpdatedOn: Date.now() })
+      setDoc(doc(db, data.col, id, 'content', 'css'), { content: css, lastUpdatedOn })
     ];
 
     if (data.snap) {

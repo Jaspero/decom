@@ -17,13 +17,47 @@ export const load: PageServerLoad = async ({ params }) => {
     return {};
   }
 
-  const [htmlRef, styleRef] = await Promise.all([
+  const toLoad: any[] = [
     doc.ref.collection('content').doc('html').get(),
     doc.ref.collection('content').doc('css').get()
-  ]);
+  ];
+
+  const data = doc.data();
+
+  if (data.header) {
+    toLoad.push(
+      firestore.collection('layouts').doc(data.header).collection('content').doc('html').get(),
+      firestore.collection('layouts').doc(data.header).collection('content').doc('css').get(),
+    );
+  }
+
+  if (data.footer) {
+    toLoad.push(
+      firestore.collection('layouts').doc(data.footer).collection('content').doc('html').get(),
+      firestore.collection('layouts').doc(data.footer).collection('content').doc('css').get(),
+    );
+  }
+
+  const [htmlRef, styleRef, ...layoutRefs] = await Promise.all(toLoad);
+  const content = [layoutRefs[0], htmlRef, layoutRefs[2]]
+    .reduce((acc, cur) => {
+      console.log(cur);
+      if (cur?.exists) {
+        acc += cur.data()!.content || ''
+      }
+      return acc;
+    }, '');
+  const style = [layoutRefs[1], styleRef, layoutRefs[3]]
+    .reduce((acc, cur) => {
+      console.log(cur);
+      if (cur?.exists) {
+        acc += cur.data()!.content || ''
+      }
+      return acc;
+    }, '');
 
   return {
-    ...doc.data(),
-    content: `${htmlRef.data()!.content}<style>${styleRef.data()!.content}</style>`
+    ...data,
+    content: `${content}<style>${style}</style>`
   };
 };

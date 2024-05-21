@@ -3,7 +3,7 @@
 <script lang="ts">
   import Button from '$lib/Button.svelte';
   import { addDoc, collection } from 'firebase/firestore';
-  import { db } from '$lib/firebase';
+  import { db } from '$lib/utils/firebase';
   import { notificationWrapper } from '$lib/notification/notification';
   import { goto } from '$app/navigation';
 

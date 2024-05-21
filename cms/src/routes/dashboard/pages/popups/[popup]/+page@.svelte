@@ -81,7 +81,9 @@
       await renderedFormModules[key].render.getValue();
     }
 
-    data.value.lastUpdatedOn = Date.now();
+    const lastUpdatedOn = new Date().toISOString();
+
+    data.value.lastUpdatedOn = lastUpdatedOn;
 
     if (!id) {
       id = `lpp-${random.string(24)}`;
@@ -95,9 +97,9 @@
       setDoc(doc(db, data.col, id, 'content', 'json'), json),
       setDoc(doc(db, data.col, id, 'content', 'html'), {
         content: html.replace('<body>', '').replace('</body>', ''),
-        lastUpdatedOn: Date.now()
+        lastUpdatedOn
       }),
-      setDoc(doc(db, data.col, id, 'content', 'css'), { content: css, lastUpdatedOn: Date.now() })
+      setDoc(doc(db, data.col, id, 'content', 'css'), { content: css, lastUpdatedOn })
     ];
 
     if (data.snap) {

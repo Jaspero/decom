@@ -4,8 +4,8 @@
   import { getDoc, doc } from 'firebase/firestore';
   import Button from '$lib/Button.svelte';
   import Dialog from '$lib/Dialog.svelte';
-  import { db } from '$lib/firebase';
   import { browser } from '$app/environment';
+  import { db } from '$lib/utils/firebase';
 
   export let popup: string | undefined;
   export let label = 'Open';

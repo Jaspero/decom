@@ -19,7 +19,7 @@
   };
 
   const title = data.meta?.title || data.title;
-  const structured = ldJson(data);
+  const structured = ldJson(data.meta?.structured);
   const classes: string[] = [];
 
   if (!data.renderLayout) {

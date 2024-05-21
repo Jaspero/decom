@@ -86,7 +86,9 @@
       await renderedFormModules[key].render.getValue();
     }
 
-    data.value.lastUpdatedOn = Date.now();
+    const lastUpdatedOn = new Date().toISOString();
+
+    data.value.lastUpdatedOn = lastUpdatedOn;
 
     if (!id) {
       id = `lpt-${random.string(24)}`;

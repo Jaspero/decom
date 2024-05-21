@@ -31,7 +31,7 @@
   async function submit() {
     saveLoading = true;
 
-    data.value.lastUpdatedOn = Date.now();
+    data.value.lastUpdatedOn = new Date().toISOString();
 
     await alertWrapper(
       updateDoc(data.snap.ref, data.value),

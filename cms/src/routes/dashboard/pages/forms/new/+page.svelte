@@ -1,20 +1,18 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import FormModule from '$lib/FormModule.svelte';
-  import { db } from '$lib/utils/firebase';
-  import { deleteDoc, doc, setDoc } from 'firebase/firestore';
-
   import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import Button from '$lib/Button.svelte';
   import Card from '$lib/Card.svelte';
+  import FormModule from '$lib/FormModule.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
+  import { CONFIG } from '$lib/consts/config.const';
   import { alertWrapper } from '$lib/utils/alert-wrapper';
-  import { confirmation } from '$lib/utils/confirmation';
+  import { db } from '$lib/utils/firebase';
   import { urlSegments } from '$lib/utils/url-segments';
   import { random } from '@jaspero/utils';
-  import { CONFIG } from '$lib/consts/config.const';
+  import { doc, setDoc } from 'firebase/firestore';
 
   export let data: {
     col: string;
@@ -51,18 +49,6 @@
     saveLoading = false;
 
     goto(back);
-  }
-
-  async function deleteItem() {
-    confirmation(async ({ confirmed }) => {
-      if (!confirmed) {
-        return;
-      }
-
-      await alertWrapper(deleteDoc(doc(db, data.col, data.value.id)), `Item deleted successfully`);
-
-      goto(back);
-    });
   }
 </script>
 

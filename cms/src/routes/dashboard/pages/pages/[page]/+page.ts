@@ -38,7 +38,7 @@ export async function load({ params, parent }) {
       options: {
         label: 'URL',
         name: 'url',
-        pattern: '[a-z0-9\\-]+'
+        pattern: '[a-z0-9\\-/]+'
       }
     },
     {
