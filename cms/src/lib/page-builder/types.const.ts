@@ -23,7 +23,7 @@ export const TYPES = (forms: PageBuilderForm[]) => [
   {
     id: 'column',
     extend: 'div',
-    isComponent: (el: HTMLInputElement) => el.tagName == 'DIV' && el.dataset.type == 'column',
+    isComponent: (el: HTMLInputElement) => el.tagName == 'DIV' && el.dataset?.type == 'column',
     model: {
       defaults: {
         tagName: 'column',
@@ -159,6 +159,31 @@ export const TYPES = (forms: PageBuilderForm[]) => [
               { value: 'gcs-xs-11', name: 'Column 11' },
               { value: 'gcs-xs-12', name: 'Column 12' }
             ]
+          }
+        ]
+      }
+    }
+  },
+
+  /**
+   * Common
+   */
+  {
+    id: 'page-link',
+    extend: 'link',
+    isComponent: (el: HTMLAnchorElement) => el?.dataset?.pblink,
+    model: {
+      defaults: {
+        type: 'page-link',
+        draggable: true,
+        content: 'Link',
+        attributes: {
+          'data-pblink': true
+        },
+        traits: [
+          {
+            label: 'Link',
+            name: 'href'
           }
         ]
       }

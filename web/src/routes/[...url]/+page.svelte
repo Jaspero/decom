@@ -4,6 +4,8 @@
   import { CONFIG } from '$lib/consts/config.const';
   import Popup from './components/Popup.svelte';
   import Submit from './components/Submit.svelte';
+  import { page } from '$app/stores';
+  import { browser } from '$app/environment';
 
   export let data: {
     content: string;
@@ -24,6 +26,25 @@
 
   if (!data.renderLayout) {
     classes.push('standalone');
+  }
+
+  if (browser) {
+    pageSetup();
+  }
+
+  function pageSetup() {
+    page.subscribe((page) => {
+      document.querySelectorAll<HTMLAnchorElement>('[data-pblink]').forEach((el) => {
+        const containes = el.classList.contains('active');
+        const href = el.getAttribute('href');
+
+        if (containes && href !== page.url.pathname) {
+          el.classList.remove('active');
+        } else if (!containes && href === page.url.pathname) {
+          el.classList.add('active');
+        }
+      });
+    });
   }
 </script>
 

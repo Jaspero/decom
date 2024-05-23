@@ -31,7 +31,7 @@ export const processCheckout = functions
       if (productsRefs) {
         const prodData: any = productsRefs.data();
         const variant = Object.values(product.selectedVariant).join('-');
-        const found = prodData.variantCombinations.find((x) => x.variant === variant);
+        const found = prodData.variantCombinations.find((x: any) => x.variant === variant);
 
         let price = prodData.price;
 

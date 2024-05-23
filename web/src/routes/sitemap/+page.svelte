@@ -5,6 +5,7 @@
   import type { BlogCategory } from '$lib/types/blog/blog-category.interface';
 
   export let data: {
+    pages: Array<{url: string; title: string}>;
     blog: {
       articles: BlogArticle[];
       categories: BlogCategory[];
@@ -21,6 +22,14 @@
 </script>
 
 <h1>Sitemap</h1>
+
+<h3>Pages</h3>
+
+<ul>
+  {#each data.pages as page}
+    <li><a href={page.url}>{page.title}</a></li>
+  {/each}
+</ul>
 
 <h3>Blog</h3>
 

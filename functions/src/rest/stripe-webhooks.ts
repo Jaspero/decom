@@ -1,11 +1,9 @@
-import express from 'express';
-import {firestore} from 'firebase-admin';
+import * as express from 'express';
 import * as functions from 'firebase-functions';
 import {logger} from 'firebase-functions';
 import {constants} from 'http2';
 import {ENV_CONFIG} from '../shared/consts/env-config.const';
 import {stripeInstance} from '../shared/consts/stripeInstance.const';
-import {FirestoreCollections} from '../shared/enums/firestore-collections.enum';
 import {CORS} from '../shared/consts/cors-whitelist.const';
 
 const app = express();
@@ -14,7 +12,7 @@ app.use(CORS);
 app.post('/webhook', (req, res) => {
   async function exec() {
     const sig = req.headers['stripe-signature'] as string;
-    const fs = firestore();
+    // const fs = firestore();
 
     let event = null;
     try {
@@ -31,13 +29,13 @@ app.post('/webhook', (req, res) => {
       return;
     }
 
-    const {object} = event.data;
+    const {object}: any = event.data;
 
-    const orderRefs = await fs
-      .collection(FirestoreCollections.Orders)
-      .doc(object.subscription_details.metadata.id)
-      .get();
-    const orderData = orderRefs.data();
+    // const orderRefs = await fs
+    //   .collection(FirestoreCollections.Orders)
+    //   .doc(object.subscription_details.metadata.id)
+    //   .get();
+    // const orderData = orderRefs.data();
 
     console.log('Payment for: ', object.subscription_details.metadata.id);
     switch (event.type) {

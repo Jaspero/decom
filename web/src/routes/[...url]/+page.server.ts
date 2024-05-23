@@ -6,7 +6,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
   const { docs } = await firestore
     .collection('pages')
-    .where('url', '==', url)
+    .where('url', '==', '/' + url)
     .where('active', '==', true)
     .limit(1)
     .get();

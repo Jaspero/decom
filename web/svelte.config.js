@@ -6,8 +6,14 @@ const config = {
   kit: {
     adapter: adapter({
       pages: '../public/web',
-      fallback: 'index.html'
-    })
+      fallback: 'index.html',
+      strict: false
+    }),
+    prerender: {
+      entries: [
+        '/sitemap'
+      ]
+    }
   },
   preprocess: vitePreprocess(),
   vitePlugin: {

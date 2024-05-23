@@ -1,4 +1,4 @@
-import cors from 'cors';
+import * as cors from 'cors';
 
 export const CORS = cors({
   origin: ['http://localhost:5173', 'http://localhost:5174'],

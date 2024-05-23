@@ -15,10 +15,11 @@ export const productCreated = functions
     const {documentId} = context.params;
     const productData = (
       await fs.collection(FirestoreCollections.Products).doc(documentId).get()
-    ).data();
+    ).data() as any;
 
     const product = await stripeInstance.products.create({
       name: productData.name,
+      // @ts-ignore
       currency: 'EUR',
       unit_amount: toStripeFormat(productData.price),
     });

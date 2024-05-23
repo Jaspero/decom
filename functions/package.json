@@ -12,25 +12,25 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "18"
+    "node": "20"
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@jaspero/utils": "1.13.0",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "firebase-admin": "11.9.0",
-    "firebase-functions": "4.5.0",
-    "stripe": "^13.8.0"
+    "@jaspero/utils": "1.15.3",
+    "cors": "2.8.5",
+    "express": "4.19.2",
+    "firebase-admin": "12.1.1",
+    "firebase-functions": "5.0.1",
+    "stripe": "15.7.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "6.13.2",
-    "@typescript-eslint/parser": "6.13.2",
-    "eslint": "8.55.0",
+    "@typescript-eslint/eslint-plugin": "7.10.0",
+    "@typescript-eslint/parser": "7.10.0",
+    "eslint": "9.3.0",
     "eslint-config-google": "0.14.0",
-    "eslint-plugin-import": "2.29.0",
-    "firebase-functions-test": "3.1.0",
-    "typescript": "5.3.3"
+    "eslint-plugin-import": "2.29.1",
+    "firebase-functions-test": "3.2.0",
+    "typescript": "5.4.5"
   },
   "private": true
 }
