@@ -11,7 +11,7 @@
   export let data: { categories: BlogCategory[]; page: BlogArticle[]; pageSize: number };
 
   $: activeCat = data.categories.find((it) => it.id === $page.params.category)!;
-  $: if (activeCat) {
+  $: if (activeCat && activeCat.meta) {
     meta.set(activeCat.meta);
   }
 </script>

@@ -10,7 +10,9 @@
 
   const { articles, author } = data;
 
-  meta.set(data.author.meta);
+  if (author) {
+    meta.set(author.meta);
+  }
 </script>
 
 {#if author}

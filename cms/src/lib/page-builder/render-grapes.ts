@@ -119,7 +119,7 @@ export function renderGrapes(
 
           assetManager = document.createElement('jp-asset-manager') as any;
           assetManager.service = new AMService();
-          assetManager.rootPath = 'landing-pages';
+          assetManager.rootPath = 'pages';
           assetManager.shownFiles = props.types;
 
           assetManager.selectable = 'single';

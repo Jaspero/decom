@@ -42,7 +42,9 @@
   let commentDialog = false;
   let recaptchaVerify: () => Promise<string>;
 
-  meta.set(data.meta);
+  if (data.meta) {
+    meta.set(data.meta);
+  }
 
   function openDialog() {
     selectedComment = null;

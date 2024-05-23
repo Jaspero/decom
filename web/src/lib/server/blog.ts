@@ -25,7 +25,7 @@ async function blog() {
 
   articles = articles.docs
     .map((doc: any) => ({ id: doc.id.trim(), ...doc.data() }))
-    .filter((doc: any) => doc.active || !doc.hasOwnProperty('active'));
+    .filter((doc: any) => doc.active);
 
   authors = authors.docs.map((it: any) => {
     const data = it.data() as BlogAuthor;

@@ -197,7 +197,8 @@ collections.addCollection('blog-articles', {
         options: {
           label: 'Author',
           name: 'author',
-          options: authors
+          options: authors,
+          required: true
         }
       },
       {
@@ -206,7 +207,8 @@ collections.addCollection('blog-articles', {
         options: {
           label: 'Category',
           name: 'category',
-          options: categories
+          options: categories,
+          required: true
         }
       },
       {

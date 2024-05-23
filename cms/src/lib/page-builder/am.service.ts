@@ -12,8 +12,9 @@ import {
   uploadBytesResumable,
   type StorageReference
 } from 'firebase/storage';
-import { writable } from 'svelte/store';
-import { storage } from '../utils/firebase';
+import {writable} from 'svelte/store';
+import {storage} from '../utils/firebase';
+import {STATIC_ASSETS} from './static-assets.const';
 
 export class AMService implements AssetManagerService {
   async getDownloadUrl(r: StorageReference) {
@@ -22,6 +23,10 @@ export class AMService implements AssetManagerService {
   }
 
   async fetch(path: string) {
+    if (path === 'pages/static-assets') {
+      return [...STATIC_ASSETS];
+    }
+
     const data = await listAll(ref(storage, path));
 
     const images = await Promise.all(
@@ -32,24 +37,35 @@ export class AMService implements AssetManagerService {
       })
     );
 
+    const folders = data.prefixes
+      .map((prefix) => ({
+        name: prefix.name,
+        id: `${path}/${prefix.name}`,
+        type: 'folder'
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name)) as Folder[];
+    const assets = images
+      .map((image) => ({
+        id: image[0].fullPath,
+        name: image[0].name,
+        url: image[1],
+        contentType: image[0].contentType,
+        type: 'asset',
+        size: image[0].size
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name)) as Asset[];
+
+    if (path === 'pages') {
+      folders.unshift({
+        name: 'Static Assets',
+        id: `pages/static-assets`,
+        type: 'folder'
+      });
+    }
+
     return [
-      ...(data.prefixes
-        .map((prefix) => ({
-          name: prefix.name,
-          id: `${path}/${prefix.name}`,
-          type: 'folder'
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name)) as Folder[]),
-      ...(images
-        .map((image) => ({
-          id: image[0].fullPath,
-          name: image[0].name,
-          url: image[1],
-          contentType: image[0].contentType,
-          type: 'asset',
-          size: image[0].size
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name)) as Asset[])
+      ...folders,
+      ...assets
     ];
   }
 
@@ -58,8 +74,6 @@ export class AMService implements AssetManagerService {
     const r = ref(storage, path);
 
     const uploader = uploadBytesResumable(r, file);
-
-    console.log(file);
 
     let currentProgress = 0;
     let curentStatus = 'uploading';
