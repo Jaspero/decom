@@ -8,6 +8,7 @@ import { DEVICES } from './devices.const';
 import type { Popup } from './popup.interface';
 import { TYPES } from './types.const';
 import type { PageBuilderForm } from './page-builder-form.interface';
+import {STYLE_OVERRIDES} from './style-overrides.const';
 
 export function renderGrapes(
   pageBuilderEl: HTMLDivElement,
@@ -143,19 +144,20 @@ export function renderGrapes(
   grapesInstance.on('load', function () {
     const styleManager = grapesInstance.StyleManager;
 
-    styleManager.removeProperty('typography', 'font-family');
-    styleManager.addProperty('typography', {
-      type: 'select',
-      property: 'font-family',
-      default: 'Sen',
-      options: [{ id: 'Sen', label: 'Sen' }]
+    STYLE_OVERRIDES.forEach(({id, property, ...overides}) => {
+      styleManager.removeProperty(id, property);
+
+      styleManager.addProperty(id, {
+        property,
+        ...overides
+      });
     });
 
-    grapesInstance.on('component:create', (model) => {
-      if (!model.getStyle().hasOwnProperty('font-family')) {
-        model.addStyle({ 'font-family': "'Sen', sans-serif" });
-      }
-    });
+    // grapesInstance.on('component:create', (model) => {
+    //   if (!model.getStyle().hasOwnProperty('font-family')) {
+    //     model.addStyle({ 'font-family': "'Sen', sans-serif" });
+    //   }
+    // });
 
     styleManager.render();
   });

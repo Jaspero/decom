@@ -26,3 +26,4 @@ jobs:
           channelId: live
           projectId: ${{ env.PROJECT }}
           target: ${{ env.TARGET }}
+          

@@ -167,6 +167,16 @@ const STEPPER = (typeMap: any) => [
   }
 ];
 
+const ASIDE_IMAGE_SLIDER = (typeMap: any) => [
+  {
+    id: 'aside-image-slider',
+    label: 'Container',
+    media: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" style="width: 100%; height: 48px;"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Z"/></svg>`,
+    category: 'Aside Image Slider',
+    content: typeMap['aside-image-slider']
+  },
+]
+
 export const BLOCKS = (forms: PageBuilderForm[], popups?: Popup[]) => {
   const typeMap = TYPES(forms).reduce((acc: any, { id, ...dt }) => {
     const { tagName, ...data } = dt.model.defaults;
@@ -568,6 +578,7 @@ export const BLOCKS = (forms: PageBuilderForm[], popups?: Popup[]) => {
     },
 
     ...STEPPER(typeMap),
+    ...ASIDE_IMAGE_SLIDER(typeMap),
 
     ...(popups
       ? [

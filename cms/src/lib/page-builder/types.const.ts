@@ -450,6 +450,31 @@ export const TYPES = (forms: PageBuilderForm[]) => [
   },
 
   /**
+   * Aside Image Slider
+   */
+  {
+    id: 'aside-image-slider',
+    extend: 'div',
+    isComponent: (el: HTMLInputElement) => el.tagName == 'ASIDE-IMAGE-SLIDER',
+    model: {
+      defaults: {
+        tagName: 'aside-image-slider',
+        script: function () {
+
+        }
+      },
+      style: {
+        height: '60vh',
+        'max-height': '650px',
+        'background-image': 'linear-gradient(118deg, #082e58 0%, #0e4d92 37%, #21d4fd 100%)',
+        'background-size': '100% auto',
+        'background-position': 'center',
+        'background-repeat': 'no-repeat'
+      }
+    }
+  },
+
+  /**
    * Stepper
    */
   {
