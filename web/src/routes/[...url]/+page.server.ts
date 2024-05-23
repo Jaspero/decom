@@ -41,7 +41,6 @@ export const load: PageServerLoad = async ({ params }) => {
   const [htmlRef, styleRef, ...layoutRefs] = await Promise.all(toLoad);
   const content = [layoutRefs[0], htmlRef, layoutRefs[2]]
     .reduce((acc, cur) => {
-      console.log(cur);
       if (cur?.exists) {
         acc += cur.data()!.content || ''
       }
@@ -49,7 +48,6 @@ export const load: PageServerLoad = async ({ params }) => {
     }, '');
   const style = [layoutRefs[1], styleRef, layoutRefs[3]]
     .reduce((acc, cur) => {
-      console.log(cur);
       if (cur?.exists) {
         acc += cur.data()!.content || ''
       }
