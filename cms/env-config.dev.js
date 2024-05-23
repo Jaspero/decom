@@ -1,12 +1,12 @@
 export const ENV_CONFIG = {
   firebase: {
-    apiKey: 'AIzaSyCv9dQEwPOLoV_Cdn8NKLhNqA9bYb9Umew',
-    authDomain: 'wonkawave.firebaseapp.com',
-    projectId: 'wonkawave',
-    storageBucket: 'wonkawave.appspot.com',
-    messagingSenderId: '100370175739',
-    appId: '1:100370175739:web:9fac4ef481495e6f5b425e',
-    measurementId: 'G-JLW8F5W78G'
+    apiKey: "AIzaSyAAas5gd9D3Fo62b4vSyuy5aKfzn5VPMn8",
+    authDomain: "jp-decom.firebaseapp.com",
+    projectId: "jp-decom",
+    storageBucket: "jp-decom.appspot.com",
+    messagingSenderId: "22188766286",
+    appId: "1:22188766286:web:7bc969e580215a3bbc3f1f",
+    measurementId: "G-JHJZTTBBVY"
   },
   region: 'europe-west1'
 };

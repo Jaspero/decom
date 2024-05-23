@@ -1,17 +1,17 @@
 {
   "targets": {
-    "wonkawave": {
+    "jp-decom": {
       "hosting": {
         "web": [
-          "wonkawave"
+          "jp-decom"
         ],
         "cms": [
-          "wonkawave-cms"
+          "jp-decom-cms"
         ]
       }
     }
   },
   "projects": {
-    "default": "wonkawave"
+    "default": "jp-decom"
   }
 }

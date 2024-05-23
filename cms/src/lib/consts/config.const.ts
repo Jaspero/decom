@@ -1,34 +1,13 @@
 export const CONFIG = {
-  title: 'Shop CMS',
-  label: 'Webshop Template',
-  webUrl: 'https://wonkawave.web.app',
+  title: 'Decom CMS',
+  label: '',
+  webUrl: 'https://decom-automation.hr',
   links: [
     {
       label: 'Home',
       href: '/dashboard',
       icon: 'home',
       exactMatch: true
-    },
-    {
-      label: 'Shop',
-      icon: 'store',
-      href: '/dashboard/shop',
-      links: [
-        { label: 'Products', href: '/dashboard/shop/products' },
-        { label: 'Categories', href: '/dashboard/shop/categories' },
-        { label: 'Tags', href: '/dashboard/shop/tags' },
-        { label: 'Discounts', href: '/dashboard/shop/discounts' },
-        { label: 'Coupons', href: '/dashboard/shop/coupons' }
-      ]
-    },
-    {
-      label: 'Sales',
-      icon: 'sell',
-      href: '/dashboard/sales',
-      links: [
-        { label: 'Orders', href: '/dashboard/sales/orders' },
-        { label: 'Customers', href: '/dashboard/sales/customers' }
-      ]
     },
     {
       label: 'Pages',

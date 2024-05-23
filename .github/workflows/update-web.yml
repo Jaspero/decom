@@ -5,8 +5,8 @@ on:
       description:
         description: 'Release description'
 env:
-  PROJECT: wonkawave
-  SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WONKAWAVE }}
+  PROJECT: jp-decom
+  SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
   TARGET: web
 jobs:
   deploy:

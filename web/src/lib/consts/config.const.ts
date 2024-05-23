@@ -1,3 +1,3 @@
 export const CONFIG = {
-  title: 'Shop'
+  title: 'Decom'
 };
