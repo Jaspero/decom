@@ -33,6 +33,10 @@
     let first = true;
 
     page.subscribe((page) => {
+      
+      /**
+       * Page Links
+       */
       document.querySelectorAll<HTMLAnchorElement>('[data-pblink]').forEach((el) => {
         const containes = el.classList.contains('active');
         const href = el.getAttribute('href');
@@ -42,6 +46,20 @@
         } else if (!containes && href === page.url.pathname) {
           el.classList.add('active');
         }
+      });
+
+      /**
+       * Anchor Lunks 
+       */
+      document.querySelectorAll<HTMLAnchorElement>('[data-pbanchor]').forEach((e) => {
+        e.addEventListener('click', (event) => {
+          event.preventDefault();
+          const target = document.querySelector(e.getAttribute('href') as string);
+          
+          if (target) {
+            target?.scrollIntoView({ behavior: e.getAttribute('animation') as 'smooth' | 'instant' });
+          }
+        });
       });
 
       if (!first) {

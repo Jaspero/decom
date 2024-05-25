@@ -63,7 +63,7 @@
       </GridCol>
 
       <GridCol spanlg="6" span="12">
-        <Card hFull={true}>
+        <Card>
           <slot slot="emoji">🎈</slot>
           <slot slot="title">Blog</slot>
           <slot slot="footerAction">

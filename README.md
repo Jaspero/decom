@@ -1,6 +1,6 @@
 # Decom Automation
 
-[![Prod | Deploy Webshop](https://github.com/Jaspero/decom/actions/workflows/webshop.yml/badge.svg)](https://github.com/Jaspero/decom/actions/workflows/webshop.yml)
+[![Prod | Deploy Web](https://github.com/Jaspero/decom/actions/workflows/web.yml/badge.svg)](https://github.com/Jaspero/decom/actions/workflows/web.yml)
 
 [![Prod | Deploy CMS](https://github.com/Jaspero/decom/actions/workflows/cms.yml/badge.svg)](https://github.com/Jaspero/decom/actions/workflows/cms.yml)
 

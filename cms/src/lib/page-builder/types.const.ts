@@ -189,6 +189,37 @@ export const TYPES = (forms: PageBuilderForm[]) => [
       }
     }
   },
+  {
+    id: 'anchor-link',
+    extend: 'link',
+    isComponent: (el: HTMLAnchorElement) => el?.dataset?.pbanchor,
+    model: {
+      defaults: {
+        type: 'anchor-link',
+        draggable: true,
+        content: 'Link',
+        attributes: {
+          'data-pbanchor': true
+        },
+        traits: [
+          {
+            label: 'Target',
+            name: 'href'
+          },
+          {
+            type: 'select',
+            label: 'Animation',
+            name: 'animation',
+            default: 'instant',
+            options: [
+              { value: 'instant', name: 'instant' },
+              { value: 'smooth', name: 'smooth' }
+            ]
+          }
+        ]
+      }
+    }
+  },
 
   /**
    * Forms
