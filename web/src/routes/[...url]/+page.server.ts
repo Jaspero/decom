@@ -27,32 +27,30 @@ export const load: PageServerLoad = async ({ params }) => {
   if (data.header) {
     toLoad.push(
       firestore.collection('layouts').doc(data.header).collection('content').doc('html').get(),
-      firestore.collection('layouts').doc(data.header).collection('content').doc('css').get(),
+      firestore.collection('layouts').doc(data.header).collection('content').doc('css').get()
     );
   }
 
   if (data.footer) {
     toLoad.push(
       firestore.collection('layouts').doc(data.footer).collection('content').doc('html').get(),
-      firestore.collection('layouts').doc(data.footer).collection('content').doc('css').get(),
+      firestore.collection('layouts').doc(data.footer).collection('content').doc('css').get()
     );
   }
 
   const [htmlRef, styleRef, ...layoutRefs] = await Promise.all(toLoad);
-  const content = [layoutRefs[0], htmlRef, layoutRefs[2]]
-    .reduce((acc, cur) => {
-      if (cur?.exists) {
-        acc += cur.data()!.content || ''
-      }
-      return acc;
-    }, '');
-  const style = [layoutRefs[1], styleRef, layoutRefs[3]]
-    .reduce((acc, cur) => {
-      if (cur?.exists) {
-        acc += cur.data()!.content || ''
-      }
-      return acc;
-    }, '');
+  const content = [layoutRefs[0], htmlRef, layoutRefs[2]].reduce((acc, cur) => {
+    if (cur?.exists) {
+      acc += cur.data()!.content || '';
+    }
+    return acc;
+  }, '');
+  const style = [layoutRefs[1], styleRef, layoutRefs[3]].reduce((acc, cur) => {
+    if (cur?.exists) {
+      acc += cur.data()!.content || '';
+    }
+    return acc;
+  }, '');
 
   return {
     ...data,

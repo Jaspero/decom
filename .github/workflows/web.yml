@@ -24,7 +24,7 @@ jobs:
           echo $SV > web/key.json
           npm ci --prefix web --legacy-peer-deps && npm run build --prefix web
         env:
-          SV: ${{ env.SERVICE_ACCOUNT }}          
+          SV: ${{ env.SERVICE_ACCOUNT }}
       - name: Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:

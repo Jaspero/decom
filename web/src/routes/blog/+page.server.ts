@@ -9,7 +9,7 @@ export const load: PageServerLoad = async () => {
   return {
     categories,
     pageSize,
-    page: pages[0].map((doc) => {
+    page: (pages[0] || []).map((doc) => {
       const {
         content,
         meta,

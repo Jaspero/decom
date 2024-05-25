@@ -1,5 +1,6 @@
 <script lang="ts">
   import Button from '$lib/Button.svelte';
+  import { CONFIG } from '$lib/consts/config.const';
 </script>
 
 <div class="w-screen h-screen flex flex-col justify-center items-center">
@@ -13,6 +14,6 @@
 </div>
 
 <svelte:head>
-  <title>Error - Jaspero</title>
+  <title>Error - {CONFIG.title}</title>
   <meta name="description" content="This page doesn't exist or something went wrong" />
 </svelte:head>

@@ -21,7 +21,7 @@
   import { renderAlert } from '@jaspero/web-components/dist/render-alert.js';
   import { onMount } from 'svelte';
   import Loader from '$lib/Loader.svelte';
-  import {CONFIG} from '../lib/consts/config.const';
+  import { CONFIG } from '../lib/consts/config.const';
 
   const redirectLink = '/dashboard';
 
@@ -166,9 +166,7 @@
       {#if showCodeInput}
         <GridCol span="12" spanxl="6">
           <form on:submit|preventDefault={confirm}>
-            <Button variant="outlined" color="warn" href="/" on:click={back}
-              >Back to login</Button
-            >
+            <Button variant="outlined" color="warn" href="/" on:click={back}>Back to login</Button>
             <div class="mt-12 mb-24 w-full">
               We have sent you a 6-digit verification code to:
               <b>{resolver.hints[0].phoneNumber}</b>
@@ -270,7 +268,7 @@
     <img src="/brand/logo-white.svg" alt="Logo" />
 
     <div class="absolute bottom-1 right-1 bg-white">
-      <img src="/images/eu.png" class="w-[200px]" alt="Financirano od EU">
+      <img src="/images/eu.png" class="w-[200px]" alt="Financirano od EU" />
     </div>
   </div>
 </main>
@@ -295,7 +293,6 @@
 </svelte:head>
 
 <style>
-
   main {
     max-width: 1000px;
     margin: 100px auto 0;

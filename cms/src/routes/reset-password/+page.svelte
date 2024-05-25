@@ -1,9 +1,10 @@
 <script lang="ts">
+  import Button from '$lib/Button.svelte';
   import Field from '$lib/Field.svelte';
   import Grid from '$lib/Grid.svelte';
   import GridCol from '$lib/GridCol.svelte';
   import SectionTitle from '$lib/SectionTitle.svelte';
-  import Button from '$lib/Button.svelte';
+  import { CONFIG } from '$lib/consts/config.const';
 
   let email = '';
 </script>
@@ -37,5 +38,5 @@
 </div>
 
 <svelte:head>
-  <title>Reset Password - Jaspero</title>
+  <title>Reset Password - {CONFIG.title}</title>
 </svelte:head>

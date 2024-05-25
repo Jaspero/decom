@@ -459,9 +459,7 @@ export const TYPES = (forms: PageBuilderForm[]) => [
     model: {
       defaults: {
         tagName: 'aside-image-slider',
-        script: function () {
-
-        }
+        script: function () {}
       },
       style: {
         height: '60vh',

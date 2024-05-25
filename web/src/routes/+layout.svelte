@@ -5,7 +5,6 @@
   import '../typography.pcss';
   import '@jaspero/web-components/dist/alert.wc';
   import '@jaspero/web-components/dist/confirm.wc';
-
 </script>
 
 <slot />

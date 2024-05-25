@@ -10,9 +10,8 @@ const config = {
       strict: false
     }),
     prerender: {
-      entries: [
-        '/sitemap'
-      ]
+      crawl: true,
+      entries: ['/sitemap']
     }
   },
   preprocess: vitePreprocess(),

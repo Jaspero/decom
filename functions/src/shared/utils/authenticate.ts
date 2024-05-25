@@ -1,4 +1,4 @@
-import {HttpsError, type CallableRequest} from 'firebase-functions/v2/https';
+import { HttpsError, type CallableRequest } from 'firebase-functions/v2/https';
 
 export function isAuthenticated(request: CallableRequest) {
   if (!request.auth?.uid) {

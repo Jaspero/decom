@@ -8,6 +8,6 @@
 
 <style>
   .auto-rows {
-    grid-auto-rows: 1fr
+    grid-auto-rows: 1fr;
   }
 </style>

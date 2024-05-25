@@ -12,9 +12,9 @@ import {
   uploadBytesResumable,
   type StorageReference
 } from 'firebase/storage';
-import {writable} from 'svelte/store';
-import {storage} from '../utils/firebase';
-import {STATIC_ASSETS} from './static-assets.const';
+import { writable } from 'svelte/store';
+import { storage } from '../utils/firebase';
+import { STATIC_ASSETS } from './static-assets.const';
 
 export class AMService implements AssetManagerService {
   async getDownloadUrl(r: StorageReference) {
@@ -63,10 +63,7 @@ export class AMService implements AssetManagerService {
       });
     }
 
-    return [
-      ...folders,
-      ...assets
-    ];
+    return [...folders, ...assets];
   }
 
   async upload(p: string, file: File) {

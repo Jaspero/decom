@@ -5,7 +5,7 @@
   import type { BlogCategory } from '$lib/types/blog/blog-category.interface';
 
   export let data: {
-    pages: Array<{url: string; title: string}>;
+    pages: Array<{ url: string; title: string }>;
     blog: {
       articles: BlogArticle[];
       categories: BlogCategory[];

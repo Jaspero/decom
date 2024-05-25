@@ -8,7 +8,7 @@ import { DEVICES } from './devices.const';
 import type { Popup } from './popup.interface';
 import { TYPES } from './types.const';
 import type { PageBuilderForm } from './page-builder-form.interface';
-import {STYLE_OVERRIDES} from './style-overrides.const';
+import { STYLE_OVERRIDES } from './style-overrides.const';
 
 export function renderGrapes(
   pageBuilderEl: HTMLDivElement,
@@ -144,7 +144,7 @@ export function renderGrapes(
   grapesInstance.on('load', function () {
     const styleManager = grapesInstance.StyleManager;
 
-    STYLE_OVERRIDES.forEach(({id, property, ...overides}) => {
+    STYLE_OVERRIDES.forEach(({ id, property, ...overides }) => {
       styleManager.removeProperty(id, property);
 
       styleManager.addProperty(id, {

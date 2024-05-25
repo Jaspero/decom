@@ -112,7 +112,7 @@
     {/if}
 
     <footer>
-      <img src="/images/eu.png" class="w-[200px]" alt="Financirano od EU">
+      <img src="/images/eu.png" class="w-[200px]" alt="Financirano od EU" />
     </footer>
   </aside>
 {/if}
