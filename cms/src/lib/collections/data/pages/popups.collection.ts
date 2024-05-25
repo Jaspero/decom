@@ -3,8 +3,8 @@ import { indexPipe } from '../../../column-pipes/index.pipe';
 import { collections } from '../../collections';
 
 collections.addCollection('popups', {
-  name: 'Popups',
-  singularName: 'popup',
+  name: 'Moduli',
+  singularName: 'modul',
   module: 'pages',
   tableHeaders: [
     {

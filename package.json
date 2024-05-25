@@ -1,5 +1,5 @@
 {
-  "name": "webshop-template",
+  "name": "decom",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,8 +10,5 @@
   "devDependencies": {
     "prettier": "2.8.0",
     "prettier-plugin-svelte": "2.10.1"
-  },
-  "dependencies": {
-    "@jaspero/web-components": "1.82.14"
   }
 }

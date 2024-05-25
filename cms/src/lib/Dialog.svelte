@@ -50,7 +50,7 @@
         {#if $$slots.actions}
           <div class="flex gap-4">
             <slot name="actions" />
-            <Button variant="outlined" color="warning" on:click={close}>Close</Button>
+            <Button variant="outlined" color="warn" on:click={close}>Zatvori</Button>
           </div>
         {/if}
       </div>

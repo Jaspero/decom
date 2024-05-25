@@ -1,8 +1,9 @@
 <script lang="ts">
   export let table = false;
+  export let classes = '';
 </script>
 
-<div class="bg-white overflow-hidden rounded border border-[#D6D6D6]">
+<div class="bg-white overflow-hidden rounded border border-[#D6D6D6] {classes}">
   <div class="flex flex-col gap-4 p-6">
     {#if $$slots.title}
       <div class="flex items-center gap-4">

@@ -7,8 +7,8 @@ import { generateSlug } from '../../../utils/generate-slug';
 import { collections } from '../../collections';
 
 collections.addCollection('blog-categories', {
-  name: 'Categories',
-  singularName: 'category',
+  name: 'Kategorije',
+  singularName: 'kategoriju',
   module: 'blog',
   tableHeaders: [
     {

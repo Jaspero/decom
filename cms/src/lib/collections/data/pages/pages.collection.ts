@@ -7,8 +7,8 @@ import { CONFIG } from '../../../consts/config.const';
 import { collections } from '../../collections';
 
 collections.addCollection('pages', {
-  name: 'Pages',
-  singularName: 'page',
+  name: 'Stranice',
+  singularName: 'stranicu',
   module: 'pages',
   tableHeaders: [
     {

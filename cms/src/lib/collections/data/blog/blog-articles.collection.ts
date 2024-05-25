@@ -13,8 +13,8 @@ import { getOptions } from '../../../utils/get-options';
 import { collections } from '../../collections';
 
 collections.addCollection('blog-articles', {
-  name: 'Articles',
-  singularName: 'article',
+  name: 'Članci',
+  singularName: 'članak',
   module: 'blog',
   tableHeaders: [
     {

@@ -3,8 +3,8 @@ import { indexPipe } from '../../../column-pipes/index.pipe';
 import { collections } from '../../collections';
 
 collections.addCollection('layouts', {
-  name: 'Layouts',
-  singularName: 'layout',
+  name: 'Tlocrti',
+  singularName: 'tlocrt',
   module: 'pages',
   tableHeaders: [
     {

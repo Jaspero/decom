@@ -3,8 +3,8 @@ import { indexPipe } from '../../../column-pipes/index.pipe';
 import { collections } from '../../collections';
 
 collections.addCollection('forms', {
-  name: 'Forms',
-  singularName: 'form',
+  name: 'Formulari',
+  singularName: 'formular',
   module: 'pages',
   tableHeaders: [
     {

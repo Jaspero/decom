@@ -9,8 +9,8 @@ import { BucketImageService } from '../../../services/image.service';
 import { collections } from '../../collections';
 
 collections.addCollection('blog-authors', {
-  name: 'Authors',
-  singularName: 'authors',
+  name: 'Authori',
+  singularName: 'autora',
   module: 'blog',
   tableHeaders: [
     {

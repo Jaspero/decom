@@ -3,8 +3,8 @@ import { indexPipe } from '../../../column-pipes/index.pipe';
 import { collections } from '../../collections';
 
 collections.addCollection('sections', {
-  name: 'Sections',
-  singularName: 'section',
+  name: 'Segmenti',
+  singularName: 'segment',
   module: 'pages',
   tableHeaders: [
     {

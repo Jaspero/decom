@@ -21,6 +21,7 @@
   import { renderAlert } from '@jaspero/web-components/dist/render-alert.js';
   import { onMount } from 'svelte';
   import Loader from '$lib/Loader.svelte';
+  import {CONFIG} from '../lib/consts/config.const';
 
   const redirectLink = '/dashboard';
 
@@ -159,20 +160,13 @@
 </script>
 
 <div id="recaptcha-container-id" />
-<div class="flex items-center">
-  <img
-    src="/images/patternmidtext.svg"
-    alt=""
-    class="hidden lg:block h-screen max-w-md object-cover"
-  />
-
+<main class="flex items-center bg-white">
   <div class="flex flex-1">
     <Grid>
-      <GridCol span="2" />
       {#if showCodeInput}
         <GridCol span="12" spanxl="6">
           <form on:submit|preventDefault={confirm}>
-            <Button variant="outlined" color="warning" href="/" on:click={back}
+            <Button variant="outlined" color="warn" href="/" on:click={back}
               >Back to login</Button
             >
             <div class="mt-12 mb-24 w-full">
@@ -192,20 +186,20 @@
           </form>
         </GridCol>
       {:else}
-        <GridCol span="12" spanxl={showCodeInput ? '3' : '8'}>
+        <GridCol span="12">
           <div class="flex flex-col gap-4">
-            <SectionTitle>Login</SectionTitle>
+            <SectionTitle>Prijava</SectionTitle>
             <form class="flex flex-col gap-4 border-b pb-8" on:submit={login}>
               <Field required label="Email" type="email" bind:value={email} />
               {#if showPassword}
-                <Field required label="Password" type="text" bind:value={password}>
+                <Field required label="Lozinka" type="text" bind:value={password}>
                   <button
                     slot="hint"
                     type="button"
                     class="show-password"
                     on:click={() => (showPassword = !showPassword)}
                   >
-                    Hide password
+                    Sakri lozinku
                   </button>
                 </Field>
               {:else}
@@ -216,12 +210,12 @@
                     class="show-password"
                     on:click={() => (showPassword = !showPassword)}
                   >
-                    Show password
+                    Pokaži lozinku
                   </button>
                 </Field>
               {/if}
               <div class="flex items-center gap-4">
-                <Button variant="filled" color="secondary" type="submit" {loading}>Log in</Button>
+                <Button variant="filled" color="secondary" type="submit" {loading}>Prijava</Button>
                 <button class="gsi-material-button" type="button" on:click={loginGoogle}>
                   <div class="gsi-material-button-state" />
                   <div class="gsi-material-button-content-wrapper">
@@ -252,8 +246,7 @@
                         <path fill="none" d="M0 0h48v48H0z" />
                       </svg>
                     </div>
-                    <span class="gsi-material-button-contents">Sign in with Google</span>
-                    <span style="display: none;">Sign in with Google</span>
+                    <span class="gsi-material-button-contents">Prijava sa google</span>
                   </div>
                 </button>
               </div>
@@ -261,23 +254,28 @@
           </div>
 
           <div class="mt-4">
-            <p class="mb-2">Forgot your password?</p>
+            <p class="mb-2">Zaboravili ste lozinku?</p>
             <button
               type="button"
               class="show-password"
               on:click={() => (resetPasswordDialog = true)}
-              >Reset password
+              >Resetiraj lozinku
             </button>
           </div>
         </GridCol>
       {/if}
-      <GridCol span="2" />
     </Grid>
   </div>
-</div>
+  <div class="hidden lg:flex aside relative">
+    <img src="/brand/logo-white.svg" alt="Logo" />
 
+    <div class="absolute bottom-1 right-1 bg-white">
+      <img src="/images/eu.png" class="w-[200px]" alt="Financirano od EU">
+    </div>
+  </div>
+</main>
 <Dialog bind:open={resetPasswordDialog}>
-  <slot slot="title">Forgotten your password?</slot>
+  <slot slot="title">Zaboravili ste lozinku?</slot>
   <Field label="Email" type="email" placeholder="your@email.com" required bind:value={rEmail} />
 
   <slot slot="actions">
@@ -287,16 +285,33 @@
       type="submit"
       loading={resetLoading}
       on:click={resetPassword}
-      >Reset password
+      >Resetiraj lozinku
     </Button>
   </slot>
 </Dialog>
 
 <svelte:head>
-  <title>Login - Jaspero</title>
+  <title>Prijava - {CONFIG.title}</title>
 </svelte:head>
 
 <style>
+
+  main {
+    max-width: 1000px;
+    margin: 100px auto 0;
+  }
+
+  .aside {
+    background-color: var(--primary-color);
+    flex: 1;
+    justify-content: center;
+    height: 528px;
+  }
+
+  .aside img {
+    max-width: 300px;
+  }
+
   .gsi-material-button {
     -moz-user-select: none;
     -webkit-user-select: none;

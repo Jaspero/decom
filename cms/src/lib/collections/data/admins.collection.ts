@@ -5,8 +5,8 @@ import { collections } from '../collections';
 import { actionsPipe } from '../../column-pipes/actions.pipe';
 
 collections.addCollection('admins', {
-  name: 'Admins',
-  singularName: 'admin',
+  name: 'Aministratori',
+  singularName: 'administratora',
   module: 'management',
   tableHeaders: [
     {

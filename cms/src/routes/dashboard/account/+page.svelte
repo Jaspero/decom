@@ -179,7 +179,7 @@
         {#if userEnrolled}
           <p>2FA is <b>enabled</b>, it is recommended to keep this feature enabled.</p>
           <div class="mt-3">
-            <Button variant="filled" color="warning" on:click={() => (openRemoveMfaDialog = true)}>
+            <Button variant="filled" color="warn" on:click={() => (openRemoveMfaDialog = true)}>
               Disable 2FA
             </Button>
           </div>

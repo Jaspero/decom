@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { db, auth } from '$lib/utils/firebase';
+  import { db } from '$lib/utils/firebase';
   import { slide } from 'svelte/transition';
   import { doc, onSnapshot } from 'firebase/firestore';
   import { onMount } from 'svelte';
   import { lastPublishedOn } from './stores/last-published-on.store';
-  import { clickOutside } from './utils/click-outside';
-  import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { sidebarStore } from './stores/sidebar.store';
 
@@ -20,8 +18,6 @@
     }>;
     checked?: boolean;
   }>;
-
-  let dropdown = false;
 
   $: pathname = $page.url.pathname;
 
@@ -115,41 +111,8 @@
       </nav>
     {/if}
 
-    <footer class="border-t border-t-black/10">
-      <button
-        class="flex gap-2 w-full px-4 py-3 font-bold hover:bg-black/5 transition-all"
-        on:click={() => {
-          dropdown = true;
-        }}
-      >
-        <span class="material-symbols-outlined">account_circle</span>
-        <span class="flex-1 text-left">Account</span>
-        <span class="material-symbols-outlined">chevron_right</span>
-      </button>
-
-      {#if dropdown}
-        <div
-          class="absolute bottom-full right-4 bg-white shadow flex flex-col whitespace-nowrap divide-y"
-          use:clickOutside
-          on:click_outside={() => (dropdown = false)}
-          transition:slide
-        >
-          <a
-            class="px-4 py-3 text-sm hover:bg-black/5 transition-colors cursor-pointer"
-            href="/dashboard/account"
-            on:click={() => {
-              dropdown = false;
-            }}>Account</a
-          >
-          <button
-            class="px-4 py-3 text-sm hover:bg-black/5 transition-colors cursor-pointer"
-            on:click={() => {
-              auth.signOut();
-              goto('/');
-            }}>Sign out</button
-          >
-        </div>
-      {/if}
+    <footer>
+      <img src="/images/eu.png" class="w-[200px]" alt="Financirano od EU">
     </footer>
   </aside>
 {/if}

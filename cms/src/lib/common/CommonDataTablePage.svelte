@@ -26,7 +26,7 @@
     >
       <slot slot="header">
         {#if data.add}
-          <Button href="{baseLink}/new">Add new {data.singularName}</Button>
+          <Button href="{baseLink}/new">Dodaj {data.singularName}</Button>
         {/if}
       </slot>
     </DataTable>

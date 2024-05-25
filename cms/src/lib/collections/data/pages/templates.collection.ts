@@ -3,8 +3,8 @@ import { indexPipe } from '../../../column-pipes/index.pipe';
 import { collections } from '../../collections';
 
 collections.addCollection('templates', {
-  name: 'Templates',
-  singularName: 'template',
+  name: 'Šablone',
+  singularName: 'šablonu',
   module: 'pages',
   tableHeaders: [
     {

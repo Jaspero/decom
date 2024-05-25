@@ -4,22 +4,22 @@ export const CONFIG = {
   webUrl: 'https://decom-automation.hr',
   links: [
     {
-      label: 'Home',
+      label: 'Početna',
       href: '/dashboard',
       icon: 'home',
       exactMatch: true
     },
     {
-      label: 'Pages',
+      label: 'Stranice',
       icon: 'description',
       href: '/dashboard/pages',
       links: [
-        { label: 'Pages', href: '/dashboard/pages/pages' },
-        { label: 'Layouts', href: '/dashboard/pages/layouts' },
-        { label: 'Popups', href: '/dashboard/pages/popups' },
-        { label: 'Sections', href: '/dashboard/pages/sections' },
-        { label: 'Templates', href: '/dashboard/pages/templates' },
-        { label: 'Forms', href: '/dashboard/pages/forms' }
+        { label: 'Stranice', href: '/dashboard/pages/pages' },
+        { label: 'Tlocrti', href: '/dashboard/pages/layouts' },
+        { label: 'Moduli', href: '/dashboard/pages/popups' },
+        { label: 'Segmenti', href: '/dashboard/pages/sections' },
+        { label: 'Šablone ', href: '/dashboard/pages/templates' },
+        { label: 'Formulari', href: '/dashboard/pages/forms' }
       ]
     },
     {
@@ -27,16 +27,16 @@ export const CONFIG = {
       icon: 'edit_note',
       href: '/dashboard/blog',
       links: [
-        { label: 'Articles', href: '/dashboard/blog/blog-articles' },
-        { label: 'Categories', href: '/dashboard/blog/blog-categories' },
-        { label: 'Authors', href: '/dashboard/blog/blog-authors' }
+        { label: 'Članci', href: '/dashboard/blog/blog-articles' },
+        { label: 'Kategorije', href: '/dashboard/blog/blog-categories' },
+        { label: 'Autori', href: '/dashboard/blog/blog-authors' }
       ]
     },
     {
-      label: 'Management',
+      label: 'Administracija',
       icon: 'admin_panel_settings',
       href: '/dashboard/management',
-      links: [{ label: 'Admins', href: '/dashboard/management/admins' }]
+      links: [{ label: 'Administratori', href: '/dashboard/management/admins' }]
     }
   ]
 };
