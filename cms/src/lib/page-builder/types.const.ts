@@ -169,6 +169,18 @@ export const TYPES = (forms: PageBuilderForm[]) => [
    * Common
    */
   {
+    id: 'header',
+    extends: 'text',
+    isComponent: (el: HTMLHeadingElement) => el.tagName === 'HEADER',
+    model: {
+      defaults: {
+        type: 'header',
+        tagName: 'header',
+        classes: ['header']
+      }
+    }
+  },
+  {
     id: 'page-link',
     extend: 'link',
     isComponent: (el: HTMLAnchorElement) => el?.dataset?.pblink,
