@@ -33,10 +33,13 @@ export function renderGrapes(
 
   grapesInstance = grapesjs.init({
     canvas: {
-      styles: ['https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap']
+      styles: [
+        'https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap',
+        '/css/normalize.css'
+      ]
     },
     container: pageBuilderEl,
-    panels: { defaults: [] },
+    panels: {defaults: []},
     plugins: [styleGradientPlugin],
     pluginsOpts: {
       'grapesjs-style-gradient': {}
@@ -47,13 +50,13 @@ export function renderGrapes(
       default: DEVICES[0].id,
       devices: DEVICES as any
     },
-    style: GLOBAL_STYLES,
     assetManager: {
       custom: true
-    }
+    },
+    style: GLOBAL_STYLES
   });
 
-  TYPES(forms!).forEach(({ id, ...data }) => grapesInstance.DomComponents.addType(id, data));
+  TYPES(forms!).forEach(({id, ...data}) => grapesInstance.DomComponents.addType(id, data));
 
   if (popups) {
     grapesInstance.DomComponents.addType(`pb-popup`, {
@@ -120,7 +123,7 @@ export function renderGrapes(
           assetManager.removeEventListener('selected', assetManagerListener);
         }
 
-        assetManagerListener = function (event: { detail: { url: string } }) {
+        assetManagerListener = function (event: {detail: {url: string}}) {
           props.select(event.detail.url, true);
         };
 
@@ -132,7 +135,7 @@ export function renderGrapes(
   grapesInstance.on('load', function () {
     const styleManager = grapesInstance.StyleManager;
 
-    STYLE_OVERRIDES.forEach(({ id, property, ...overides }) => {
+    STYLE_OVERRIDES.forEach(({id, property, ...overides}) => {
       styleManager.removeProperty(id, property);
 
       styleManager.addProperty(id, {
@@ -168,26 +171,22 @@ export function renderGrapes(
     property: 'overflow',
     default: 'auto',
     options: [
-      { id: 'visible', label: 'Visible' },
-      { id: 'hidden', label: 'Hidden' },
-      { id: 'auto', label: 'Auto' }
+      {id: 'visible', label: 'Visible'},
+      {id: 'hidden', label: 'Hidden'},
+      {id: 'auto', label: 'Auto'}
     ]
   });
 
   grapesInstance.runCommand('core:component-outline');
-  grapesInstance.DomComponents.getWrapper()!.set({ badgable: false, selectable: false });
+  grapesInstance.DomComponents.getWrapper()!.set({badgable: false, selectable: false});
 
   grapesInstance.on('component:update:traits', (component: any) => {
-    if (
-      component.changed.attributes?.fontSize &&
-      component.get('traits').where({ name: 'fontSize' }).length
-    ) {
-      component.addStyle({ 'font-size': component.changed.attributes.fontSize });
-      return;
-    }
-
     for (const key in component.changed) {
       switch (key) {
+        case 'tagName': {
+          component.setClass([component.changed.tagName]);
+          break;
+        }
         case 'column-span-desktop': {
           let cls = component.getAttributes().class;
           let regex = /gc-\d{0,2}/;

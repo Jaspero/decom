@@ -5,7 +5,7 @@
   import type { BlogCategory } from '$lib/types/blog/blog-category.interface';
 
   export let data: {
-    pages: Array<{ url: string; title: string }>;
+    pages: Array<{url: string; title: string}>;
     blog: {
       articles: BlogArticle[];
       categories: BlogCategory[];
@@ -18,7 +18,7 @@
     };
   };
 
-  meta.set({ title: 'Sitemap' });
+  meta.set({ title: 'Sitemap', noIndex: true });
 </script>
 
 <h1>Sitemap</h1>
@@ -33,7 +33,18 @@
 
 <h3>Blog</h3>
 
-<a href="/blog">Blog</a>
+<ul>
+  <li><a href="/blog">Blog</a></li>
+
+  <!-- Can be removed if we have content -->
+  <li><a href="/blog/authors">Blog Authors</a></li>
+  <li><a href="/blog/authors/id">Blog Authors</a></li>
+  <li><a href="/blog/page/1">Blog Page</a></li>
+  <li><a href="/blog/category">Blog Category</a></li>
+  <li><a href="/blog/category/page">Blog Category Page</a></li>
+  <li><a href="/blog/category/page/1">Blog Category Page</a></li>
+  <li><a href="/blog/category/category">Blog Category Page</a></li>
+</ul>
 
 <h4>Articles</h4>
 

@@ -1,4 +1,4 @@
-import type { PageBuilderForm } from './page-builder-form.interface';
+import type { PageBuilderForm } from '../page-builder-form.interface';
 
 const createOption = (value: string, content: string) => ({
   type: 'option',
@@ -23,13 +23,13 @@ export const TYPES = (forms: PageBuilderForm[]) => [
   {
     id: 'column',
     extend: 'div',
-    isComponent: (el: HTMLInputElement) => el.tagName == 'DIV' && el.dataset?.type == 'column',
+    isComponent: (el: HTMLInputElement) => el.tagName === 'COLUMN' && el.dataset?.type == 'column',
     model: {
       defaults: {
         tagName: 'column',
         draggable: true,
+        classes: ['gc-6'],
         attributes: {
-          class: 'gc-6',
           dataset: {
             type: 'column'
           }
@@ -181,6 +181,66 @@ export const TYPES = (forms: PageBuilderForm[]) => [
     }
   },
   {
+    id: 'nav',
+    extends: 'text',
+    isComponent: (el: HTMLDivElement) => el.tagName === 'NAV',
+    model: {
+      defaults: {
+        type: 'nav',
+        tagName: 'nav',
+        classes: ['nav']
+      }
+    }
+  },
+  {
+    id: 'section',
+    extends: 'text',
+    isComponent: (el: HTMLDivElement) => el.tagName === 'SECTION',
+    model: {
+      defaults: {
+        type: 'section',
+        tagName: 'section',
+        classes: ['section']
+      }
+    }
+  },
+  {
+    id: 'article',
+    extends: 'text',
+    isComponent: (el: HTMLDivElement) => el.tagName === 'ARTICLE',
+    model: {
+      defaults: {
+        type: 'article',
+        tagName: 'article',
+        classes: ['article']
+      }
+    }
+  },
+  {
+    id: 'aside',
+    extends: 'text',
+    isComponent: (el: HTMLDivElement) => el.tagName === 'ASIDE',
+    model: {
+      defaults: {
+        type: 'aside',
+        tagName: 'aside',
+        classes: ['aside']
+      }
+    }
+  },
+  {
+    id: 'footer',
+    extends: 'text',
+    isComponent: (el: HTMLDivElement) => el.tagName === 'FOOTER',
+    model: {
+      defaults: {
+        type: 'footer',
+        tagName: 'footer',
+        classes: ['footer']
+      }
+    }
+  },
+  {
     id: 'page-link',
     extend: 'link',
     isComponent: (el: HTMLAnchorElement) => el?.dataset?.pblink,
@@ -222,7 +282,7 @@ export const TYPES = (forms: PageBuilderForm[]) => [
             type: 'select',
             label: 'Animation',
             name: 'animation',
-            default: 'instant',
+            default: 'instanct',
             options: [
               { value: 'instant', name: 'instant' },
               { value: 'smooth', name: 'smooth' }
@@ -247,10 +307,7 @@ export const TYPES = (forms: PageBuilderForm[]) => [
         draggable: 'form, form *',
         droppable: (_: any, target: any) => !target.view.$el['0'].children.length,
         content: 'Label',
-        style: {
-          display: 'flex',
-          'flex-direction': 'column-reverse'
-        }
+        classes: ['label']
       }
     }
   },
@@ -264,15 +321,7 @@ export const TYPES = (forms: PageBuilderForm[]) => [
         draggable: 'label, label *',
         droppable: false,
         highlightable: false,
-        style: {
-          width: '100%',
-          height: '3rem',
-          border: '1px solid #c4d8ce',
-          'border-radius': '4px',
-          padding: '0 16px',
-          'margin-top': '4px',
-          'font-size': '16px'
-        },
+        classes: ['input'],
         attributes: {
           type: 'text'
         },
@@ -308,15 +357,7 @@ export const TYPES = (forms: PageBuilderForm[]) => [
         draggable: 'label, label *',
         droppable: false,
         highlightable: false,
-        style: {
-          width: '100%',
-          height: '3rem',
-          border: '1px solid #c4d8ce',
-          'border-radius': '4px',
-          padding: '0 16px',
-          'margin-top': '4px',
-          'font-size': '16px'
-        },
+        classes: ['input'],
         attributes: {
           type: 'number'
         },
@@ -352,15 +393,7 @@ export const TYPES = (forms: PageBuilderForm[]) => [
         draggable: 'label, label *',
         droppable: false,
         highlightable: false,
-        style: {
-          width: '100%',
-          height: '3rem',
-          border: '1px solid #c4d8ce',
-          'border-radius': '4px',
-          padding: '0 16px',
-          'margin-top': '4px',
-          'font-size': '16px'
-        },
+        classes: ['input'],
         attributes: {
           rows: 10
         },
@@ -502,7 +535,9 @@ export const TYPES = (forms: PageBuilderForm[]) => [
     model: {
       defaults: {
         tagName: 'aside-image-slider',
-        script: function () {}
+        script: function () {
+
+        }
       },
       style: {
         height: '60vh',
