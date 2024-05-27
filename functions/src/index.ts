@@ -3,6 +3,11 @@ import { initializeApp } from 'firebase-admin/app';
 initializeApp();
 
 /**
+ * Callable
+ */
+export { createadmin } from './callable/create-admin';
+
+/**
  * Triggers
  */
 export { adminupdated } from './triggers/admin-updated';
