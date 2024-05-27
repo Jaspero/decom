@@ -135,12 +135,12 @@ export function renderGrapes(
   grapesInstance.on('load', function () {
     const styleManager = grapesInstance.StyleManager;
 
-    STYLE_OVERRIDES.forEach(({id, property, ...overides}) => {
+    STYLE_OVERRIDES.forEach(({id, property, ...overrides}) => {
       styleManager.removeProperty(id, property);
 
       styleManager.addProperty(id, {
         property,
-        ...overides
+        ...overrides
       });
     });
 
