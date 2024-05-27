@@ -1,15 +1,18 @@
 import '@jaspero/web-components/dist/asset-manager.wc';
 import grapesjs from 'grapesjs';
+import parserPostCSS from 'grapesjs-parser-postcss';
 import styleGradientPlugin from 'grapesjs-style-gradient';
+import componentCodeEditor from 'grapesjs-component-code-editor';
 import 'grapesjs/dist/css/grapes.min.css';
 import 'grapick/dist/grapick.min.css';
-import { AMService } from './am.service';
-import { DEVICES } from './devices.const';
-import type { Popup } from './popup.interface';
-import { TYPES } from './types.const';
-import type { PageBuilderForm } from './page-builder-form.interface';
-import { STYLE_OVERRIDES } from './style-overrides.const';
+import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css';
+import {AMService} from './am.service';
+import {DEVICES} from './devices.const';
 import {GLOBAL_STYLES} from './global-styles.const';
+import {STYLE_OVERRIDES} from './style-overrides.const';
+import {TYPES} from './types.const';
+import type {PageBuilderForm} from './page-builder-form.interface';
+import type {Popup} from './popup.interface';
 
 export function renderGrapes(
   pageBuilderEl: HTMLDivElement,
@@ -40,12 +43,26 @@ export function renderGrapes(
     },
     container: pageBuilderEl,
     panels: {defaults: []},
-    plugins: [styleGradientPlugin],
+    plugins: [
+      styleGradientPlugin,
+      parserPostCSS,
+      editor => componentCodeEditor(
+        editor,
+        {
+          preserveWidth: true,
+          appendTo: '#component-wrapper'
+        }
+      )
+    ],
     pluginsOpts: {
       'grapesjs-style-gradient': {}
     },
     height: '100%',
     storageManager: false,
+    selectorManager: {
+      componentFirst: true,
+      custom: true
+    },
     deviceManager: {
       default: DEVICES[0].id,
       devices: DEVICES as any
@@ -135,12 +152,12 @@ export function renderGrapes(
   grapesInstance.on('load', function () {
     const styleManager = grapesInstance.StyleManager;
 
-    STYLE_OVERRIDES.forEach(({id, property, ...overrides}) => {
+    STYLE_OVERRIDES.forEach(({id, property, ...overides}) => {
       styleManager.removeProperty(id, property);
 
       styleManager.addProperty(id, {
         property,
-        ...overrides
+        ...overides
       });
     });
 

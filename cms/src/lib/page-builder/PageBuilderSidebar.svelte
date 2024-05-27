@@ -25,10 +25,74 @@
     icon: string;
   }> = [];
   let blocksEl: HTMLDivElement;
-  let layersEl: HTMLDivElement;
-  let stylesEl: HTMLDivElement;
-  let traitsEl: HTMLDivElement;
+  let componentEl: HTMLDivElement;
   let activeCategory = '';
+  let activeComponent = '';
+  let codeEditorInstance: any;
+  let listenersConnected = false;
+  let selectorEl: any;
+
+  const componentTabs = [
+    {
+      id: 'styles',
+      title: 'Styles',
+      icon: 'style'
+    },
+    {
+      id: 'traits',
+      title: 'Traits',
+      icon: 'dataset'
+    },
+    {
+      id: 'layers',
+      title: 'Layers',
+      icon: 'stacks'
+    },
+    {
+      id: 'code',
+      label: 'Code',
+      icon: 'code'
+    }
+  ];
+
+  $: if (activeComponent && componentEl) {
+    componentEl.innerHTML = '';
+
+    if (activeComponent !== 'code' && codeEditorInstance) {
+      codeEditorInstance.hideCodePanel();
+    }
+
+    switch (activeComponent) {
+      case 'layers': {
+        const el = grapesInstance.LayerManager.render();
+        componentEl.appendChild(el);
+        break;
+      }
+      case 'styles': {
+        componentEl.appendChild(selectorEl);
+
+        const el = grapesInstance.StyleManager.render();
+
+        componentEl.appendChild(el);
+        break;
+      }
+      case 'traits': {
+        const el = grapesInstance.TraitManager.render();
+        componentEl.appendChild(el);
+        break;
+      }
+      case 'code': {
+        if (codeEditorInstance) {
+          codeEditorInstance.showCodePanel();
+          codeEditorInstance.buildCodePanel();
+        } else {
+          grapesInstance.runCommand('open-code');
+          codeEditorInstance = grapesInstance.runCommand('code-editor-object');
+        }
+        break;
+      }
+    }
+  }
 
   $: if (activeSidebar) {
     switch (activeSidebar) {
@@ -39,31 +103,17 @@
         }
         break;
       }
-      case 'layers': {
-        if (layersEl) {
-          const el = grapesInstance.LayerManager.render();
-          layersEl.appendChild(el);
-        }
-        break;
-      }
-      case 'styles': {
-        if (stylesEl) {
-          const selectorEl = grapesInstance.SelectorManager.render();
-          stylesEl.appendChild(selectorEl);
-
-          const el = grapesInstance.StyleManager.render();
-          stylesEl.appendChild(el);
-        }
-        break;
-      }
-      case 'traits': {
-        if (traitsEl) {
-          const el = grapesInstance.TraitManager.render();
-          traitsEl.appendChild(el);
+      case 'component': {
+        if (!activeComponent) {
+          activeComponent = 'styles';
         }
         break;
       }
     }
+  }
+
+  $: if (grapesInstance) {
+    connectListeners();
   }
 
   function adjustIds(components: any[], styles: any[]) {
@@ -90,6 +140,20 @@
         adjustIds(component.components, styles);
       }
     }
+  }
+
+  function connectListeners() {
+    if (listenersConnected) {
+      return;
+    }
+
+    grapesInstance.on('component:selected', (c: any) => {
+      activeSidebar = 'component';
+    });
+
+    selectorEl = grapesInstance.SelectorManager.render();
+
+    listenersConnected = true;
   }
 
   function addSection(section: TemplateSection) {
@@ -159,19 +223,9 @@
           ]
         : []),
       {
-        id: 'layers',
-        title: 'Layers',
-        icon: 'stacks'
-      },
-      {
-        id: 'styles',
-        title: 'Styles',
-        icon: 'style'
-      },
-      {
-        id: 'traits',
-        title: 'Traits',
-        icon: 'dataset'
+        id: 'component',
+        title: 'Component',
+        icon: 'view_in_ar'
       },
       ...(metaItems
         ? [
@@ -273,15 +327,20 @@
         {/each}
       </div>
     {/if}
-  {:else if activeSidebar === 'layers'}
-    <p class="p-4 border-b">Layers</p>
-    <div bind:this={layersEl} />
-  {:else if activeSidebar === 'styles'}
-    <p class="p-4 border-b">Styles</p>
-    <div bind:this={stylesEl} />
-  {:else if activeSidebar === 'traits'}
-    <p class="p-4 border-b">Traits</p>
-    <div bind:this={traitsEl} />
+  {:else if activeSidebar === 'component'}
+    <div class="flex justify-around border-b">
+      {#each componentTabs as element}
+        <button
+          title={element.title}
+          class="material-symbols-outlined w-full"
+          class:active={activeComponent === element.id}
+          on:click={() => (activeComponent = element.id)}
+        >
+          {element.icon}
+        </button>
+      {/each}
+    </div>
+    <div id="component-wrapper" bind:this={componentEl} />
   {:else if activeSidebar === 'seo'}
     <p class="p-4 border-b">SEO</p>
     <FormModule id="seo" bind:this={formModule} items={metaItems} bind:value />
