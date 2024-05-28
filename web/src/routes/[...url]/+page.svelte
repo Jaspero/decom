@@ -3,6 +3,7 @@
   import { page } from '$app/stores';
   import { browser } from '$app/environment';
   import { meta } from '$lib/meta/meta.store';
+  import './components';
 
   export let data: {
     content: string;

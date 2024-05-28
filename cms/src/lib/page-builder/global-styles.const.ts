@@ -128,6 +128,7 @@ export const GLOBAL_STYLES = `
 .label {
 	display: flex;
 	flex-direction: column-reverse;
+	margin-bottom: 1rem;
 }
 .input {
 	width: 100%;

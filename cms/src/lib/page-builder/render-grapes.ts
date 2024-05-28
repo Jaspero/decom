@@ -14,6 +14,11 @@ import {TYPES} from './types.const';
 import type {PageBuilderForm} from './page-builder-form.interface';
 import type {Popup} from './popup.interface';
 
+/**
+ * Registers all custom components
+ */
+import './custom-components/custom-component';
+
 export function renderGrapes(
   pageBuilderEl: HTMLDivElement,
   grapesInstance: any,

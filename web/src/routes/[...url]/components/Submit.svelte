@@ -1,30 +1,30 @@
 <svelte:options customElement={{ tag: 'pb-submit', shadow: 'none' }} />
 
 <script lang="ts">
-  import Button from '$lib/Button.svelte';
   import { addDoc, collection } from 'firebase/firestore';
   import { db } from '$lib/utils/firebase';
-  import { notificationWrapper } from '$lib/notification/notification';
   import { goto } from '$app/navigation';
+  import { alertWrapper } from '$lib/utils/alert-wrapper';
 
+  export let id: string;
   export let label: string;
   export let form: string;
-  export let redirect: string | undefined;
+  export let redirect = '';
   export let success: string;
   export let error: string;
 
-  let button: Button;
+  let button: HTMLButtonElement;
   let connected = false;
   let loading = false;
 
-  $: if (!connected && button?.$$.root) {
+  $: if (!connected && button) {
     bindForm();
   }
 
   function bindForm() {
     connected = true;
 
-    const formEl = button?.$$.root.closest('form');
+    const formEl = button?.closest('form') as HTMLFormElement;
 
     formEl.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -38,8 +38,8 @@
       const formData = new FormData(formEl);
       const data = Object.fromEntries(formData);
 
-      await notificationWrapper(
-        addDoc(collection(db, 'landing-page-forms', form, 'landing-page-form-responses'), {
+      await alertWrapper(
+        addDoc(collection(db, 'forms', form, 'form-responses'), {
           createdOn: new Date().toISOString(),
           ...data
         }),
@@ -55,9 +55,25 @@
         }
       }
 
+      formEl.reset();
+
       loading = false;
     });
   }
 </script>
 
-<Button type="submit" bind:this={button} {loading}>{label}</Button>
+<button type="submit" bind:this={button} class:loading={loading}>{label}</button>
+
+<style>
+  button {
+    background-color: var(--primary);
+    color: var(--primary-contrast);
+    border-radius: var(--border-radius);
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
+  }
+
+  .loading {
+    pointer-events: none;
+  }
+</style>

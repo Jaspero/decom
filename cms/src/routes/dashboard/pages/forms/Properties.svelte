@@ -15,17 +15,23 @@
       label: ''
     }
   ];
+  let internalValue = [...value];
 
   export function getValue() {
     return value;
   }
 
   function remove(index: number) {
-    value = value.filter((_, i) => i !== index);
+    internalValue = internalValue.filter((_, i) => i !== index);
+    value.splice(index, 1);
   }
 
   function addProperty() {
-    value = [...value, { key: '', label: '' }];
+
+    const item = { key: '', label: '' };
+
+    internalValue = [...internalValue, item];
+    value.push(item);
   }
 </script>
 
@@ -33,7 +39,7 @@
   <span>Properties</span>
   <Button on:click={addProperty}>Add New Property</Button>
 </div>
-{#each value as property, index}
+{#each internalValue as property, index}
   <div class="properties">
     <Field required label="Key" bind:value={property.key} />
     <Field required label="Label" bind:value={property.label} />
