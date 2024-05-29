@@ -71,6 +71,8 @@
     border-radius: var(--border-radius);
     padding: .5rem 1rem;
     font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
   }
 
   .loading {
