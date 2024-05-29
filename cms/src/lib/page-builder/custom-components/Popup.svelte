@@ -18,7 +18,8 @@
       getDoc(doc(db, 'landing-page-popups', popup, 'content', 'css'))
     ])
       .then((res) => {
-        content = `${res[0].data()!.content}<style>${res[1].data()!.content}</style>`;
+        // content = `${res[0].data()!.content}<style>${res[1].data()!.content}</style>`;
+        content = `${res[0].data()!.content}`;
       })
       .catch(console.error);
   }
