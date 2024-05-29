@@ -14,8 +14,8 @@
 
   $: if (open && popup) {
     Promise.all([
-      getDoc(doc(db, 'landing-page-popups', popup, 'content', 'html')),
-      getDoc(doc(db, 'landing-page-popups', popup, 'content', 'css'))
+      getDoc(doc(db, 'page-popups', popup, 'content', 'html')),
+      getDoc(doc(db, 'page-popups', popup, 'content', 'css'))
     ])
       .then((res) => {
         // content = `${res[0].data()!.content}<style>${res[1].data()!.content}</style>`;

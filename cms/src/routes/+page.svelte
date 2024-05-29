@@ -267,8 +267,11 @@
   <div class="hidden lg:flex aside relative">
     <img src="/brand/logo-white.svg" alt="Logo" />
 
-    <div class="absolute bottom-1 right-1 bg-white">
-      <img src="/images/eu.png" class="w-[200px]" alt="Financirano od EU" />
+    <div class="absolute bottom-1 right-1 left-1 bg-white">
+      <div>
+        <img src="/images/eu.png" class="w-[200px]" alt="Financirano od EU" />
+      </div>
+      <p class="text-xs p-1">Financira Europska unija – NextGenerationEU. Izneseni stavovi i mišljenja samo su autorova i ne odražavaju nužno službena stajališta Europske unije ili Europske komisije. Ni Europska unija ni Europska komisija ne mogu se smatrati odgovornima za njih.</p>
     </div>
   </div>
 </main>
