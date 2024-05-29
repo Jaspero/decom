@@ -250,16 +250,16 @@ export const BLOCKS = (forms: PageBuilderForm[], popups?: Popup[]) => {
       content: {
         type: 'link',
         style: {
-          'font-family': '"Sen", sans-serif',
+          'font-family': '"Montserrat", sans-serif',
           display: 'inline-flex',
           'align-items': 'center',
-          height: '46px',
-          'background-color': '#E66439',
+          'height': '46px',
+          'background-color': '#1486AD',
           color: 'white',
           'font-weight': 'bold',
           'border-radius': '4px',
-          border: 'none',
-          padding: '0 16px'
+          'border': 'none',
+          'padding': '0 16px'
         },
         components: [
           {
