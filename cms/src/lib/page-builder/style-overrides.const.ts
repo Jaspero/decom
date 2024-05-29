@@ -17,8 +17,8 @@ export const STYLE_OVERRIDES = [
     id: 'typography',
     property: 'font-family',
     type: 'select',
-    default: 'Sen',
-    options: [{ id: 'Sen', label: 'Sen' }]
+    default: 'Montserrat',
+    options: [{ id: 'Montserrat', label: 'Montserrat' }]
   },
   {
     id: 'typography',
