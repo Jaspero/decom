@@ -521,7 +521,11 @@ export const TYPES = (forms: PageBuilderForm[]) => [
           success: `Form submitted successfully!`,
           error: `There was an error submitting the form. Please try again later.`
         }
-      }
+      },
+      style: {
+        'background-color': '#1486ad',
+        'color':  '#fff',
+      },
     }
   },
 
