@@ -7,12 +7,17 @@ const config = {
     adapter: adapter({
       pages: '../public/web',
       fallback: 'index.html',
-      strict: false,
+      strict: false
     }),
     prerender: {
       crawl: true,
       handleMissingId: 'warn',
-      entries: ['/sitemap-hidden']
+      entries: [
+        /**
+         * Contains links to all other pages
+         */
+        '/sitemap-hidden'
+      ]
     }
   },
   preprocess: vitePreprocess(),
