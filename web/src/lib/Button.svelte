@@ -129,7 +129,10 @@
   .button {
     @apply relative transition-all overflow-hidden;
     border-radius: var(--border-radius);
-    font-size: 0.875rem;
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
   }
 
   .button:not(.variant-icon) {

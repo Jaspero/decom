@@ -478,6 +478,25 @@ export const TYPES = (forms: PageBuilderForm[]) => [
    * Custom Components
    */
   {
+    id: 'pb-accessibility-widget',
+    isComponent: (el: HTMLElement) => el.tagName === 'PB-ACCESSIBILITY-WIDGET',
+    model: {
+      defaults: {
+        tagName: 'pb-accessibility-widget',
+        attributes: {
+          color: '#005a9d'
+        },
+        traits: [
+          {
+            type: 'color',
+            name: 'color',
+            label: 'Color'
+          }
+        ]
+      }
+    }
+  },
+  {
     id: 'pb-submit',
     isComponent: (el: HTMLElement) => el.tagName === 'PB-SUBMIT',
     model: {

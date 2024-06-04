@@ -4,6 +4,8 @@
   import '../normalize.pcss';
   import '@jaspero/web-components/dist/alert.wc';
   import '@jaspero/web-components/dist/confirm.wc';
+  import '@jaspero/web-components/dist/select.wc';
+  import '@jaspero/web-components/dist/toggle.wc';
 </script>
 
 <slot />
