@@ -78,7 +78,7 @@
 
 	<footer>
 		<Button variant="ghost" on:click={resetData}>Resetiraj postavke</Button>
-		<Button on:click={storeData}>Spremi Promijene</Button>
+		<Button on:click={storeData}>Spremi promjene</Button>
 	</footer>
 </Dialog>
 
