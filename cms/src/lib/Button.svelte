@@ -153,11 +153,11 @@
   }
   .button.variant-filled.color-warn {
     background-color: var(--warn-color);
-    color: var(--warn-contrast);
+    color: var(--warn-contrast-color);
   }
   .button.variant-filled.color-error {
-    background-color: var(--error-colors);
-    color: var(--error-contrast);
+    background-color: var(--error-color);
+    color: var(--error-contrast-color);
   }
 
   /* Button - Outlined */

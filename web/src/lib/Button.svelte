@@ -151,19 +151,19 @@
   /* Button - Filled */
   .button.variant-filled.color-primary {
     background-color: var(--primary-color);
-    color: var(--primary-contrast);
+    color: var(--primary-contrast-color);
   }
   .button.variant-filled.color-secondary {
-    background-color: var(--secondary);
-    color: var(--secondary-contrast);
+    background-color: var(--secondary-color);
+    color: var(--secondary-contrast-color);
   }
   .button.variant-filled.color-warn {
-    background-color: var(--warn);
-    color: var(--warn-contrast);
+    background-color: var(--warn-color);
+    color: var(--warn-contrast-color);
   }
   .button.variant-filled.color-error {
-    background-color: var(--error);
-    color: var(--error-contrast);
+    background-color: var(--error-color);
+    color: var(--error-contrast-color);
   }
 
   /* Button - Outlined */
@@ -173,9 +173,9 @@
     color: var(--primary-color);
   }
   .button.variant-outlined.color-secondary {
-    box-shadow: inset 0 0 0 var(--border-width) var(--secondary);
-    border-color: var(--secondary);
-    color: var(--secondary);
+    box-shadow: inset 0 0 0 var(--border-width) var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
   }
 
   .button.variant-outlined.color-blackish {
@@ -191,14 +191,14 @@
   }
 
   .button.variant-outlined.color-warn {
-    box-shadow: inset 0 0 0 var(--border-width) var(--warn);
-    border-color: var(--warn);
-    color: var(--warn);
+    box-shadow: inset 0 0 0 var(--border-width) var(--warn-color);
+    border-color: var(--warn-color);
+    color: var(--warn-color);
   }
   .button.variant-outlined.color-error {
-    box-shadow: inset 0 0 0 var(--border-width) var(--error);
-    border-color: var(--error);
-    color: var(--error);
+    box-shadow: inset 0 0 0 var(--border-width) var(--error-color);
+    border-color: var(--error-color);
+    color: var(--error-color);
   }
 
   /* Button - Ghost */
@@ -206,13 +206,13 @@
     color: var(--primary-color);
   }
   .button.variant-ghost.color-secondary {
-    color: var(--secondary);
+    color: var(--secondary-color);
   }
   .button.variant-ghost.color-warn {
-    color: var(--warn);
+    color: var(--warn-color);
   }
   .button.variant-ghost.color-error {
-    color: var(--error);
+    color: var(--error-color);
   }
 
   /* Button - Underlined */
@@ -226,12 +226,12 @@
     border-color: var(--primary-color);
   }
   .button.variant-underlined.color-secondary {
-    border-color: var(--secondary);
+    border-color: var(--secondary-color);
   }
   .button.variant-underlined.color-warn {
-    border-color: var(--warn);
+    border-color: var(--warn-color);
   }
   .button.variant-underlined.color-error {
-    border-color: var(--error);
+    border-color: var(--error-color);
   }
 </style>

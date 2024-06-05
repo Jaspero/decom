@@ -13,14 +13,14 @@
   }
 
   a:hover {
-    background-color: var(--secondary);
-    color: var(--secondary-contrast);
-    border-color: var(--secondary);
+    background-color: var(--secondary-color);
+    color: var(--secondary-contrast-color);
+    border-color: var(--secondary-color);
   }
 
   a.active {
     background-color: var(--primary-color);
-    color: var(--primary-contrast);
+    color: var(--primary-contrast-color);
     border-color: var(--primary-color);
   }
 </style>

@@ -114,19 +114,19 @@
   /* Button - Filled */
   .button.variant-filled.color-primary {
     background-color: var(--primary-color);
-    color: var(--primary-contrast);
+    color: var(--primary-contrast-color);
   }
   .button.variant-filled.color-secondary {
-    background-color: var(--secondary);
-    color: var(--secondary-contrast);
+    background-color: var(--secondary-color);
+    color: var(--secondary-contrast-color);
   }
   .button.variant-filled.color-warn {
-    background-color: var(--warn);
-    color: var(--warn-contrast);
+    background-color: var(--warn-color);
+    color: var(--warn-contrast-color);
   }
   .button.variant-filled.color-error {
-    background-color: var(--error);
-    color: var(--error-contrast);
+    background-color: var(--error-color);
+    color: var(--error-contrast-color);
   }
 
   /* Button - Stroked */
@@ -135,16 +135,16 @@
     color: var(--primary-color);
   }
   .button.variant-stroked.color-secondary {
-    border-color: var(--secondary);
-    color: var(--secondary);
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
   }
   .button.variant-stroked.color-warn {
-    border-color: var(--warn);
-    color: var(--warn);
+    border-color: var(--warn-color);
+    color: var(--warn-color);
   }
   .button.variant-stroked.color-error {
-    border-color: var(--error);
-    color: var(--error);
+    border-color: var(--error-color);
+    color: var(--error-color);
   }
 
   /* Button - Ghost */
@@ -152,12 +152,12 @@
     color: var(--primary-color);
   }
   .button.variant-ghost.color-secondary {
-    color: var(--secondary);
+    color: var(--secondary-color);
   }
   .button.variant-ghost.color-warn {
-    color: var(--warn);
+    color: var(--warn-color);
   }
   .button.variant-ghost.color-error {
-    color: var(--error);
+    color: var(--error-color);
   }
 </style>

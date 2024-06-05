@@ -67,7 +67,7 @@
 <style>
   button {
     background-color: var(--primary-color);
-    color: var(--primary-contrast);
+    color: var(--primary-contrast-color);
     border-radius: var(--border-radius);
     padding: .5rem 1rem;
     font-size: 1.2rem;
