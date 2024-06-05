@@ -213,7 +213,7 @@
                 </Field>
               {/if}
               <div class="flex items-center gap-4">
-                <Button variant="filled" color="secondary" type="submit" {loading}>Prijava</Button>
+                <Button variant="filled" color="primary" type="submit" {loading}>Prijava</Button>
                 <button class="gsi-material-button" type="button" on:click={loginGoogle}>
                   <div class="gsi-material-button-state" />
                   <div class="gsi-material-button-content-wrapper">
@@ -282,7 +282,7 @@
   <slot slot="actions">
     <Button
       variant="filled"
-      color="secondary"
+      color="primary"
       type="submit"
       loading={resetLoading}
       on:click={resetPassword}

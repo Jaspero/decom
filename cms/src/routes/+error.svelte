@@ -8,7 +8,7 @@
     <h1 class="text-4xl font-bold">Error</h1>
     <p class="text-xl">Something went wrong. Try again later.</p>
     <div class="flex justify-center">
-      <Button variant="filled" color="secondary" href="/dashboard">Back to dashboard</Button>
+      <Button variant="filled" color="primary" href="/dashboard">Back to dashboard</Button>
     </div>
   </div>
 </div>

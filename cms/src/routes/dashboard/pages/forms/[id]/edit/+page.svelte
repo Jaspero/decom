@@ -61,8 +61,8 @@
 <div class="save-menu">
   <Button type="button" color="warn" on:click={deleteItem}>Delete</Button>
   <div class="flex-1" />
-  <Button href={back} variant="outlined" color="secondary">Cancel</Button>
-  <Button type="submit" form="form" variant="filled" color="secondary" loading={saveLoading}
+  <Button href={back} variant="outlined" color="primary">Cancel</Button>
+  <Button type="submit" form="form" variant="filled" color="primary" loading={saveLoading}
     >Save</Button
   >
 </div>

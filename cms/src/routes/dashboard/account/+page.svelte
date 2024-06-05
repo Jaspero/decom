@@ -167,7 +167,7 @@
 
         <p class="mb-4">Time to improve account security by changing your password?</p>
 
-        <Button variant="outlined" color="secondary" on:click={() => (passwordDialog = true)}
+        <Button variant="outlined" color="primary" on:click={() => (passwordDialog = true)}
           >Change your password
         </Button>
       </Card>
@@ -258,7 +258,7 @@
       />
     {/if}
     <div>
-      <Button type="button" color="secondary" on:click={() => (showPassword = !showPassword)}
+      <Button type="button" color="primary" on:click={() => (showPassword = !showPassword)}
         >{showPassword ? 'Hide' : 'Show'} password
       </Button>
     </div>
@@ -266,7 +266,7 @@
   </form>
 
   <slot slot="actions">
-    <Button variant="filled" color="secondary" type="submit" form="password_form">Save</Button>
+    <Button variant="filled" color="primary" type="submit" form="password_form">Save</Button>
   </slot>
 </Dialog>
 

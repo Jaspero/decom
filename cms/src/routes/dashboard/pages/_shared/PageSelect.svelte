@@ -113,7 +113,7 @@
       {/if}
 
       <div class="text-center py-2">
-        <Button color="secondary" variant="filled" on:click={() => dispatch('new')}
+        <Button color="primary" variant="filled" on:click={() => dispatch('new')}
           >Create New Page</Button
         >
       </div>

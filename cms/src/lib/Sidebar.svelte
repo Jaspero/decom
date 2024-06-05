@@ -68,12 +68,7 @@
                   <span class="material-symbols-outlined">{link.icon}</span>
                 {/if}
                 <span class="flex-1 text-left">{link.label}</span>
-                <img
-                  class="w-6 h-6 transition-transform duration-500"
-                  class:-scale-y-100={link.checked}
-                  src="/images/expand_more.svg"
-                  alt={link.checked ? 'Expand less' : 'Expand more'}
-                />
+                <span class="material-symbols-outlined">{link.checked ? 'expand_less' : 'expand_more'}</span>
               </button>
 
               {#if link.checked}

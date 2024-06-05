@@ -24,7 +24,7 @@
           <form class="flex flex-col gap-4 border-b pb-8">
             <Field required label="Email" type="email" bind:value={email} />
             <div>
-              <Button variant="filled" color="secondary">Submit</Button>
+              <Button variant="filled" color="primary">Submit</Button>
             </div>
           </form>
         </div>

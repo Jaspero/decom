@@ -180,13 +180,13 @@
       <Button type="button" color="warn" on:click={deleteItem}>Delete</Button>
     {/if}
     <div class="flex-1" />
-    <Button href={back} variant="outlined" color="secondary">Cancel</Button>
+    <Button href={back} variant="outlined" color="primary">Cancel</Button>
     &nbsp;
     <Button
       type="submit"
       form="form"
       variant="filled"
-      color="secondary"
+      color="primary"
       loading={saveLoading}
       on:click={submit}>Save</Button
     >
