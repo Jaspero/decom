@@ -1,0 +1,41 @@
+{
+	"/": [
+		"src/routes/+layout.server.ts"
+	],
+	"/blog": [
+		"src/routes/blog/+page.server.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/blog/authors": [
+		"src/routes/blog/authors/+page.server.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/blog/authors/[id]": [
+		"src/routes/blog/authors/[id]/+page.server.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/blog/page/[page]": [
+		"src/routes/blog/page/[page]/+page.server.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/blog/[category]": [
+		"src/routes/blog/[category]/+page.server.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/blog/[category]/page/[page]": [
+		"src/routes/blog/[category]/page/[page]/+page.server.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/blog/[category]/[id]": [
+		"src/routes/blog/[category]/[id]/+page.server.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/sitemap-hidden": [
+		"src/routes/sitemap-hidden/+page.server.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/[...url]": [
+		"src/routes/[...url]/+page.server.ts",
+		"src/routes/+layout.server.ts"
+	]
+}
