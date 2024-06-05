@@ -150,7 +150,7 @@
 
   /* Button - Filled */
   .button.variant-filled.color-primary {
-    background-color: var(--primary);
+    background-color: var(--primary-color);
     color: var(--primary-contrast);
   }
   .button.variant-filled.color-secondary {
@@ -168,9 +168,9 @@
 
   /* Button - Outlined */
   .button.variant-outlined.color-primary {
-    box-shadow: inset 0 0 0 var(--border-width) var(--primary);
-    border-color: var(--primary);
-    color: var(--primary);
+    box-shadow: inset 0 0 0 var(--border-width) var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
   }
   .button.variant-outlined.color-secondary {
     box-shadow: inset 0 0 0 var(--border-width) var(--secondary);
@@ -203,7 +203,7 @@
 
   /* Button - Ghost */
   .button.variant-ghost.color-primary {
-    color: var(--primary);
+    color: var(--primary-color);
   }
   .button.variant-ghost.color-secondary {
     color: var(--secondary);
@@ -223,7 +223,7 @@
     border-bottom-right-radius: 0;
   }
   .button.variant-underlined.color-primary {
-    border-color: var(--primary);
+    border-color: var(--primary-color);
   }
   .button.variant-underlined.color-secondary {
     border-color: var(--secondary);

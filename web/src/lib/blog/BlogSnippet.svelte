@@ -43,7 +43,7 @@
   }
 
   .article:hover .link-to-article {
-    color: var(--primary);
+    color: var(--primary-color);
   }
 
   .article header {
@@ -67,7 +67,7 @@
   }
 
   .article-author:hover {
-    color: var(--primary);
+    color: var(--primary-color);
   }
 
   .link-to-article {

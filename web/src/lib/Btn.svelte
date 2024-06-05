@@ -113,7 +113,7 @@
 
   /* Button - Filled */
   .button.variant-filled.color-primary {
-    background-color: var(--primary);
+    background-color: var(--primary-color);
     color: var(--primary-contrast);
   }
   .button.variant-filled.color-secondary {
@@ -131,8 +131,8 @@
 
   /* Button - Stroked */
   .button.variant-stroked.color-primary {
-    border-color: var(--primary);
-    color: var(--primary);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
   }
   .button.variant-stroked.color-secondary {
     border-color: var(--secondary);
@@ -149,7 +149,7 @@
 
   /* Button - Ghost */
   .button.variant-ghost.color-primary {
-    color: var(--primary);
+    color: var(--primary-color);
   }
   .button.variant-ghost.color-secondary {
     color: var(--secondary);
