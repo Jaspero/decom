@@ -127,7 +127,9 @@
 
 <style lang="postcss">
   .button {
-    @apply relative transition-all overflow-hidden;
+    position: relative;
+    transition: all .25s;
+    overflow: hidden;
     border-radius: var(--border-radius);
     padding: .5rem 1rem;
     font-size: 1.2rem;
